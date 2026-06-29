@@ -1,0 +1,313 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>Pricing — Siddharth Studious</title>
+    <meta name="description" content="Transparent pricing for professional design services. YouTube thumbnails from ₹299, social media posts from ₹249. Premium packs up to 75% off." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <Navbar />
+    <main>
+      <!-- Page Header -->
+      <div class="page-hero">
+        <div class="container-page">
+          <p class="page-eyebrow text-caption-mono">PRICING</p>
+          <h1 class="page-heading">Simple, honest pricing.</h1>
+          <p class="page-subheading">No hidden fees. No complicated tiers. Up to 75% off market rates. Pick what you need.</p>
+        </div>
+      </div>
+
+      <!-- Individual Designs -->
+      <section class="pricing-section">
+        <div class="container-page">
+          <h2 class="pricing-section-title">Individual Designs</h2>
+          <p class="pricing-section-desc">Order one-off designs for immediate needs.</p>
+          <div class="individual-grid">
+            <div class="individual-card">
+              <div class="individual-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m8 21 4-4 4 4M12 17v4"/></svg>
+              </div>
+              <div class="individual-content">
+                <h3>YouTube Thumbnail Design</h3>
+                <p>Custom, scroll-stopping thumbnail optimized for your niche. Includes 2 revisions.</p>
+                <ul>
+                  <li>✓ Custom design based on your brief</li>
+                  <li>✓ High-res PNG + source file</li>
+                  <li>✓ 24hr delivery</li>
+                  <li>✓ 2 revisions</li>
+                </ul>
+              </div>
+              <div class="individual-pricing">
+                <span class="ind-original">₹999</span>
+                <span class="ind-price">₹299</span>
+                <span class="ind-badge">70% OFF</span>
+                <a href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20YouTube%20Thumbnail%20for%20%E2%82%B9299" target="_blank" rel="noopener noreferrer" class="ind-cta" id="pricing-thumbnail-individual">Order Now →</a>
+              </div>
+            </div>
+            <div class="individual-card">
+              <div class="individual-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </div>
+              <div class="individual-content">
+                <h3>Social Media Post Design</h3>
+                <p>Custom post for Instagram, Facebook, LinkedIn, or Twitter. Includes 2 revisions.</p>
+                <ul>
+                  <li>✓ Poster, Banner, Flyer, Story, Card</li>
+                  <li>✓ Platform-optimized dimensions</li>
+                  <li>✓ 24hr delivery</li>
+                  <li>✓ 2 revisions</li>
+                </ul>
+              </div>
+              <div class="individual-pricing">
+                <span class="ind-original">₹999</span>
+                <span class="ind-price">₹249</span>
+                <span class="ind-badge">75% OFF</span>
+                <a href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20Social%20Media%20Post%20for%20%E2%82%B9249" target="_blank" rel="noopener noreferrer" class="ind-cta" id="pricing-social-individual">Order Now →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pack Pricing -->
+      <section class="pricing-section pricing-section-soft">
+        <div class="container-page">
+          <h2 class="pricing-section-title">YouTube Thumbnail Packs</h2>
+          <p class="pricing-section-desc">Save more with bulk orders. Get consistent, high-quality thumbnails for your entire channel.</p>
+          <div class="pack-grid">
+            {[
+              { name: "Starter", designs: 5, price: "₹1,249", savings: "Save ₹3,745", id: "thumb-starter" },
+              { name: "Standard", designs: 10, price: "₹2,449", savings: "Save ₹7,541", featured: true, id: "thumb-standard" },
+              { name: "Premium", designs: 20, price: "₹4,799", savings: "Save ₹15,181", id: "thumb-premium" },
+            ].map(pack => (
+              <div class={`pack-card ${pack.featured ? 'pack-card-featured' : ''}`}>
+                {pack.featured && <div class="pack-badge">Best Value</div>}
+                <h3 class="pack-name">{pack.name}</h3>
+                <div class="pack-designs">{pack.designs} Designs</div>
+                <div class="pack-price">{pack.price}</div>
+                <div class="pack-savings">{pack.savings}</div>
+                <a href={`https://wa.me/917488316199?text=Hi%2C%20I%20want%20the%20${pack.name}%20YouTube%20Thumbnail%20Pack`} target="_blank" rel="noopener noreferrer" class={`pack-cta ${pack.featured ? 'pack-cta-featured' : ''}`} id={pack.id}>Get Access →</a>
+              </div>
+            ))}
+          </div>
+
+          <h2 class="pricing-section-title" style="margin-top: 64px;">Social Media Post Packs</h2>
+          <p class="pricing-section-desc">Bulk social media designs for consistent brand presence across all platforms.</p>
+          <div class="pack-grid">
+            {[
+              { name: "Starter", designs: 5, price: "₹999", savings: "Save ₹4,000", id: "social-starter" },
+              { name: "Standard", designs: 10, price: "₹1,899", savings: "Save ₹8,091", featured: true, id: "social-standard" },
+              { name: "Premium", designs: 20, price: "₹3,599", savings: "Save ₹16,381", id: "social-premium" },
+            ].map(pack => (
+              <div class={`pack-card ${pack.featured ? 'pack-card-featured' : ''}`}>
+                {pack.featured && <div class="pack-badge">Best Value</div>}
+                <h3 class="pack-name">{pack.name}</h3>
+                <div class="pack-designs">{pack.designs} Designs</div>
+                <div class="pack-price">{pack.price}</div>
+                <div class="pack-savings">{pack.savings}</div>
+                <a href={`https://wa.me/917488316199?text=Hi%2C%20I%20want%20the%20${pack.name}%20Social%20Media%20Post%20Pack`} target="_blank" rel="noopener noreferrer" class={`pack-cta ${pack.featured ? 'pack-cta-featured' : ''}`} id={pack.id}>Get Access →</a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ / Notes -->
+      <section class="pricing-section">
+        <div class="container-page">
+          <div class="faq-grid">
+            <div>
+              <h2 class="section-heading" style="font-size: 28px; letter-spacing: -1px;">Have questions?</h2>
+              <p style="font-size: 16px; color: var(--color-body); line-height: 24px; margin: 12px 0 24px;">Everything is delivered via WhatsApp. Just send us your requirements and we'll handle the rest.</p>
+              <a href="https://wa.me/917488316199" target="_blank" rel="noopener noreferrer" class="hero-btn-primary" id="pricing-whatsapp-faq">Chat on WhatsApp →</a>
+            </div>
+            <div class="faq-list">
+              {[
+                { q: "How do I place an order?", a: "Click 'Order Now' and WhatsApp us your requirements. We'll confirm and get started." },
+                { q: "What formats do I receive?", a: "High-res PNG files. Source files (PSD/Figma) included in Standard and Premium packs." },
+                { q: "How many revisions are included?", a: "Individual orders get 2 revisions. Pack orders get unlimited revisions." },
+                { q: "Is there a platform fee?", a: "A 20% platform fee applies to all orders. Paying via website adds a 2% processing fee + GST." },
+              ].map(faq => (
+                <div class="faq-item">
+                  <h3 class="faq-q">{faq.q}</h3>
+                  <p class="faq-a">{faq.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .page-hero {
+    background: var(--color-canvas);
+    border-bottom: 1px solid var(--color-hairline);
+    padding: 64px 24px 48px;
+    text-align: center;
+  }
+  .page-eyebrow { color: var(--color-mute); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 12px; }
+  .page-heading { font-size: clamp(32px, 5vw, 48px); font-weight: 600; letter-spacing: -2px; color: var(--color-ink); margin: 0 0 16px; }
+  .page-subheading { font-size: 18px; color: var(--color-body); line-height: 28px; margin: 0 auto; max-width: 520px; }
+
+  .pricing-section { padding: 72px 24px; background: var(--color-canvas-soft); }
+  .pricing-section-soft { background: var(--color-canvas); border-top: 1px solid var(--color-hairline); border-bottom: 1px solid var(--color-hairline); }
+  .pricing-section-title { font-size: 28px; font-weight: 600; letter-spacing: -1px; color: var(--color-ink); margin: 0 0 8px; }
+  .pricing-section-desc { font-size: 16px; color: var(--color-body); margin: 0 0 40px; }
+
+  /* Individual Cards */
+  .individual-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .individual-card {
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    display: flex;
+    gap: 24px;
+    box-shadow: var(--shadow-card);
+  }
+  .individual-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--color-canvas-soft-2);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .individual-content { flex: 1; }
+  .individual-content h3 { font-size: 18px; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.3px; }
+  .individual-content p { font-size: 14px; color: var(--color-body); margin: 0 0 12px; line-height: 20px; }
+  .individual-content ul { list-style: none; margin: 0; padding: 0; font-size: 13px; color: var(--color-body); display: flex; flex-direction: column; gap: 4px; }
+  .individual-pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    flex-shrink: 0;
+    min-width: 120px;
+  }
+  .ind-original { font-size: 13px; color: var(--color-mute); text-decoration: line-through; font-family: var(--font-mono); }
+  .ind-price { font-size: 36px; font-weight: 700; letter-spacing: -2px; color: var(--color-ink); font-family: var(--font-mono); line-height: 1; }
+  .ind-badge { font-size: 11px; font-weight: 600; color: white; background: linear-gradient(135deg, #007cf0, #7928ca); padding: 3px 10px; border-radius: var(--radius-full); }
+  .ind-cta {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+    background: var(--color-ink);
+    color: white;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .ind-cta:hover { opacity: 0.85; }
+
+  /* Pack Cards */
+  .pack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pack-card {
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    position: relative;
+    box-shadow: var(--shadow-card);
+  }
+  .pack-card-featured {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: white;
+    transform: scale(1.04);
+    box-shadow: var(--shadow-pricing);
+  }
+  .pack-badge {
+    position: absolute;
+    top: -12px;
+    background: linear-gradient(135deg, #007cf0, #7928ca);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: var(--radius-full);
+  }
+  .pack-name { font-size: 18px; font-weight: 600; margin: 0; }
+  .pack-designs { font-size: 32px; font-weight: 700; letter-spacing: -1px; font-family: var(--font-mono); line-height: 1; }
+  .pack-price { font-size: 28px; font-weight: 700; letter-spacing: -1px; color: var(--color-link); font-family: var(--font-mono); }
+  .pack-card-featured .pack-price { color: #50e3c2; }
+  .pack-savings { font-size: 12px; color: var(--color-mute); font-family: var(--font-mono); }
+  .pack-card-featured .pack-savings { color: #666; }
+  .pack-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 44px;
+    border-radius: var(--radius-pill);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    background: var(--color-canvas-soft);
+    border: 1px solid var(--color-hairline);
+    color: var(--color-ink);
+    margin-top: 8px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .pack-cta:hover { background: var(--color-canvas-soft-2); border-color: var(--color-hairline-strong); }
+  .pack-cta-featured { background: white; border-color: white; }
+  .pack-cta-featured:hover { background: #f0f0f0; border-color: #f0f0f0; }
+
+  /* FAQ */
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .section-heading { font-size: clamp(24px, 3vw, 32px); font-weight: 600; letter-spacing: -1px; color: var(--color-ink); margin: 0 0 8px; }
+  .faq-list { display: flex; flex-direction: column; gap: 24px; }
+  .faq-item {}
+  .faq-q { font-size: 15px; font-weight: 600; color: var(--color-ink); margin: 0 0 6px; }
+  .faq-a { font-size: 14px; color: var(--color-body); line-height: 20px; margin: 0; }
+  .hero-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 24px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-on-primary);
+    background: var(--color-ink);
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+  .hero-btn-primary:hover { opacity: 0.85; }
+
+  @media (max-width: 900px) {
+    .individual-grid { grid-template-columns: 1fr; }
+    .individual-card { flex-direction: column; }
+    .individual-pricing { align-items: flex-start; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .pack-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+    .pack-card-featured { transform: none; }
+    .faq-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+</style>

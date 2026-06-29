@@ -1,0 +1,222 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+const portfolioItems = [
+  { id: "p1", category: "thumbnail", title: "Gaming Channel Thumbnail", client: "Tech Creator", color: "#007cf0" },
+  { id: "p2", category: "social", title: "Instagram Post Design", client: "Lifestyle Brand", color: "#7928ca" },
+  { id: "p3", category: "thumbnail", title: "Finance YouTube Thumbnail", client: "Finance Creator", color: "#ff4d4d" },
+  { id: "p4", category: "branding", title: "Startup Logo Design", client: "EdTech Startup", color: "#00dfd8" },
+  { id: "p5", category: "social", title: "Social Media Banner", client: "Fashion Brand", color: "#ff0080" },
+  { id: "p6", category: "thumbnail", title: "Motivation Channel Art", client: "Motivational Creator", color: "#f9cb28" },
+  { id: "p7", category: "thumbnail", title: "Cooking Show Thumbnail", client: "Food Creator", color: "#50e3c2" },
+  { id: "p8", category: "social", title: "Product Launch Post", client: "D2C Brand", color: "#7928ca" },
+  { id: "p9", category: "branding", title: "Creator Brand Kit", client: "Travel Creator", color: "#007cf0" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>Portfolio — Siddharth Studious</title>
+    <meta name="description" content="Browse our portfolio of professional YouTube thumbnails, social media designs, logos, and brand identity work." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <Navbar />
+    <main>
+      <!-- Hero -->
+      <div class="portfolio-hero">
+        <div class="container-page">
+          <p class="eyebrow text-caption-mono">PORTFOLIO</p>
+          <h1 class="portfolio-heading">Our recent work.</h1>
+          <p class="portfolio-subheading">A selection of designs created for our clients. Every pixel is intentional.</p>
+        </div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-bar">
+        <div class="container-page">
+          <div class="filter-tabs" role="tablist">
+            {[
+              { value: "all", label: "All Work" },
+              { value: "thumbnail", label: "Thumbnails" },
+              { value: "social", label: "Social Media" },
+              { value: "branding", label: "Branding" },
+            ].map(tab => (
+              <button
+                class={`filter-tab ${tab.value === 'all' ? 'filter-tab-active' : ''}`}
+                data-filter={tab.value}
+                role="tab"
+                id={`filter-${tab.value}`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Portfolio Grid -->
+      <section class="portfolio-section">
+        <div class="container-page">
+          <div class="portfolio-grid" id="portfolio-grid">
+            {portfolioItems.map(item => (
+              <div class="portfolio-card" data-category={item.category} id={`portfolio-item-${item.id}`}>
+                <!-- Design Preview Mockup -->
+                <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${item.color}20 0%, ${item.color}40 100%); border-bottom: 3px solid ${item.color}`}>
+                  <div class="preview-inner">
+                    <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                    <div class="preview-lines">
+                      <div class="preview-line preview-line-wide" style={`background: ${item.color}60`}></div>
+                      <div class="preview-line preview-line-med" style={`background: ${item.color}40`}></div>
+                      <div class="preview-line preview-line-short" style={`background: ${item.color}30`}></div>
+                    </div>
+                    <div class="preview-dot" style={`background: ${item.color}`}></div>
+                  </div>
+                </div>
+                <div class="portfolio-info">
+                  <h3 class="portfolio-item-title">{item.title}</h3>
+                  <p class="portfolio-item-client">{item.client}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="portfolio-cta">
+        <div class="container-page portfolio-cta-inner">
+          <div>
+            <h2>Want a design like this?</h2>
+            <p>Order yours today and get it delivered within 24 hours.</p>
+          </div>
+          <div class="portfolio-cta-btns">
+            <a href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design" target="_blank" rel="noopener noreferrer" class="cta-primary" id="portfolio-order-cta">Order Now →</a>
+            <a href="/pricing" class="cta-secondary">View Pricing</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<script>
+  const tabs = document.querySelectorAll('.filter-tab');
+  const cards = document.querySelectorAll('.portfolio-card') as NodeListOf<HTMLElement>;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('filter-tab-active'));
+      tab.classList.add('filter-tab-active');
+
+      const filter = tab.getAttribute('data-filter');
+      cards.forEach(card => {
+        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .portfolio-hero { background: var(--color-canvas); border-bottom: 1px solid var(--color-hairline); padding: 64px 24px 48px; }
+  .eyebrow { color: var(--color-mute); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 12px; }
+  .portfolio-heading { font-size: clamp(36px, 5vw, 56px); font-weight: 600; letter-spacing: -2px; color: var(--color-ink); margin: 0 0 16px; }
+  .portfolio-subheading { font-size: 18px; color: var(--color-body); line-height: 28px; margin: 0; max-width: 420px; }
+
+  .filter-bar { background: var(--color-canvas); border-bottom: 1px solid var(--color-hairline); padding: 16px 24px; }
+  .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-tab {
+    display: inline-flex; align-items: center; height: 36px; padding: 0 16px;
+    font-size: 14px; font-weight: 400; color: var(--color-body);
+    background: var(--color-canvas); border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-pill-sm); cursor: pointer;
+    font-family: var(--font-sans);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .filter-tab:hover { background: var(--color-canvas-soft-2); color: var(--color-ink); border-color: var(--color-hairline-strong); }
+  .filter-tab-active {
+    background: var(--color-ink); color: white; border-color: var(--color-ink);
+  }
+
+  .portfolio-section { padding: 64px 24px; background: var(--color-canvas-soft); }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .portfolio-card {
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .portfolio-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card-lg); }
+  .portfolio-preview {
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .preview-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px;
+    gap: 10px;
+  }
+  .preview-label { color: var(--color-mute); font-size: 10px; }
+  .preview-lines { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+  .preview-line { height: 8px; border-radius: 4px; }
+  .preview-line-wide { width: 80%; }
+  .preview-line-med { width: 55%; }
+  .preview-line-short { width: 35%; }
+  .preview-dot { width: 32px; height: 32px; border-radius: 50%; margin-top: 8px; opacity: 0.7; }
+  .portfolio-info { padding: 16px 20px; }
+  .portfolio-item-title { font-size: 15px; font-weight: 600; color: var(--color-ink); margin: 0 0 4px; }
+  .portfolio-item-client { font-size: 13px; color: var(--color-mute); margin: 0; }
+
+  .portfolio-cta {
+    background: var(--color-canvas);
+    border-top: 1px solid var(--color-hairline);
+    padding: 64px 24px;
+  }
+  .portfolio-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .portfolio-cta h2 { font-size: 28px; font-weight: 600; letter-spacing: -1px; color: var(--color-ink); margin: 0 0 8px; }
+  .portfolio-cta p { font-size: 16px; color: var(--color-body); margin: 0; }
+  .portfolio-cta-btns { display: flex; gap: 12px; flex-wrap: wrap; flex-shrink: 0; }
+  .cta-primary {
+    display: inline-flex; align-items: center; height: 48px; padding: 0 24px;
+    font-size: 16px; font-weight: 500; color: white; background: var(--color-ink);
+    border-radius: var(--radius-pill); text-decoration: none; transition: opacity 0.15s;
+  }
+  .cta-primary:hover { opacity: 0.85; }
+  .cta-secondary {
+    display: inline-flex; align-items: center; height: 48px; padding: 0 24px;
+    font-size: 16px; font-weight: 500; color: var(--color-ink);
+    border: 1px solid var(--color-hairline); background: var(--color-canvas);
+    border-radius: var(--radius-pill); text-decoration: none; transition: border-color 0.15s, background 0.15s;
+  }
+  .cta-secondary:hover { border-color: var(--color-hairline-strong); background: var(--color-canvas-soft-2); }
+
+  @media (max-width: 900px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) {
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .portfolio-cta-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>

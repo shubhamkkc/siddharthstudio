@@ -1,0 +1,237 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+const allServices = [
+  {
+    id: "thumbnails",
+    title: "YouTube Thumbnails",
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m8 21 4-4 4 4"/><path d="M12 17v4"/></svg>`,
+    description: "Scroll-stopping YouTube thumbnails that make viewers click. Our thumbnails are crafted to dominate your niche with high-contrast visuals, eye-catching typography, and trend-aware designs.",
+    features: ["Custom character/face design", "Brand-consistent color palette", "Text overlay with impact fonts", "A/B test variants available", "High-res PNG + editable source", "24–48hr turnaround"],
+    pricing: [
+      { label: "Single Thumbnail", price: "₹299", original: "₹999" },
+      { label: "5 Thumbnails", price: "₹1,249", original: "₹4,995" },
+      { label: "10 Thumbnails", price: "₹2,449", original: "₹9,990" },
+    ],
+    gradient: "linear-gradient(135deg, #007cf0 0%, #00dfd8 100%)",
+  },
+  {
+    id: "social-media",
+    title: "Social Media Designs",
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+    description: "Consistent, platform-optimized designs for Instagram, Facebook, LinkedIn, and more. Build a recognizable brand presence with visuals that stop the scroll and drive engagement.",
+    features: ["Instagram posts & stories", "Facebook covers & ads", "LinkedIn banners & posts", "Twitter/X header & posts", "Brand color consistency", "Multiple format sizes"],
+    pricing: [
+      { label: "Single Design", price: "₹249", original: "₹999" },
+      { label: "5 Designs", price: "₹999", original: "₹4,995" },
+      { label: "10 Designs", price: "₹1,899", original: "₹9,990" },
+    ],
+    gradient: "linear-gradient(135deg, #7928ca 0%, #ff0080 100%)",
+  },
+  {
+    id: "video",
+    title: "Video Editing",
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>`,
+    description: "Professional video editing for YouTube, Instagram Reels, and brand content. Story-driven, paced for engagement, with clean cuts, transitions, color grading, and subtitles.",
+    features: ["YouTube long-form & Shorts", "Instagram Reels editing", "Color grading & correction", "Music & SFX sync", "Subtitles & captions", "Motion graphics add-ons"],
+    pricing: [
+      { label: "Short Video (≤5 min)", price: "Custom", original: null },
+      { label: "Long Video (5–20 min)", price: "Custom", original: null },
+      { label: "Monthly Package", price: "Custom", original: null },
+    ],
+    gradient: "linear-gradient(135deg, #ff4d4d 0%, #f9cb28 100%)",
+  },
+  {
+    id: "branding",
+    title: "Logos & Branding",
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+    description: "Complete brand identity packages for YouTubers, creators, and small businesses. Logo design, color palette selection, typography, and usage guidelines.",
+    features: ["Logo design (3 concepts)", "Color palette definition", "Typography selection", "Brand style guide PDF", "All file formats (SVG, PNG, AI)", "Social media kit"],
+    pricing: [
+      { label: "Logo Only", price: "₹499", original: "₹2,499" },
+      { label: "Brand Kit", price: "₹999", original: "₹4,999" },
+      { label: "Full Brand Identity", price: "₹1,999", original: "₹9,999" },
+    ],
+    gradient: "linear-gradient(135deg, #007cf0 0%, #7928ca 100%)",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>Services — Siddharth Studious</title>
+    <meta name="description" content="Professional design services: YouTube thumbnails from ₹299, social media posts from ₹249, video editing, logos, and brand identity packages." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <Navbar />
+    <main>
+      <!-- Hero -->
+      <div class="services-hero">
+        <div class="container-page">
+          <p class="eyebrow text-caption-mono">SERVICES</p>
+          <h1 class="services-heading">Everything your content needs.</h1>
+          <p class="services-subheading">Professional creative services at honest prices. Delivered in 24–48 hours via WhatsApp.</p>
+        </div>
+      </div>
+
+      <!-- Service Sections -->
+      {allServices.map((service, i) => (
+        <section class={`service-section ${i % 2 === 1 ? 'service-section-alt' : ''}`} id={service.id}>
+          <div class="container-page service-grid">
+            <div class="service-info">
+              <div class="service-icon-lg" style={`background: ${service.gradient}`} set:html={service.icon} />
+              <h2 class="service-title">{service.title}</h2>
+              <p class="service-desc">{service.description}</p>
+              <ul class="service-features-list">
+                {service.features.map(f => (
+                  <li class="service-feature-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="service-pricing-panel">
+              <h3 class="panel-heading">Pricing</h3>
+              <div class="panel-tiers">
+                {service.pricing.map((tier, j) => (
+                  <div class={`panel-tier ${j === 1 ? 'panel-tier-featured' : ''}`}>
+                    <div class="tier-label">{tier.label}</div>
+                    <div class="tier-prices">
+                      {tier.original && <span class="tier-original">{tier.original}</span>}
+                      <span class="tier-price">{tier.price}</span>
+                    </div>
+                    <a
+                      href={`https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20${encodeURIComponent(tier.label + ' - ' + service.title)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class={`tier-btn ${j === 1 ? 'tier-btn-featured' : ''}`}
+                      id={`service-${service.id}-${j}`}
+                    >
+                      Order Now
+                    </a>
+                  </div>
+                ))}
+              </div>
+              <a
+                href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20a%20custom%20quote"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="custom-quote-link"
+                id={`service-${service.id}-custom`}
+              >
+                Need a custom quote? Chat with us →
+              </a>
+            </div>
+          </div>
+        </section>
+      ))}
+
+      <!-- Bottom CTA -->
+      <section class="services-cta">
+        <div class="container-page services-cta-inner">
+          <h2>Not sure which to pick?</h2>
+          <p>Tell us your goal and we'll recommend the right service and package for you.</p>
+          <a href="https://wa.me/917488316199?text=Hi%2C%20I%20need%20help%20choosing%20the%20right%20service" target="_blank" rel="noopener noreferrer" class="cta-btn" id="services-help-cta">
+            Get a Recommendation →
+          </a>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .services-hero { background: var(--color-canvas); border-bottom: 1px solid var(--color-hairline); padding: 64px 24px 48px; }
+  .eyebrow { color: var(--color-mute); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 12px; }
+  .services-heading { font-size: clamp(36px, 5vw, 56px); font-weight: 600; letter-spacing: -2px; color: var(--color-ink); margin: 0 0 16px; }
+  .services-subheading { font-size: 18px; color: var(--color-body); line-height: 28px; margin: 0; max-width: 480px; }
+
+  .service-section { padding: 80px 24px; background: var(--color-canvas-soft); }
+  .service-section:nth-child(odd) { background: var(--color-canvas); border-top: 1px solid var(--color-hairline); border-bottom: 1px solid var(--color-hairline); }
+  .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .service-icon-lg {
+    width: 64px; height: 64px;
+    border-radius: var(--radius-lg);
+    display: flex; align-items: center; justify-content: center;
+    color: white; margin-bottom: 20px;
+  }
+  .service-title { font-size: 32px; font-weight: 600; letter-spacing: -1px; color: var(--color-ink); margin: 0 0 16px; }
+  .service-desc { font-size: 16px; color: var(--color-body); line-height: 26px; margin: 0 0 28px; }
+  .service-features-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .service-feature-item { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--color-body); }
+  .service-feature-item svg { color: var(--color-link); flex-shrink: 0; }
+
+  .service-pricing-panel {
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    box-shadow: var(--shadow-card-lg);
+    position: sticky;
+    top: 80px;
+  }
+  .panel-heading { font-size: 14px; font-weight: 600; color: var(--color-mute); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 24px; font-family: var(--font-mono); }
+  .panel-tiers { display: flex; flex-direction: column; gap: 12px; }
+  .panel-tier {
+    background: var(--color-canvas-soft);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .panel-tier-featured {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: white;
+  }
+  .tier-label { font-size: 14px; font-weight: 500; flex: 1; }
+  .panel-tier-featured .tier-label { color: white; }
+  .tier-prices { display: flex; align-items: baseline; gap: 8px; flex-shrink: 0; }
+  .tier-original { font-size: 12px; text-decoration: line-through; color: var(--color-mute); font-family: var(--font-mono); }
+  .panel-tier-featured .tier-original { color: #555; }
+  .tier-price { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; font-family: var(--font-mono); color: var(--color-ink); }
+  .panel-tier-featured .tier-price { color: white; }
+  .tier-btn {
+    display: inline-flex; align-items: center; height: 36px; padding: 0 14px;
+    font-size: 13px; font-weight: 500;
+    background: var(--color-canvas); border: 1px solid var(--color-hairline);
+    color: var(--color-ink); border-radius: var(--radius-pill);
+    text-decoration: none; transition: background 0.15s, border-color 0.15s;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .tier-btn:hover { background: var(--color-canvas-soft-2); border-color: var(--color-hairline-strong); }
+  .tier-btn-featured { background: white; border-color: white; }
+  .tier-btn-featured:hover { background: #f0f0f0; border-color: #f0f0f0; }
+  .custom-quote-link { display: block; margin-top: 20px; font-size: 14px; color: var(--color-link); text-decoration: none; text-align: center; }
+  .custom-quote-link:hover { text-decoration: underline; }
+
+  .services-cta { background: var(--color-ink); padding: 80px 24px; text-align: center; color: white; }
+  .services-cta-inner { max-width: 480px; margin: 0 auto; }
+  .services-cta h2 { font-size: 32px; font-weight: 600; letter-spacing: -1.5px; margin: 0 0 12px; }
+  .services-cta p { font-size: 17px; color: #a1a1a1; margin: 0 0 28px; }
+  .cta-btn {
+    display: inline-flex; align-items: center; height: 48px; padding: 0 24px;
+    font-size: 16px; font-weight: 500; color: var(--color-ink); background: white;
+    border-radius: var(--radius-pill); text-decoration: none; transition: opacity 0.15s;
+  }
+  .cta-btn:hover { opacity: 0.9; }
+
+  @media (max-width: 900px) {
+    .service-grid { grid-template-columns: 1fr; gap: 48px; }
+    .service-pricing-panel { position: static; }
+  }
+</style>

@@ -1,0 +1,336 @@
+---
+import "../styles/global.css";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/services", label: "Services" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="navbar-root">
+  <div class="container-page">
+    <nav class="navbar-inner">
+      <!-- Logo -->
+      <a href="/" class="navbar-logo" aria-label="Siddharth Studious Home">
+          <img src="/logo.png" alt="Siddharth Studious Logo" width="28" height="28" class="logo-image" />
+        <span class="logo-text">Siddharth Studious</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links" role="list">
+        {navLinks.map(link => (
+          <li>
+            <a
+              href={link.href}
+              class={`nav-link ${currentPath === link.href ? 'nav-link-active' : ''}`}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- CTA Cluster -->
+      <div class="nav-cta-cluster">
+        <a
+          href="https://t.me/kumarsiddharth"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-nav-ghost"
+        >
+          Telegram
+        </a>
+        <a
+          href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-nav-primary"
+        >
+          Order Now
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button
+        class="hamburger"
+        id="hamburger-btn"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+      >
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <div class="mobile-menu-inner">
+    <ul role="list" class="mobile-nav-links">
+      {navLinks.map(link => (
+        <li>
+          <a href={link.href} class="mobile-nav-link">{link.label}</a>
+        </li>
+      ))}
+    </ul>
+    <div class="mobile-cta-cluster">
+      <a
+        href="https://t.me/kumarsiddharth"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mobile-btn-ghost"
+      >
+        Join Telegram
+      </a>
+      <a
+        href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mobile-btn-primary"
+      >
+        Order Now →
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .navbar-root {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-hairline);
+    height: 64px;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+  }
+
+  /* Logo */
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .logo-icon { display: flex; align-items: center; }
+  .logo-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+  }
+
+  /* Nav Links */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-link {
+    display: block;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-body);
+    text-decoration: none;
+    border-radius: var(--radius-full);
+    transition: color 0.15s ease, background-color 0.15s ease;
+  }
+  .nav-link:hover {
+    color: var(--color-ink);
+    background-color: var(--color-canvas-soft-2);
+  }
+  .nav-link-active {
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  /* CTA Cluster */
+  .nav-cta-cluster {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .btn-nav-ghost {
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-ink);
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn-nav-ghost:hover {
+    background-color: var(--color-canvas-soft-2);
+    border-color: var(--color-hairline-strong);
+  }
+
+  .btn-nav-primary {
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-on-primary);
+    background: var(--color-ink);
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn-nav-primary:hover { opacity: 0.85; }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+  }
+  .ham-line {
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background-color: var(--color-ink);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 64px 0 0 0;
+    background-color: var(--color-canvas);
+    z-index: 49;
+    border-top: 1px solid var(--color-hairline);
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .mobile-menu.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+  .mobile-menu-inner {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .mobile-nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mobile-nav-link {
+    display: block;
+    padding: 12px 16px;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-ink);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: background-color 0.15s ease;
+  }
+  .mobile-nav-link:hover { background-color: var(--color-canvas-soft-2); }
+  .mobile-cta-cluster {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .mobile-btn-ghost, .mobile-btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    border-radius: var(--radius-pill);
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+  .mobile-btn-ghost {
+    color: var(--color-ink);
+    border: 1px solid var(--color-hairline);
+    background: var(--color-canvas);
+  }
+  .mobile-btn-primary {
+    color: var(--color-on-primary);
+    background: var(--color-ink);
+  }
+  .mobile-btn-primary:hover, .mobile-btn-ghost:hover { opacity: 0.8; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-cta-cluster { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu { display: block; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('hamburger-btn');
+  const menu = document.getElementById('mobile-menu');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(isOpen));
+    menu?.setAttribute('aria-hidden', String(!isOpen));
+  });
+
+  // Close menu on nav link click
+  menu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('open');
+      btn?.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+    });
+  });
+</script>
