@@ -65,6 +65,18 @@ const allServices = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
     <title>Services — Siddharth Studious</title>
     <meta name="description" content="Professional design services: YouTube thumbnails from ₹299, social media posts from ₹249, video editing, logos, and brand identity packages." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -194,8 +206,8 @@ const allServices = [
     gap: 12px;
   }
   .panel-tier-featured {
-    background: var(--color-ink);
-    border-color: var(--color-ink);
+    background: #0a0a0c;
+    border-color: #0a0a0c;
     color: white;
   }
   .tier-label { font-size: 14px; font-weight: 500; flex: 1; }
@@ -219,13 +231,13 @@ const allServices = [
   .custom-quote-link { display: block; margin-top: 20px; font-size: 14px; color: var(--color-link); text-decoration: none; text-align: center; }
   .custom-quote-link:hover { text-decoration: underline; }
 
-  .services-cta { background: var(--color-ink); padding: 80px 24px; text-align: center; color: white; }
+  .services-cta { background: #0a0a0c; padding: 80px 24px; text-align: center; color: white; }
   .services-cta-inner { max-width: 480px; margin: 0 auto; }
   .services-cta h2 { font-size: 32px; font-weight: 600; letter-spacing: -1.5px; margin: 0 0 12px; }
   .services-cta p { font-size: 17px; color: #a1a1a1; margin: 0 0 28px; }
   .cta-btn {
     display: inline-flex; align-items: center; height: 48px; padding: 0 24px;
-    font-size: 16px; font-weight: 500; color: var(--color-ink); background: white;
+    font-size: 16px; font-weight: 500; color: #000; background: white;
     border-radius: var(--radius-pill); text-decoration: none; transition: opacity 0.15s;
   }
   .cta-btn:hover { opacity: 0.9; }

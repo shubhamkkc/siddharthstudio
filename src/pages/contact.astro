@@ -10,6 +10,18 @@ import Footer from "../components/Footer.astro";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
     <title>Contact — Siddharth Studious</title>
     <meta name="description" content="Get in touch with Siddharth Studious. Order designs via WhatsApp, email us, or connect on social media. Based in Patna, Bihar, India." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -179,7 +191,7 @@ import Footer from "../components/Footer.astro";
   .biz-label { display: block; font-size: 11px; color: var(--color-mute); letter-spacing: 0.06em; margin-bottom: 4px; }
   .biz-value { font-size: 15px; color: var(--color-ink); line-height: 22px; display: block; }
   .quick-order-card {
-    background: var(--color-ink);
+    background: #0a0a0c;
     border-radius: var(--radius-lg);
     padding: 28px;
     color: white;
@@ -188,7 +200,7 @@ import Footer from "../components/Footer.astro";
   .quick-order-card p { font-size: 14px; color: #a1a1a1; line-height: 20px; margin: 0 0 20px; }
   .quick-order-btn {
     display: inline-flex; align-items: center; height: 44px; padding: 0 20px;
-    font-size: 15px; font-weight: 500; color: var(--color-ink); background: white;
+    font-size: 15px; font-weight: 500; color: #000; background: white;
     border-radius: var(--radius-pill); text-decoration: none; transition: opacity 0.15s;
   }
   .quick-order-btn:hover { opacity: 0.9; }

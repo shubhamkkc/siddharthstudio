@@ -10,6 +10,18 @@ import Footer from "../components/Footer.astro";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
     <title>Become a Partner — Siddharth Studious</title>
     <meta name="description" content="Join the Siddharth Studious partner network. Earn by designing and creating for 200+ clients. Flexible work, consistent projects, great community." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -172,7 +184,7 @@ import Footer from "../components/Footer.astro";
 
 <style>
   .partner-hero {
-    background: var(--color-ink);
+    background: #0a0a0c;
     position: relative;
     overflow: hidden;
     padding: 96px 24px 80px;
@@ -191,7 +203,7 @@ import Footer from "../components/Footer.astro";
   .partner-subheading { font-size: 18px; color: #a1a1a1; line-height: 28px; margin: 0 0 32px; max-width: 480px; }
   .hero-btn-primary {
     display: inline-flex; align-items: center; height: 48px; padding: 0 24px;
-    font-size: 16px; font-weight: 500; color: var(--color-ink); background: white;
+    font-size: 16px; font-weight: 500; color: #000; background: white;
     border-radius: var(--radius-pill); text-decoration: none; transition: opacity 0.15s;
   }
   .hero-btn-primary:hover { opacity: 0.9; }
@@ -256,7 +268,7 @@ import Footer from "../components/Footer.astro";
   .form-submit-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 8px; }
   .form-submit-btn {
     display: inline-flex; align-items: center; height: 48px; padding: 0 28px;
-    font-size: 16px; font-weight: 500; color: white; background: var(--color-ink);
+    font-size: 16px; font-weight: 500; color: var(--color-on-primary); background: var(--color-ink);
     border: none; border-radius: var(--radius-pill); cursor: pointer; transition: opacity 0.15s;
     font-family: var(--font-sans);
   }

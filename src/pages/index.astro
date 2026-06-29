@@ -490,14 +490,14 @@ const steps = [
     padding: 0 24px;
     font-size: 16px;
     font-weight: 500;
-    color: var(--color-ink);
+    color: var(--color-ink) !important;
     background: var(--color-canvas);
     border: 1px solid var(--color-hairline);
     border-radius: var(--radius-pill);
     text-decoration: none;
-    transition: border-color 0.15s ease, background-color 0.15s ease;
+    transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
   }
-  .hero-btn-secondary:hover { border-color: var(--color-hairline-strong); background: var(--color-canvas-soft-2); }
+  .hero-btn-secondary:hover { border-color: var(--color-hairline-strong); background: var(--color-canvas-soft-2); color: var(--color-ink) !important; }
   .hero-footnote {
     font-size: 13px;
     color: var(--color-mute);
@@ -520,8 +520,7 @@ const steps = [
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(8px);
+    background: var(--color-canvas);
     border: 1px solid var(--color-hairline);
     border-radius: var(--radius-lg);
     padding: 12px 18px;
@@ -776,9 +775,9 @@ const steps = [
     position: relative;
   }
   .pricing-card-featured {
-    background: var(--color-ink);
-    color: var(--color-on-primary);
-    border-color: var(--color-ink);
+    background: #0a0a0c;
+    color: #fff;
+    border-color: #0a0a0c;
     box-shadow: var(--shadow-pricing);
     transform: scale(1.03);
   }
@@ -869,10 +868,10 @@ const steps = [
   .pricing-cta:hover { background: var(--color-canvas-soft-2); border-color: var(--color-hairline-strong); }
   .pricing-cta-featured {
     background: white;
-    color: var(--color-ink);
+    color: #000;
     border-color: white;
   }
-  .pricing-cta-featured:hover { background: #f0f0f0; border-color: #f0f0f0; }
+  .pricing-cta-featured:hover { background: #f0f0f0; border-color: #f0f0f0; color: #000; }
   .pricing-note {
     text-align: center;
     font-size: 14px;
@@ -954,8 +953,8 @@ const steps = [
 
   /* ── Partner Band ── */
   .partner-band {
-    background: var(--color-ink);
-    color: var(--color-on-primary);
+    background: #0a0a0c;
+    color: #fff;
     padding: 96px 24px;
     position: relative;
     overflow: hidden;
@@ -1001,7 +1000,7 @@ const steps = [
     padding: 0 24px;
     font-size: 16px;
     font-weight: 500;
-    color: var(--color-ink);
+    color: #000;
     background: white;
     border-radius: var(--radius-pill);
     text-decoration: none;

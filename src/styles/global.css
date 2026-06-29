@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
-/* ─── Vercel-inspired design system tokens ─── */
-@theme {
-  /* ── Colors ── */
+:root {
   --color-ink: #171717;
   --color-body: #4d4d4d;
   --color-mute: #888888;
@@ -14,6 +12,44 @@
   --color-on-primary: #ffffff;
   --color-link: #0070f3;
   --color-link-deep: #0761d1;
+
+  --shadow-card: 0px 1px 1px #00000005, 0px 2px 2px #0000000a, 0 0 0 1px #00000014 inset;
+  --shadow-card-lg: 0px 2px 2px #0000000a, 0px 8px 16px -4px #0000000a, 0 0 0 1px #00000014 inset;
+  --shadow-pricing: 0px 2px 2px #0000000a, 0px 8px 16px -4px #0000000a, 0 0 0 1px #00000014 inset;
+}
+
+:root[data-theme="dark"] {
+  --color-ink: #f5f5f7;
+  --color-body: #a1a1a6;
+  --color-mute: #6e6e73;
+  --color-hairline: #222224;
+  --color-hairline-strong: #444446;
+  --color-canvas: #0a0a0c;
+  --color-canvas-soft: #000000;
+  --color-canvas-soft-2: #121214;
+  --color-on-primary: #000000;
+  --color-link: #0070f3;
+  --color-link-deep: #1f85ff;
+
+  --shadow-card: 0px 1px 1px #00000050, 0px 2px 2px #00000060, 0 0 0 1px #ffffff10 inset;
+  --shadow-card-lg: 0px 2px 2px #00000060, 0px 8px 16px -4px #000000a0, 0 0 0 1px #ffffff10 inset;
+  --shadow-pricing: 0px 2px 2px #00000060, 0px 8px 16px -4px #000000a0, 0 0 0 1px #ffffff10 inset;
+}
+
+/* ─── Vercel-inspired design system tokens ─── */
+@theme {
+  /* ── Colors ── */
+  --color-ink: var(--color-ink);
+  --color-body: var(--color-body);
+  --color-mute: var(--color-mute);
+  --color-hairline: var(--color-hairline);
+  --color-hairline-strong: var(--color-hairline-strong);
+  --color-canvas: var(--color-canvas);
+  --color-canvas-soft: var(--color-canvas-soft);
+  --color-canvas-soft-2: var(--color-canvas-soft-2);
+  --color-on-primary: var(--color-on-primary);
+  --color-link: var(--color-link);
+  --color-link-deep: var(--color-link-deep);
 
   /* Brand gradient pairs */
   --color-grad-a-start: #007cf0;
@@ -48,9 +84,9 @@
   --radius-full: 9999px;
 
   /* ── Shadows (stacked, Vercel-style) ── */
-  --shadow-card: 0px 1px 1px #00000005, 0px 2px 2px #0000000a, 0 0 0 1px #00000014 inset;
-  --shadow-card-lg: 0px 2px 2px #0000000a, 0px 8px 16px -4px #0000000a, 0 0 0 1px #00000014 inset;
-  --shadow-pricing: 0px 2px 2px #0000000a, 0px 8px 16px -4px #0000000a, 0 0 0 1px #00000014 inset;
+  --shadow-card: var(--shadow-card);
+  --shadow-card-lg: var(--shadow-card-lg);
+  --shadow-pricing: var(--shadow-pricing);
 
   /* ── Spacing extras ── */
   --spacing-section: 192px;
@@ -78,7 +114,7 @@ body {
 
 ::selection {
   background-color: var(--color-ink);
-  color: #f2f2f2;
+  color: var(--color-canvas);
 }
 
 /* ─── Custom Utilities ─── */
@@ -152,6 +188,15 @@ body {
     radial-gradient(ellipse at 60% 80%, #ff008025 0%, transparent 50%),
     radial-gradient(ellipse at 90% 70%, #00dfd820 0%, transparent 50%),
     radial-gradient(ellipse at 10% 90%, #f9cb2820 0%, transparent 50%);
+}
+
+:root[data-theme="dark"] .mesh-gradient {
+  background-image:
+    radial-gradient(ellipse at 20% 50%, #007cf020 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, #7928ca15 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, #ff008015 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 70%, #00dfd810 0%, transparent 50%),
+    radial-gradient(ellipse at 10% 90%, #f9cb2810 0%, transparent 50%);
 }
 
 /* ─── Animations ─── */

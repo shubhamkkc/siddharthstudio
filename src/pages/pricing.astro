@@ -10,6 +10,18 @@ import Footer from "../components/Footer.astro";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
     <title>Pricing — Siddharth Studious</title>
     <meta name="description" content="Transparent pricing for professional design services. YouTube thumbnails from ₹299, social media posts from ₹249. Premium packs up to 75% off." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -214,7 +226,7 @@ import Footer from "../components/Footer.astro";
     font-size: 14px;
     font-weight: 500;
     background: var(--color-ink);
-    color: white;
+    color: var(--color-on-primary);
     border-radius: var(--radius-pill);
     text-decoration: none;
     white-space: nowrap;
@@ -238,8 +250,8 @@ import Footer from "../components/Footer.astro";
     box-shadow: var(--shadow-card);
   }
   .pack-card-featured {
-    background: var(--color-ink);
-    border-color: var(--color-ink);
+    background: #0a0a0c;
+    border-color: #0a0a0c;
     color: white;
     transform: scale(1.04);
     box-shadow: var(--shadow-pricing);
@@ -277,8 +289,8 @@ import Footer from "../components/Footer.astro";
     transition: background 0.15s, border-color 0.15s;
   }
   .pack-cta:hover { background: var(--color-canvas-soft-2); border-color: var(--color-hairline-strong); }
-  .pack-cta-featured { background: white; border-color: white; }
-  .pack-cta-featured:hover { background: #f0f0f0; border-color: #f0f0f0; }
+  .pack-cta-featured { background: white; border-color: white; color: #000; }
+  .pack-cta-featured:hover { background: #f0f0f0; border-color: #f0f0f0; color: #000; }
 
   /* FAQ */
   .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
