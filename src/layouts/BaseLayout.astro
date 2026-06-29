@@ -8,7 +8,9 @@ interface Props {
 const {
   title,
   description = "India's premier creative design studio. Professional YouTube thumbnails, social media designs, and premium template packs at unbeatable prices.",
-  image = "/og-image.jpg"
+  image = "/logo.png",
+  keywords = "YouTube thumbnails, Social media design, Video editing, Graphic design India, Content creator designs, Thumbnail designer, Siddharth Studious",
+  author = "Siddharth Studious"
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://www.siddharthstudious.in");
@@ -36,6 +38,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://www.sidd
     <!-- SEO -->
     <title>{title} | Siddharth Studious</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={author} />
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph -->

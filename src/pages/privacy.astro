@@ -1,0 +1,99 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Privacy Policy" description="Privacy Policy for Siddharth Studious Ventures Private Limited.">
+  <Navbar />
+  <main>
+    <section class="legal-hero">
+      <div class="container-page">
+        <p class="section-eyebrow text-caption-mono">LEGAL</p>
+        <h1 class="legal-heading">Privacy Policy</h1>
+        <p class="legal-subheading">Last updated: June 29, 2026</p>
+      </div>
+    </section>
+
+    <section class="legal-content-section">
+      <div class="container-page legal-inner">
+        <p>At Siddharth Studious, accessible from https://www.siddharthstudious.in, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Siddharth Studious and how we use it.</p>
+        
+        <h2>Information We Collect</h2>
+        <p>The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information.</p>
+        <p>If you contact us directly, we may receive additional information about you such as your name, email address, phone number, the contents of the message and/or attachments you may send us, and any other information you may choose to provide.</p>
+
+        <h2>How We Use Your Information</h2>
+        <p>We use the information we collect in various ways, including to:</p>
+        <ul>
+          <li>Provide, operate, and maintain our website and services</li>
+          <li>Improve, personalize, and expand our website and services</li>
+          <li>Understand and analyze how you use our website</li>
+          <li>Develop new products, services, features, and functionality</li>
+          <li>Communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the website</li>
+          <li>Send you emails or WhatsApp messages regarding your design orders</li>
+          <li>Find and prevent fraud</li>
+        </ul>
+
+        <h2>Log Files</h2>
+        <p>Siddharth Studious follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable.</p>
+
+        <h2>Consent</h2>
+        <p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .legal-hero {
+    background: var(--color-canvas-soft);
+    border-bottom: 1px solid var(--color-hairline);
+    padding: 80px 24px 48px;
+    text-align: center;
+  }
+  .legal-heading {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 600;
+    letter-spacing: -2px;
+    color: var(--color-ink);
+    margin: 8px 0 12px;
+  }
+  .legal-subheading {
+    font-size: 14px;
+    color: var(--color-mute);
+    font-family: var(--font-mono);
+  }
+  .legal-content-section {
+    padding: 64px 24px;
+    background: var(--color-canvas);
+  }
+  .legal-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .legal-inner h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 32px 0 16px;
+  }
+  .legal-inner p {
+    font-size: 15px;
+    line-height: 26px;
+    color: var(--color-body);
+    margin-bottom: 16px;
+  }
+  .legal-inner ul {
+    margin-bottom: 24px;
+    padding-left: 20px;
+  }
+  .legal-inner li {
+    font-size: 15px;
+    line-height: 26px;
+    color: var(--color-body);
+    margin-bottom: 8px;
+  }
+</style>

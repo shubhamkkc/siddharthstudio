@@ -1,0 +1,78 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Disclaimer" description="Disclaimer for Siddharth Studious Ventures Private Limited.">
+  <Navbar />
+  <main>
+    <section class="legal-hero">
+      <div class="container-page">
+        <p class="section-eyebrow text-caption-mono">LEGAL</p>
+        <h1 class="legal-heading">Disclaimer</h1>
+        <p class="legal-subheading">Last updated: June 29, 2026</p>
+      </div>
+    </section>
+
+    <section class="legal-content-section">
+      <div class="container-page legal-inner">
+        <p>If you require any more information or have any questions about our site's disclaimer, please feel free to contact us by email at info@siddharthstudious.in.</p>
+
+        <h2>Disclaimers for Siddharth Studious</h2>
+        <p>All the information on this website - https://www.siddharthstudious.in - is published in good faith and for general information purpose only. Siddharth Studious does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (Siddharth Studious), is strictly at your own risk. Siddharth Studious will not be liable for any losses and/or damages in connection with the use of our website.</p>
+        <p>From our website, you can visit other websites by following hyperlinks to such external sites. While we strive to provide only quality links to useful and ethical websites, we have no control over the content and nature of these sites. These links to other websites do not imply a recommendation for all the content found on these sites. Site owners and content may change without notice and may occur before we have the opportunity to remove a link which may have gone 'bad'.</p>
+        <p>Please be also aware that when you leave our website, other sites may have different privacy policies and terms which are beyond our control. Please be sure to check the Privacy Policies of these sites as well as their "Terms of Service" before engaging in any business or uploading any information.</p>
+
+        <h2>Consent</h2>
+        <p>By using our website, you hereby consent to our disclaimer and agree to its terms.</p>
+
+        <h2>Update</h2>
+        <p>Should we update, amend or make any changes to this document, those changes will be prominently posted here.</p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .legal-hero {
+    background: var(--color-canvas-soft);
+    border-bottom: 1px solid var(--color-hairline);
+    padding: 80px 24px 48px;
+    text-align: center;
+  }
+  .legal-heading {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 600;
+    letter-spacing: -2px;
+    color: var(--color-ink);
+    margin: 8px 0 12px;
+  }
+  .legal-subheading {
+    font-size: 14px;
+    color: var(--color-mute);
+    font-family: var(--font-mono);
+  }
+  .legal-content-section {
+    padding: 64px 24px;
+    background: var(--color-canvas);
+  }
+  .legal-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .legal-inner h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 32px 0 16px;
+  }
+  .legal-inner p {
+    font-size: 15px;
+    line-height: 26px;
+    color: var(--color-body);
+    margin-bottom: 16px;
+  }
+</style>
