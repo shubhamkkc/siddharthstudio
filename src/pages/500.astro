@@ -1,0 +1,98 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="500 - Internal Server Error" description="An unexpected error occurred on Siddharth Studious.">
+  <Navbar />
+  <main>
+    <section class="error-hero">
+      <div class="container-page error-container">
+        <span class="error-code">500</span>
+        <h1 class="error-heading">Internal Server Error</h1>
+        <p class="error-subheading">Oops! Something went wrong on our end. Please try again later or contact our team if the issue persists.</p>
+        <div class="error-actions">
+          <a href="/" class="hero-btn-primary">Go Back Home</a>
+          <a href="/contact" class="hero-btn-secondary">Contact Support</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .error-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    background: var(--color-canvas);
+    padding: 80px 24px;
+    text-align: center;
+  }
+  .error-container {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .error-code {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ff4d4d;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 16px;
+  }
+  .error-heading {
+    font-size: clamp(32px, 5vw, 44px);
+    font-weight: 600;
+    letter-spacing: -1.5px;
+    color: var(--color-ink);
+    margin: 0 0 16px;
+  }
+  .error-subheading {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--color-body);
+    margin: 0 0 32px;
+  }
+  .error-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 24px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-on-primary);
+    background: var(--color-ink);
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+  .hero-btn-primary:hover { opacity: 0.85; }
+  .hero-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 24px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-ink);
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+  .hero-btn-secondary:hover { border-color: var(--color-hairline-strong); background: var(--color-canvas-soft-2); }
+</style>
