@@ -2,6 +2,23 @@
 import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import { sanityClient, urlFor } from "../lib/sanity";
+import { portfolioPageQuery } from "../lib/queries";
+
+let cmsPage: any = null;
+try {
+  cmsPage = await sanityClient.fetch(portfolioPageQuery);
+} catch (e) {
+  console.warn("Sanity fetch failed:", e);
+}
+
+const seoTitle = cmsPage?.seoTitle ?? "Portfolio — Siddharth Studious";
+const seoDescription = cmsPage?.seoDescription ?? "Browse our portfolio of professional YouTube thumbnails, social media designs, logos, and brand identity work.";
+const heroHeading = cmsPage?.heroHeading ?? "Our recent work.";
+const heroSubheading = cmsPage?.heroSubheading ?? "A selection of designs created for our clients. Every pixel is intentional.";
+
+const ctaHeading = cmsPage?.ctaHeading ?? "Want a design like this?";
+const ctaBody = cmsPage?.ctaBody ?? "Order yours today and get it delivered within 24 hours.";
 
 const portfolioItems = [
   { id: "p1", category: "thumbnail", title: "Gaming Channel Thumbnail", client: "Tech Creator", color: "#007cf0" },
@@ -14,6 +31,8 @@ const portfolioItems = [
   { id: "p8", category: "social", title: "Product Launch Post", client: "D2C Brand", color: "#7928ca" },
   { id: "p9", category: "branding", title: "Creator Brand Kit", client: "Travel Creator", color: "#007cf0" },
 ];
+
+const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.length > 0) ? cmsPage.portfolioItems : portfolioItems;
 ---
 
 <!doctype html>
@@ -34,8 +53,8 @@ const portfolioItems = [
       })();
       document.documentElement.setAttribute('data-theme', theme);
     </script>
-    <title>Portfolio — Siddharth Studious</title>
-    <meta name="description" content="Browse our portfolio of professional YouTube thumbnails, social media designs, logos, and brand identity work." />
+    <title>{seoTitle}</title>
+    <meta name="description" content={seoDescription} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -47,8 +66,8 @@ const portfolioItems = [
       <div class="portfolio-hero">
         <div class="container-page">
           <p class="eyebrow text-caption-mono">PORTFOLIO</p>
-          <h1 class="portfolio-heading">Our recent work.</h1>
-          <p class="portfolio-subheading">A selection of designs created for our clients. Every pixel is intentional.</p>
+          <h1 class="portfolio-heading">{heroHeading}</h1>
+          <p class="portfolio-subheading">{heroSubheading}</p>
         </div>
       </div>
 
@@ -79,26 +98,35 @@ const portfolioItems = [
       <section class="portfolio-section">
         <div class="container-page">
           <div class="portfolio-grid" id="portfolio-grid">
-            {portfolioItems.map(item => (
-              <div class="portfolio-card" data-category={item.category} id={`portfolio-item-${item.id}`}>
-                <!-- Design Preview Mockup -->
-                <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${item.color}20 0%, ${item.color}40 100%); border-bottom: 3px solid ${item.color}`}>
-                  <div class="preview-inner">
-                    <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
-                    <div class="preview-lines">
-                      <div class="preview-line preview-line-wide" style={`background: ${item.color}60`}></div>
-                      <div class="preview-line preview-line-med" style={`background: ${item.color}40`}></div>
-                      <div class="preview-line preview-line-short" style={`background: ${item.color}30`}></div>
-                    </div>
-                    <div class="preview-dot" style={`background: ${item.color}`}></div>
+            {finalPortfolioItems.map((item: any) => {
+              const itemColor = item.bgColor || item.color || '#007cf0';
+              return (
+                <div class="portfolio-card" data-category={item.category} id={`portfolio-item-${item.id || item._id}`}>
+                  <!-- Design Preview Mockup -->
+                  <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
+                    {item.image ? (
+                      <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                    ) : item.imageUrl ? (
+                      <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                    ) : (
+                      <div class="preview-inner">
+                        <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                        <div class="preview-lines">
+                          <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
+                          <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
+                          <div class="preview-line preview-line-short" style={`background: ${item.lineColor || itemColor}30`}></div>
+                        </div>
+                        <div class="preview-dot" style={`background: ${item.dotColor || itemColor}`}></div>
+                      </div>
+                    )}
+                  </div>
+                  <div class="portfolio-info">
+                    <h3 class="portfolio-item-title">{item.title}</h3>
+                    <p class="portfolio-item-client">{item.client}</p>
                   </div>
                 </div>
-                <div class="portfolio-info">
-                  <h3 class="portfolio-item-title">{item.title}</h3>
-                  <p class="portfolio-item-client">{item.client}</p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -107,8 +135,8 @@ const portfolioItems = [
       <section class="portfolio-cta">
         <div class="container-page portfolio-cta-inner">
           <div>
-            <h2>Want a design like this?</h2>
-            <p>Order yours today and get it delivered within 24 hours.</p>
+            <h2>{ctaHeading}</h2>
+            <p>{ctaBody}</p>
           </div>
           <div class="portfolio-cta-btns">
             <a href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design" target="_blank" rel="noopener noreferrer" class="cta-primary" id="portfolio-order-cta">Order Now →</a>

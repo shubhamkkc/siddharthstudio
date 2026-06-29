@@ -1,13 +1,24 @@
 ---
 import "../styles/global.css";
+import { sanityClient } from "../lib/sanity";
+import { siteSettingsQuery } from "../lib/queries";
 
-const navLinks = [
+let siteSettings: any = null;
+try {
+  siteSettings = await sanityClient.fetch(siteSettingsQuery);
+} catch (e) {
+  console.warn("Sanity fetch failed:", e);
+}
+
+const defaultNavLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
 ];
+
+const finalNavLinks = siteSettings?.navLinks ?? defaultNavLinks;
 
 const currentPath = Astro.url.pathname;
 ---
@@ -23,7 +34,7 @@ const currentPath = Astro.url.pathname;
 
       <!-- Desktop Nav Links -->
       <ul class="nav-links" role="list">
-        {navLinks.map(link => (
+        {finalNavLinks.map((link: any) => (
           <li>
             <a
               href={link.href}
@@ -91,7 +102,7 @@ const currentPath = Astro.url.pathname;
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <div class="mobile-menu-inner">
     <ul role="list" class="mobile-nav-links">
-      {navLinks.map(link => (
+      {finalNavLinks.map((link: any) => (
         <li>
           <a href={link.href} class="mobile-nav-link">{link.label}</a>
         </li>

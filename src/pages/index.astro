@@ -3,6 +3,16 @@ import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { sanityClient, urlFor } from "../lib/sanity";
+import { homepageQuery } from "../lib/queries";
+
+// Fetch from Sanity (falls back to hardcoded defaults below if null)
+let cms: any = null;
+try {
+  cms = await sanityClient.fetch(homepageQuery);
+} catch (e) {
+  console.warn("Sanity fetch failed, using hardcoded defaults:", e);
+}
 
 // Pricing data
 const pricingTiers = [
@@ -157,9 +167,26 @@ const steps = [
     description: "Get your polished design delivered within 24–48 hours. Revisions included until you're happy.",
   },
 ];
+
+// ── CMS Override: Use Sanity data if available ──
+const finalPricingTiers = cms?.pricingTiers ?? pricingTiers;
+const finalServices = cms?.services ?? services;
+const finalStats = cms?.stats ?? stats;
+const finalTestimonials = cms?.testimonials ?? testimonials;
+const finalSteps = cms?.steps ?? steps;
+const finalFaqItems = cms?.faqItems ?? [
+  { question: "What design services does Siddharth Studious offer?", answer: "We specialize in YouTube thumbnails, video editing, social media banner art, Instagram posts/carousels, and premium template design packs tailored for creators and brands." },
+  { question: "How do I place an order?", answer: "Simply choose a plan from our pricing page or click any 'Order Now' button to chat with us on WhatsApp. You can share your design brief directly, and we will confirm and start working." },
+  { question: "What is the turnaround time for designs?", answer: "Our standard delivery time is 24 to 48 hours depending on the complexity of the design. We prioritize quick deliveries so you never miss an upload schedule." },
+  { question: "Do you offer revisions?", answer: "Yes, we offer revisions to ensure you get exactly what you want. Single orders include 2 rounds of revisions, while Standard and Premium design packs include unlimited revisions." },
+  { question: "Do I get the source files?", answer: "Yes, raw source files (Figma or Photoshop PSD formats) are fully included with our Standard and Premium design packages." },
+];
+const seoTitle = cms?.seoTitle ?? "Siddharth Studious — India's Premier Creative Design Studio";
+const seoDescription = cms?.seoDescription ?? "Professional YouTube thumbnails, social media designs, and premium template packs. Up to 75% off. Trusted by 200+ content creators across India.";
+const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
 ---
 
-<BaseLayout title="Siddharth Studious — India's Premier Creative Design Studio" description="Professional YouTube thumbnails, social media designs, and premium template packs. Up to 75% off. Trusted by 200+ content creators across India.">
+<BaseLayout title={seoTitle} description={seoDescription} image={seoImageUrl}>
     <Navbar />
 
     <main>
@@ -203,29 +230,39 @@ const steps = [
             Starting at just ₹249 · Delivered in 24 hours · Revisions included
           </p>
         </div>
-        <!-- Decorative floating cards -->
-        <div class="hero-decoration" aria-hidden="true">
-          <div class="deco-card deco-card-1 animate-float">
-            <div class="deco-dot" style="background:#50e3c2"></div>
-            <span>Thumbnail Delivered</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0070f3" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <!-- Hero Image or Decorative floating cards -->
+        {cms?.heroImage ? (
+          <div class="hero-image-wrapper animate-fade-up-delay-2">
+            <img 
+              src={urlFor(cms.heroImage).url()} 
+              alt="Hero Illustration" 
+              class="hero-image"
+            />
           </div>
-          <div class="deco-card deco-card-2 animate-float" style="animation-delay: 1.5s">
-            <div class="deco-dot" style="background:#7928ca"></div>
-            <span>CTR: 8.4% ↑</span>
+        ) : (
+          <div class="hero-decoration" aria-hidden="true">
+            <div class="deco-card deco-card-1 animate-float">
+              <div class="deco-dot" style="background:#50e3c2"></div>
+              <span>Thumbnail Delivered</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0070f3" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <div class="deco-card deco-card-2 animate-float" style="animation-delay: 1.5s">
+              <div class="deco-dot" style="background:#7928ca"></div>
+              <span>CTR: 8.4% ↑</span>
+            </div>
+            <div class="deco-card deco-card-3 animate-float" style="animation-delay: 0.8s">
+              <div class="deco-dot" style="background:#ff0080"></div>
+              <span>200+ Creators</span>
+            </div>
           </div>
-          <div class="deco-card deco-card-3 animate-float" style="animation-delay: 0.8s">
-            <div class="deco-dot" style="background:#ff0080"></div>
-            <span>200+ Creators</span>
-          </div>
-        </div>
+        )}
       </section>
 
       <!-- ── Stats Strip ── -->
       <section class="stats-strip">
         <div class="container-page">
           <ul class="stats-grid" role="list">
-            {stats.map(stat => (
+            {finalStats.map(stat => (
               <li class="stat-item">
                 <span class="stat-value">{stat.value}</span>
                 <span class="stat-label">{stat.label}</span>
@@ -246,9 +283,15 @@ const steps = [
             </p>
           </div>
           <div class="services-grid">
-            {services.map(service => (
+            {finalServices.map(service => (
               <a href={service.href} class={`service-card service-card-${service.gradient}`} id={`service-${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
-                <div class="service-card-icon" set:html={service.icon} />
+                {service.image ? (
+                  <div class="service-card-image">
+                    <img src={urlFor(service.image).width(600).url()} alt={service.title} />
+                  </div>
+                ) : (
+                  <div class="service-card-icon" set:html={service.icon} />
+                )}
                 <div class="service-card-content">
                   <h3 class="service-card-title">{service.title}</h3>
                   <p class="service-card-desc">{service.description}</p>
@@ -272,10 +315,15 @@ const steps = [
             <p class="section-subheading">No complex onboarding. Just send a message and get your design.</p>
           </div>
           <div class="process-grid">
-            {steps.map((step, i) => (
+            {finalSteps.map((step, i) => (
               <div class="process-step">
                 <div class="process-number">{step.number}</div>
-                {i < steps.length - 1 && <div class="process-connector" aria-hidden="true"></div>}
+                {i < finalSteps.length - 1 && <div class="process-connector" aria-hidden="true"></div>}
+                {step.image && (
+                  <div class="process-image">
+                    <img src={urlFor(step.image).width(400).url()} alt={step.title} />
+                  </div>
+                )}
                 <div class="process-content">
                   <h3 class="process-title">{step.title}</h3>
                   <p class="process-desc">{step.description}</p>
@@ -306,7 +354,7 @@ const steps = [
             <p class="section-subheading">No hidden fees. Up to 75% off market rates for new clients.</p>
           </div>
           <div class="pricing-grid">
-            {pricingTiers.map(tier => (
+            {finalPricingTiers.map(tier => (
               <div class={`pricing-card ${tier.featured ? 'pricing-card-featured' : ''}`}>
                 {tier.featured && (
                   <div class="pricing-badge">Most Popular</div>
@@ -354,14 +402,18 @@ const steps = [
             <p class="section-subheading">Real feedback from real clients who grew their channels with us.</p>
           </div>
           <div class="testimonials-grid">
-            {testimonials.map(t => (
+            {finalTestimonials.map(t => (
               <div class="testimonial-card">
                 <div class="testimonial-stars" aria-label={`${t.rating} out of 5 stars`}>
                   {Array.from({ length: t.rating }, () => '★').join('')}
                 </div>
                 <blockquote class="testimonial-quote">"{t.quote}"</blockquote>
                 <div class="testimonial-author">
-                  <div class="testimonial-avatar">{t.avatar}</div>
+                  {t.avatarImage ? (
+                    <img class="testimonial-avatar testimonial-avatar-img" src={urlFor(t.avatarImage).width(100).url()} alt={t.name} />
+                  ) : (
+                    <div class="testimonial-avatar">{t.avatar}</div>
+                  )}
                   <div>
                     <p class="testimonial-name">{t.name}</p>
                     <p class="testimonial-role">{t.role}</p>
@@ -394,13 +446,7 @@ const steps = [
         <div class="container-page" style="max-width: 800px;">
           <h2 class="section-heading faq-title">Frequently Asked Questions</h2>
           <div class="faq-accordion-container">
-            {[
-              { q: "What design services does Siddharth Studious offer?", a: "We specialize in YouTube thumbnails, video editing, social media banner art, Instagram posts/carousels, and premium template design packs tailored for creators and brands." },
-              { q: "How do I place an order?", a: "Simply choose a plan from our pricing page or click any 'Order Now' button to chat with us on WhatsApp. You can share your design brief directly, and we will confirm and start working." },
-              { q: "What is the turnaround time for designs?", a: "Our standard delivery time is 24 to 48 hours depending on the complexity of the design. We prioritize quick deliveries so you never miss an upload schedule." },
-              { q: "Do you offer revisions?", a: "Yes, we offer revisions to ensure you get exactly what you want. Single orders include 2 rounds of revisions, while Standard and Premium design packs include unlimited revisions." },
-              { q: "Do I get the source files?", a: "Yes, raw source files (Figma or Photoshop PSD formats) are fully included with our Standard and Premium design packages." }
-            ].map(faq => (
+            {finalFaqItems.map(faq => (
               <details class="faq-details">
                 <summary class="faq-summary">
                   <span>{faq.q}</span>
@@ -1211,5 +1257,61 @@ const steps = [
     line-height: 22px;
     color: var(--color-body);
     margin: 0;
+  }
+
+  /* ── Dynamic Image Overrides ── */
+  .hero-image-wrapper {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45%;
+    max-width: 500px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .hero-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card-lg);
+  }
+  @media (max-width: 900px) {
+    .hero-image-wrapper {
+      display: none;
+    }
+  }
+
+  .service-card-image {
+    width: calc(100% + 48px);
+    margin: -24px -24px 16px -24px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .service-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .process-image {
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .process-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  img.testimonial-avatar-img {
+    padding: 0;
+    background: transparent;
+    object-fit: cover;
   }
 </style>

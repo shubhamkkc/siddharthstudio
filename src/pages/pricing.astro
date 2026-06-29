@@ -2,6 +2,62 @@
 import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import { sanityClient } from "../lib/sanity";
+import { pricingPageQuery } from "../lib/queries";
+
+let cms: any = null;
+try {
+  cms = await sanityClient.fetch(pricingPageQuery);
+} catch (e) {
+  console.warn("Sanity fetch failed:", e);
+}
+
+const seoTitle = cms?.seoTitle ?? "Pricing — Siddharth Studious";
+const seoDescription = cms?.seoDescription ?? "Transparent pricing for professional design services. YouTube thumbnails from ₹299, social media posts from ₹249. Premium packs up to 75% off.";
+const heroHeading = cms?.heroHeading ?? "Simple, honest pricing.";
+const heroSubheading = cms?.heroSubheading ?? "No hidden fees. No complicated tiers. Up to 75% off market rates. Pick what you need.";
+
+const finalIndividualDesigns = cms?.individualDesigns ?? [
+  {
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m8 21 4-4 4 4M12 17v4"/></svg>`,
+    title: "YouTube Thumbnail Design",
+    description: "Custom, scroll-stopping thumbnail optimized for your niche. Includes 2 revisions.",
+    features: ["Custom design based on your brief", "High-res PNG + source file", "24hr delivery", "2 revisions"],
+    originalPrice: "₹999",
+    price: "₹299",
+    ctaLabel: "Order Now →",
+    ctaHref: "https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20YouTube%20Thumbnail%20for%20%E2%82%B9299"
+  },
+  {
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>`,
+    title: "Social Media Post Design",
+    description: "Custom post for Instagram, Facebook, LinkedIn, or Twitter. Includes 2 revisions.",
+    features: ["Poster, Banner, Flyer, Story, Card", "Platform-optimized dimensions", "24hr delivery", "2 revisions"],
+    originalPrice: "₹999",
+    price: "₹249",
+    ctaLabel: "Order Now →",
+    ctaHref: "https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20Social%20Media%20Post%20for%20%E2%82%B9249"
+  }
+];
+
+const finalThumbnailPacks = cms?.thumbnailPacks ?? [
+  { name: "Starter", designs: 5, price: "₹1,249", savings: "Save ₹3,745", id: "thumb-starter", featured: false },
+  { name: "Standard", designs: 10, price: "₹2,449", savings: "Save ₹7,541", featured: true, id: "thumb-standard" },
+  { name: "Premium", designs: 20, price: "₹4,799", savings: "Save ₹15,181", id: "thumb-premium", featured: false },
+];
+
+const finalSocialMediaPacks = cms?.socialMediaPacks ?? [
+  { name: "Starter", designs: 5, price: "₹999", savings: "Save ₹4,000", id: "social-starter", featured: false },
+  { name: "Standard", designs: 10, price: "₹1,899", savings: "Save ₹8,091", featured: true, id: "social-standard" },
+  { name: "Premium", designs: 20, price: "₹3,599", savings: "Save ₹16,381", id: "social-premium", featured: false },
+];
+
+const finalFaqItems = cms?.faqItems ?? [
+  { q: "How do I place an order?", a: "Click 'Order Now' and WhatsApp us your requirements. We'll confirm and get started." },
+  { q: "What formats do I receive?", a: "High-res PNG files. Source files (PSD/Figma) included in Standard and Premium packs." },
+  { q: "How many revisions are included?", a: "Individual orders get 2 revisions. Pack orders get unlimited revisions." },
+  { q: "Is there a platform fee?", a: "A 20% platform fee applies to all orders. Paying via website adds a 2% processing fee + GST." },
+];
 ---
 
 <!doctype html>
@@ -22,8 +78,8 @@ import Footer from "../components/Footer.astro";
       })();
       document.documentElement.setAttribute('data-theme', theme);
     </script>
-    <title>Pricing — Siddharth Studious</title>
-    <meta name="description" content="Transparent pricing for professional design services. YouTube thumbnails from ₹299, social media posts from ₹249. Premium packs up to 75% off." />
+    <title>{seoTitle}</title>
+    <meta name="description" content={seoDescription} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -35,8 +91,8 @@ import Footer from "../components/Footer.astro";
       <div class="page-hero">
         <div class="container-page">
           <p class="page-eyebrow text-caption-mono">PRICING</p>
-          <h1 class="page-heading">Simple, honest pricing.</h1>
-          <p class="page-subheading">No hidden fees. No complicated tiers. Up to 75% off market rates. Pick what you need.</p>
+          <h1 class="page-heading">{heroHeading}</h1>
+          <p class="page-subheading">{heroSubheading}</p>
         </div>
       </div>
 
@@ -46,48 +102,25 @@ import Footer from "../components/Footer.astro";
           <h2 class="pricing-section-title">Individual Designs</h2>
           <p class="pricing-section-desc">Order one-off designs for immediate needs.</p>
           <div class="individual-grid">
-            <div class="individual-card">
-              <div class="individual-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m8 21 4-4 4 4M12 17v4"/></svg>
+            {finalIndividualDesigns.map((design: any) => (
+              <div class="individual-card">
+                <div class="individual-icon" set:html={design.icon} />
+                <div class="individual-content">
+                  <h3>{design.title}</h3>
+                  <p>{design.description}</p>
+                  <ul>
+                    {design.features.map((feat: string) => (
+                      <li>✓ {feat}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div class="individual-pricing">
+                  <span class="ind-original">{design.originalPrice}</span>
+                  <span class="ind-price">{design.price}</span>
+                  <a href={design.ctaHref} target="_blank" rel="noopener noreferrer" class="ind-cta">{design.ctaLabel}</a>
+                </div>
               </div>
-              <div class="individual-content">
-                <h3>YouTube Thumbnail Design</h3>
-                <p>Custom, scroll-stopping thumbnail optimized for your niche. Includes 2 revisions.</p>
-                <ul>
-                  <li>✓ Custom design based on your brief</li>
-                  <li>✓ High-res PNG + source file</li>
-                  <li>✓ 24hr delivery</li>
-                  <li>✓ 2 revisions</li>
-                </ul>
-              </div>
-              <div class="individual-pricing">
-                <span class="ind-original">₹999</span>
-                <span class="ind-price">₹299</span>
-                <span class="ind-badge">70% OFF</span>
-                <a href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20YouTube%20Thumbnail%20for%20%E2%82%B9299" target="_blank" rel="noopener noreferrer" class="ind-cta" id="pricing-thumbnail-individual">Order Now →</a>
-              </div>
-            </div>
-            <div class="individual-card">
-              <div class="individual-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-              </div>
-              <div class="individual-content">
-                <h3>Social Media Post Design</h3>
-                <p>Custom post for Instagram, Facebook, LinkedIn, or Twitter. Includes 2 revisions.</p>
-                <ul>
-                  <li>✓ Poster, Banner, Flyer, Story, Card</li>
-                  <li>✓ Platform-optimized dimensions</li>
-                  <li>✓ 24hr delivery</li>
-                  <li>✓ 2 revisions</li>
-                </ul>
-              </div>
-              <div class="individual-pricing">
-                <span class="ind-original">₹999</span>
-                <span class="ind-price">₹249</span>
-                <span class="ind-badge">75% OFF</span>
-                <a href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20Social%20Media%20Post%20for%20%E2%82%B9249" target="_blank" rel="noopener noreferrer" class="ind-cta" id="pricing-social-individual">Order Now →</a>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -98,18 +131,14 @@ import Footer from "../components/Footer.astro";
           <h2 class="pricing-section-title">YouTube Thumbnail Packs</h2>
           <p class="pricing-section-desc">Save more with bulk orders. Get consistent, high-quality thumbnails for your entire channel.</p>
           <div class="pack-grid">
-            {[
-              { name: "Starter", designs: 5, price: "₹1,249", savings: "Save ₹3,745", id: "thumb-starter" },
-              { name: "Standard", designs: 10, price: "₹2,449", savings: "Save ₹7,541", featured: true, id: "thumb-standard" },
-              { name: "Premium", designs: 20, price: "₹4,799", savings: "Save ₹15,181", id: "thumb-premium" },
-            ].map(pack => (
+            {finalThumbnailPacks.map((pack: any) => (
               <div class={`pack-card ${pack.featured ? 'pack-card-featured' : ''}`}>
                 {pack.featured && <div class="pack-badge">Best Value</div>}
                 <h3 class="pack-name">{pack.name}</h3>
                 <div class="pack-designs">{pack.designs} Designs</div>
                 <div class="pack-price">{pack.price}</div>
                 <div class="pack-savings">{pack.savings}</div>
-                <a href={`https://wa.me/917488316199?text=Hi%2C%20I%20want%20the%20${pack.name}%20YouTube%20Thumbnail%20Pack`} target="_blank" rel="noopener noreferrer" class={`pack-cta ${pack.featured ? 'pack-cta-featured' : ''}`} id={pack.id}>Get Access →</a>
+                <a href={`https://wa.me/917488316199?text=Hi%2C%20I%20want%20the%20${pack.name}%20YouTube%20Thumbnail%20Pack`} target="_blank" rel="noopener noreferrer" class={`pack-cta ${pack.featured ? 'pack-cta-featured' : ''}`} id={pack.ctaId || pack.id}>Get Access →</a>
               </div>
             ))}
           </div>
@@ -117,18 +146,14 @@ import Footer from "../components/Footer.astro";
           <h2 class="pricing-section-title" style="margin-top: 64px;">Social Media Post Packs</h2>
           <p class="pricing-section-desc">Bulk social media designs for consistent brand presence across all platforms.</p>
           <div class="pack-grid">
-            {[
-              { name: "Starter", designs: 5, price: "₹999", savings: "Save ₹4,000", id: "social-starter" },
-              { name: "Standard", designs: 10, price: "₹1,899", savings: "Save ₹8,091", featured: true, id: "social-standard" },
-              { name: "Premium", designs: 20, price: "₹3,599", savings: "Save ₹16,381", id: "social-premium" },
-            ].map(pack => (
+            {finalSocialMediaPacks.map((pack: any) => (
               <div class={`pack-card ${pack.featured ? 'pack-card-featured' : ''}`}>
                 {pack.featured && <div class="pack-badge">Best Value</div>}
                 <h3 class="pack-name">{pack.name}</h3>
                 <div class="pack-designs">{pack.designs} Designs</div>
                 <div class="pack-price">{pack.price}</div>
                 <div class="pack-savings">{pack.savings}</div>
-                <a href={`https://wa.me/917488316199?text=Hi%2C%20I%20want%20the%20${pack.name}%20Social%20Media%20Post%20Pack`} target="_blank" rel="noopener noreferrer" class={`pack-cta ${pack.featured ? 'pack-cta-featured' : ''}`} id={pack.id}>Get Access →</a>
+                <a href={`https://wa.me/917488316199?text=Hi%2C%20I%20want%20the%20${pack.name}%20Social%20Media%20Post%20Pack`} target="_blank" rel="noopener noreferrer" class={`pack-cta ${pack.featured ? 'pack-cta-featured' : ''}`} id={pack.ctaId || pack.id}>Get Access →</a>
               </div>
             ))}
           </div>
@@ -145,15 +170,10 @@ import Footer from "../components/Footer.astro";
               <a href="https://wa.me/917488316199" target="_blank" rel="noopener noreferrer" class="hero-btn-primary" id="pricing-whatsapp-faq">Chat on WhatsApp →</a>
             </div>
             <div class="faq-list">
-              {[
-                { q: "How do I place an order?", a: "Click 'Order Now' and WhatsApp us your requirements. We'll confirm and get started." },
-                { q: "What formats do I receive?", a: "High-res PNG files. Source files (PSD/Figma) included in Standard and Premium packs." },
-                { q: "How many revisions are included?", a: "Individual orders get 2 revisions. Pack orders get unlimited revisions." },
-                { q: "Is there a platform fee?", a: "A 20% platform fee applies to all orders. Paying via website adds a 2% processing fee + GST." },
-              ].map(faq => (
+              {finalFaqItems.map((faq: any) => (
                 <div class="faq-item">
-                  <h3 class="faq-q">{faq.q}</h3>
-                  <p class="faq-a">{faq.a}</p>
+                  <h3 class="faq-q">{faq.q || faq.question}</h3>
+                  <p class="faq-a">{faq.a || faq.answer}</p>
                 </div>
               ))}
             </div>

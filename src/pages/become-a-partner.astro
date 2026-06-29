@@ -2,6 +2,45 @@
 import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import { sanityClient } from "../lib/sanity";
+import { partnerPageQuery } from "../lib/queries";
+
+let cms: any = null;
+try {
+  cms = await sanityClient.fetch(partnerPageQuery);
+} catch (e) {
+  console.warn("Sanity fetch failed:", e);
+}
+
+const seoTitle = cms?.seoTitle ?? "Become a Partner — Siddharth Studious";
+const seoDescription = cms?.seoDescription ?? "Join the Siddharth Studious partner network. Earn by designing and creating for 200+ clients. Flexible work, consistent projects, great community.";
+const heroBadgeText = cms?.heroBadgeText ?? "Join 500+ Partners";
+const heroHeading = cms?.heroHeading ?? "Turn your skills into<br />a steady income.";
+const heroSubheading = cms?.heroSubheading ?? "Are you a graphic designer, video editor, or content creator? Join our partner network and earn consistently doing what you love.";
+const heroCtaText = cms?.heroCtaText ?? "Apply Now →";
+
+const finalBenefits = cms?.benefits ?? [
+  { icon: "💰", title: "Competitive Pay", description: "Earn market-rate commissions for every project completed. Fast payments via UPI." },
+  { icon: "📅", title: "Flexible Schedule", description: "Work on your own time. Set your own availability and take projects that fit your schedule." },
+  { icon: "🚀", title: "Consistent Work", description: "With 200+ active clients, there's always a steady stream of projects waiting for partners." },
+  { icon: "🎓", title: "Skill Growth", description: "Learn from senior designers, access premium tools, and grow your portfolio with real client work." },
+  { icon: "🤝", title: "Supportive Community", description: "Join a network of creators. Collaborate, share tips, and grow together in our partner chat." },
+  { icon: "⭐", title: "Build Your Reputation", description: "Get client reviews, build a portfolio, and establish yourself as a trusted designer." },
+];
+
+const eligibilityHeading = cms?.eligibilityHeading ?? "We're looking for talented creators.";
+const eligibilityDescription = cms?.eligibilityDescription ?? "If you have the skills and the drive, we have the projects. No minimum experience required — we value quality and dedication above all else.";
+
+const finalRoleTags = cms?.roleTags ?? [
+  "Graphic Designers", "Video Editors", "Thumbnail Artists", "Social Media Designers", "Motion Graphic Artists", "Content Creators"
+];
+
+const finalProcessSteps = cms?.processSteps ?? [
+  { step: "01", title: "Fill the Application", description: "Submit the form below with your portfolio samples and skills." },
+  { step: "02", title: "Portfolio Review", description: "Our team reviews your work within 48 hours and reaches out." },
+  { step: "03", title: "Onboarding Call", description: "Quick call to align on expectations, pricing, and project types." },
+  { step: "04", title: "Start Earning", description: "Get your first project assignment and start growing with us." },
+];
 ---
 
 <!doctype html>
@@ -22,8 +61,8 @@ import Footer from "../components/Footer.astro";
       })();
       document.documentElement.setAttribute('data-theme', theme);
     </script>
-    <title>Become a Partner — Siddharth Studious</title>
-    <meta name="description" content="Join the Siddharth Studious partner network. Earn by designing and creating for 200+ clients. Flexible work, consistent projects, great community." />
+    <title>{seoTitle}</title>
+    <meta name="description" content={seoDescription} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -37,14 +76,11 @@ import Footer from "../components/Footer.astro";
         <div class="container-page partner-hero-content">
           <div class="partner-badge">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            Join 500+ Partners
+            {heroBadgeText}
           </div>
-          <h1 class="partner-heading">Turn your skills into<br />a steady income.</h1>
-          <p class="partner-subheading">
-            Are you a graphic designer, video editor, or content creator?
-            Join our partner network and earn consistently doing what you love.
-          </p>
-          <a href="#apply" class="hero-btn-primary" id="partner-hero-apply">Apply Now →</a>
+          <h1 class="partner-heading" set:html={heroHeading} />
+          <p class="partner-subheading">{heroSubheading}</p>
+          <a href="#apply" class="hero-btn-primary" id="partner-hero-apply">{heroCtaText}</a>
         </div>
       </section>
 
@@ -56,18 +92,11 @@ import Footer from "../components/Footer.astro";
             <h2 class="section-heading">Why join Siddharth Studious?</h2>
           </div>
           <div class="benefits-grid">
-            {[
-              { icon: "💰", title: "Competitive Pay", desc: "Earn market-rate commissions for every project completed. Fast payments via UPI." },
-              { icon: "📅", title: "Flexible Schedule", desc: "Work on your own time. Set your own availability and take projects that fit your schedule." },
-              { icon: "🚀", title: "Consistent Work", desc: "With 200+ active clients, there's always a steady stream of projects waiting for partners." },
-              { icon: "🎓", title: "Skill Growth", desc: "Learn from senior designers, access premium tools, and grow your portfolio with real client work." },
-              { icon: "🤝", title: "Supportive Community", desc: "Join a network of creators. Collaborate, share tips, and grow together in our partner chat." },
-              { icon: "⭐", title: "Build Your Reputation", desc: "Get client reviews, build a portfolio, and establish yourself as a trusted designer." },
-            ].map(b => (
+            {finalBenefits.map((b: any) => (
               <div class="benefit-card">
                 <div class="benefit-icon">{b.icon}</div>
                 <h3 class="benefit-title">{b.title}</h3>
-                <p class="benefit-desc">{b.desc}</p>
+                <p class="benefit-desc">{b.desc || b.description}</p>
               </div>
             ))}
           </div>
@@ -79,30 +108,22 @@ import Footer from "../components/Footer.astro";
         <div class="container-page eligibility-grid">
           <div>
             <p class="section-eyebrow text-caption-mono">WHO CAN APPLY</p>
-            <h2 class="eligibility-heading">We're looking for talented creators.</h2>
-            <p class="eligibility-desc">
-              If you have the skills and the drive, we have the projects. No minimum experience required —
-              we value quality and dedication above all else.
-            </p>
+            <h2 class="eligibility-heading">{eligibilityHeading}</h2>
+            <p class="eligibility-desc">{eligibilityDescription}</p>
             <div class="role-tags">
-              {["Graphic Designers", "Video Editors", "Thumbnail Artists", "Social Media Designers", "Motion Graphic Artists", "Content Creators"].map(role => (
+              {finalRoleTags.map((role: string) => (
                 <span class="role-tag">{role}</span>
               ))}
             </div>
           </div>
           <div class="process-steps">
             <h3 class="process-steps-heading text-caption-mono">HOW TO JOIN</h3>
-            {[
-              { step: "01", title: "Fill the Application", desc: "Submit the form below with your portfolio samples and skills." },
-              { step: "02", title: "Portfolio Review", desc: "Our team reviews your work within 48 hours and reaches out." },
-              { step: "03", title: "Onboarding Call", desc: "Quick call to align on expectations, pricing, and project types." },
-              { step: "04", title: "Start Earning", desc: "Get your first project assignment and start growing with us." },
-            ].map(s => (
+            {finalProcessSteps.map((s: any) => (
               <div class="process-step-item">
                 <div class="ps-number">{s.step}</div>
                 <div>
                   <div class="ps-title">{s.title}</div>
-                  <div class="ps-desc">{s.desc}</div>
+                  <div class="ps-desc">{s.desc || s.description}</div>
                 </div>
               </div>
             ))}

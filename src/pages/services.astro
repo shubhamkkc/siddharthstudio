@@ -2,6 +2,18 @@
 import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import { sanityClient } from "../lib/sanity";
+import { servicesQuery, servicesPageQuery } from "../lib/queries";
+
+// Fetch from Sanity (falls back to hardcoded defaults below if null)
+let cmsServices: any = null;
+let cmsPage: any = null;
+try {
+  cmsServices = await sanityClient.fetch(servicesQuery);
+  cmsPage = await sanityClient.fetch(servicesPageQuery);
+} catch (e) {
+  console.warn("Sanity fetch failed, using hardcoded defaults:", e);
+}
 
 const allServices = [
   {
@@ -57,6 +69,15 @@ const allServices = [
     gradient: "linear-gradient(135deg, #007cf0 0%, #7928ca 100%)",
   },
 ];
+
+// ── CMS Override: Use Sanity data if available ──
+const finalServices = cmsServices && cmsServices.length > 0 ? cmsServices : allServices;
+const seoTitle = cmsPage?.seoTitle ?? "Services — Siddharth Studious";
+const seoDescription = cmsPage?.seoDescription ?? "Professional design services: YouTube thumbnails from ₹299, social media posts from ₹249, video editing, logos, and brand identity packages.";
+const heroHeading = cmsPage?.heroHeading ?? "Everything your content needs.";
+const heroSubheading = cmsPage?.heroSubheading ?? "Professional creative services at honest prices. Delivered in 24–48 hours via WhatsApp.";
+const ctaHeading = cmsPage?.ctaHeading ?? "Ready to level up your content?";
+const ctaBody = cmsPage?.ctaBody ?? "Send us a message on WhatsApp and let's discuss your next project.";
 ---
 
 <!doctype html>
@@ -77,8 +98,8 @@ const allServices = [
       })();
       document.documentElement.setAttribute('data-theme', theme);
     </script>
-    <title>Services — Siddharth Studious</title>
-    <meta name="description" content="Professional design services: YouTube thumbnails from ₹299, social media posts from ₹249, video editing, logos, and brand identity packages." />
+    <title>{seoTitle}</title>
+    <meta name="description" content={seoDescription} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -90,14 +111,14 @@ const allServices = [
       <div class="services-hero">
         <div class="container-page">
           <p class="eyebrow text-caption-mono">SERVICES</p>
-          <h1 class="services-heading">Everything your content needs.</h1>
-          <p class="services-subheading">Professional creative services at honest prices. Delivered in 24–48 hours via WhatsApp.</p>
+          <h1 class="services-heading">{heroHeading}</h1>
+          <p class="services-subheading">{heroSubheading}</p>
         </div>
       </div>
 
       <!-- Service Sections -->
-      {allServices.map((service, i) => (
-        <section class={`service-section ${i % 2 === 1 ? 'service-section-alt' : ''}`} id={service.id}>
+      {finalServices.map((service: any, i: number) => (
+        <section class={`service-section ${i % 2 === 1 ? 'service-section-alt' : ''}`} id={service.id || service.serviceId}>
           <div class="container-page service-grid">
             <div class="service-info">
               <div class="service-icon-lg" style={`background: ${service.gradient}`} set:html={service.icon} />
@@ -151,8 +172,8 @@ const allServices = [
       <!-- Bottom CTA -->
       <section class="services-cta">
         <div class="container-page services-cta-inner">
-          <h2>Not sure which to pick?</h2>
-          <p>Tell us your goal and we'll recommend the right service and package for you.</p>
+          <h2>{ctaHeading}</h2>
+          <p>{ctaBody}</p>
           <a href="https://wa.me/917488316199?text=Hi%2C%20I%20need%20help%20choosing%20the%20right%20service" target="_blank" rel="noopener noreferrer" class="cta-btn" id="services-help-cta">
             Get a Recommendation →
           </a>

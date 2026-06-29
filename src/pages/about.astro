@@ -2,6 +2,43 @@
 import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import { sanityClient } from "../lib/sanity";
+import { aboutPageQuery } from "../lib/queries";
+
+let cms: any = null;
+try {
+  cms = await sanityClient.fetch(aboutPageQuery);
+} catch (e) {
+  console.warn("Sanity fetch failed:", e);
+}
+
+const seoTitle = cms?.seoTitle ?? "About — Siddharth Studious";
+const seoDescription = cms?.seoDescription ?? "Learn about Siddharth Studious — India's premier creative design studio founded by Kumar Siddharth in Patna, Bihar.";
+const heroHeading = cms?.heroHeading ?? "Built by creators,<br />for creators.";
+const heroSubheading = cms?.heroSubheading ?? "Siddharth Studious was founded with a simple mission: make world-class design accessible to every content creator in India.";
+
+const finalStoryParagraphs = cms?.storyParagraphs ?? [
+  "Siddharth Studious was founded by Kumar Siddharth in Patna, Bihar. What started as helping fellow creators with YouTube thumbnails quickly grew into a full-fledged creative design studio serving hundreds of creators and businesses across India.",
+  "Today, we operate as <strong>Siddharth Studious Ventures Private Limited</strong>, with a team of talented designers and a growing partner network. Our designs have helped creators grow their channels, improve their CTR, and build recognizable brand identities.",
+  "We believe that premium design shouldn't cost a premium. That's why we offer professional-grade work at introductory prices — because every creator deserves to look their best."
+];
+
+const finalCompanyInfo = cms?.companyInfo ?? [
+  { label: "Registered as", value: "Siddharth Studious Ventures Pvt. Ltd." },
+  { label: "Location", value: "Patna, Bihar, India — 800008" },
+  { label: "Founded", value: "2020" },
+  { label: "Team size", value: "10+ designers & editors" }
+];
+
+const finalValues = cms?.values ?? [
+  { title: "Quality First", icon: "⭐", description: "Every design is crafted with attention to detail. We don't release work we're not proud of." },
+  { title: "Accessible Pricing", icon: "💰", description: "Premium design for everyone — not just big brands with big budgets." },
+  { title: "Creator Community", icon: "🤝", description: "We're built by creators for creators. We understand your journey because we've lived it." },
+  { title: "Fast Delivery", icon: "⚡", description: "Time is money for content creators. We deliver within 24–48 hours, always." }
+];
+
+const ctaHeading = cms?.ctaHeading ?? "Ready to work together?";
+const ctaBody = cms?.ctaBody ?? "Order your first design today and experience the Siddharth Studious difference.";
 ---
 
 <!doctype html>
@@ -22,8 +59,8 @@ import Footer from "../components/Footer.astro";
       })();
       document.documentElement.setAttribute('data-theme', theme);
     </script>
-    <title>About — Siddharth Studious</title>
-    <meta name="description" content="Learn about Siddharth Studious — India's premier creative design studio founded by Kumar Siddharth in Patna, Bihar." />
+    <title>{seoTitle}</title>
+    <meta name="description" content={seoDescription} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -36,11 +73,8 @@ import Footer from "../components/Footer.astro";
         <div class="about-hero-mesh mesh-gradient" aria-hidden="true"></div>
         <div class="container-page about-hero-content">
           <p class="section-eyebrow text-caption-mono">ABOUT US</p>
-          <h1 class="about-heading">Built by creators,<br />for creators.</h1>
-          <p class="about-subheading">
-            Siddharth Studious was founded with a simple mission: make world-class design
-            accessible to every content creator in India.
-          </p>
+          <h1 class="about-heading" set:html={heroHeading} />
+          <p class="about-subheading">{heroSubheading}</p>
         </div>
       </section>
 
@@ -50,22 +84,9 @@ import Footer from "../components/Footer.astro";
           <div class="story-text">
             <p class="section-eyebrow text-caption-mono">OUR STORY</p>
             <h2 class="story-heading">Started with a thumbnail. Grew into a studio.</h2>
-            <p>
-              Siddharth Studious was founded by Kumar Siddharth in Patna, Bihar. What started
-              as helping fellow creators with YouTube thumbnails quickly grew into a full-fledged
-              creative design studio serving hundreds of creators and businesses across India.
-            </p>
-            <p>
-              Today, we operate as <strong>Siddharth Studious Ventures Private Limited</strong>,
-              with a team of talented designers and a growing partner network. Our designs have
-              helped creators grow their channels, improve their CTR, and build recognizable
-              brand identities.
-            </p>
-            <p>
-              We believe that premium design shouldn't cost a premium. That's why we offer
-              professional-grade work at introductory prices — because every creator deserves
-              to look their best.
-            </p>
+            {finalStoryParagraphs.map((para: string) => (
+              <p set:html={para} />
+            ))}
           </div>
           <div class="story-card">
             <div class="founder-card">
@@ -90,22 +111,12 @@ import Footer from "../components/Footer.astro";
             <div class="company-info-card">
               <h4>Company Info</h4>
               <dl>
-                <div class="info-row">
-                  <dt>Registered as</dt>
-                  <dd>Siddharth Studious Ventures Pvt. Ltd.</dd>
-                </div>
-                <div class="info-row">
-                  <dt>Location</dt>
-                  <dd>Patna, Bihar, India — 800008</dd>
-                </div>
-                <div class="info-row">
-                  <dt>Founded</dt>
-                  <dd>2020</dd>
-                </div>
-                <div class="info-row">
-                  <dt>Team size</dt>
-                  <dd>10+ designers & editors</dd>
-                </div>
+                {finalCompanyInfo.map((info: any) => (
+                  <div class="info-row">
+                    <dt>{info.label}</dt>
+                    <dd>{info.value}</dd>
+                  </div>
+                ))}
               </dl>
             </div>
           </div>
@@ -120,16 +131,11 @@ import Footer from "../components/Footer.astro";
             <h2 class="section-heading">What we stand for.</h2>
           </div>
           <div class="values-grid">
-            {[
-              { title: "Quality First", icon: "⭐", desc: "Every design is crafted with attention to detail. We don't release work we're not proud of." },
-              { title: "Accessible Pricing", icon: "💰", desc: "Premium design for everyone — not just big brands with big budgets." },
-              { title: "Creator Community", icon: "🤝", desc: "We're built by creators for creators. We understand your journey because we've lived it." },
-              { title: "Fast Delivery", icon: "⚡", desc: "Time is money for content creators. We deliver within 24–48 hours, always." },
-            ].map(val => (
+            {finalValues.map((val: any) => (
               <div class="value-card">
                 <div class="value-icon">{val.icon}</div>
                 <h3 class="value-title">{val.title}</h3>
-                <p class="value-desc">{val.desc}</p>
+                <p class="value-desc">{val.desc || val.description}</p>
               </div>
             ))}
           </div>
@@ -139,8 +145,8 @@ import Footer from "../components/Footer.astro";
       <!-- CTA -->
       <section class="about-cta">
         <div class="container-page about-cta-inner">
-          <h2>Ready to work together?</h2>
-          <p>Order your first design today and experience the Siddharth Studious difference.</p>
+          <h2>{ctaHeading}</h2>
+          <p>{ctaBody}</p>
           <div class="about-cta-actions">
             <a href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design" target="_blank" rel="noopener noreferrer" class="hero-btn-primary-white" id="about-order-cta">Order Now →</a>
             <a href="/contact" class="hero-btn-secondary-white">Contact Us</a>
