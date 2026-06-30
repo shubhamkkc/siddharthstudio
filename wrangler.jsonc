@@ -6,5 +6,8 @@
 			"binding": "SESSION",
 			"id": "3c6ac7e4ad48471c900a58b7e9c2bcaf"
 		}
-	]
+	],
+  "assets": {
+    "directory": "./dist"
+  }
 }

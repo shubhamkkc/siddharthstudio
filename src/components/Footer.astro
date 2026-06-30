@@ -1,11 +1,11 @@
 ---
 import "../styles/global.css";
 import { sanityClient } from "../lib/sanity";
-import { siteSettingsQuery } from "../lib/queries";
+import { siteConfigQuery } from "../lib/queries";
 
 let siteSettings: any = null;
 try {
-  siteSettings = await sanityClient.fetch(siteSettingsQuery);
+  siteSettings = await sanityClient.fetch(siteConfigQuery);
 } catch (e) {
   console.warn("Sanity fetch failed:", e);
 }
