@@ -181,6 +181,23 @@ const finalFaqItems = cms?.faqItems ?? [
   { question: "Do you offer revisions?", answer: "Yes, we offer revisions to ensure you get exactly what you want. Single orders include 2 rounds of revisions, while Standard and Premium design packs include unlimited revisions." },
   { question: "Do I get the source files?", answer: "Yes, raw source files (Figma or Photoshop PSD formats) are fully included with our Standard and Premium design packages." },
 ];
+const heroEyebrow = cms?.heroEyebrow ?? "India's Leading Creative Agency";
+// Use CMS headline as plain text, or use styled HTML fallback
+const heroHeadlineCms: string | null = cms?.heroHeadline ?? null;
+const heroHeadlineFallback = "Designs that make your content <span class=\"gradient-text\">stand out.</span>";
+const heroBody = cms?.heroBody ?? "Empowering Creators and Brands with Creative Design, Engaging Video Content and End-to-End Social Media Management.";
+const heroFootnote = cms?.heroFootnote ?? "Starting at just ₹249 · Delivered in 24 hours · Revisions included";
+
+// Debug: output hero headline source
+console.log('🛠️ heroHeadline value:', heroHeadlineCms ?? heroHeadlineFallback);
+
+
+const heroPrimaryCtaLabel = cms?.heroPrimaryCta?.label ?? "Order a Design";
+const heroPrimaryCtaHref = cms?.heroPrimaryCta?.href ?? "https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design";
+
+const heroSecondaryCtaLabel = cms?.heroSecondaryCta?.label ?? "View Our Work";
+const heroSecondaryCtaHref = cms?.heroSecondaryCta?.href ?? "/portfolio";
+
 const seoTitle = cms?.seoTitle ?? "Siddharth Studious — India's Premier Creative Design Studio";
 const seoDescription = cms?.seoDescription ?? "Professional YouTube thumbnails, social media designs, and premium template packs. Up to 75% off. Trusted by 200+ content creators across India.";
 const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
@@ -205,29 +222,32 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
       <section class="hero-band" id="hero">
         <div class="hero-mesh mesh-gradient"></div>
         <div class="container-page hero-content">
-          <p class="hero-eyebrow text-caption-mono animate-fade-up">India's Premier Creative Design Studio</p>
-          <h1 class="hero-headline animate-fade-up-delay-1">
-            Designs that make<br />
-            your content <span class="gradient-text">stand out.</span>
-          </h1>
+          <p class="hero-eyebrow text-caption-mono animate-fade-up">{heroEyebrow}</p>
+          <h1 class="hero-headline animate-fade-up-delay-1" set:html={heroHeadlineCms ?? heroHeadlineFallback} />
           <p class="hero-body animate-fade-up-delay-2">
-            Professional YouTube thumbnails, social media graphics, and premium design packs.
-            Trusted by 200+ creators. Up to 75% off market rates.
+            {heroBody}
           </p>
           <div class="hero-actions animate-fade-up-delay-3">
             <a
-              href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design"
-              target="_blank"
-              rel="noopener noreferrer"
+              href={heroPrimaryCtaHref}
+              target={heroPrimaryCtaHref.startsWith("http") ? "_blank" : undefined}
+              rel={heroPrimaryCtaHref.startsWith("http") ? "noopener noreferrer" : undefined}
               class="hero-btn-primary"
               id="hero-order-cta"
             >
-              Order a Design →
+              {heroPrimaryCtaLabel}
             </a>
-            <a href="/portfolio" class="hero-btn-secondary">View Our Work</a>
+            <a
+              href={heroSecondaryCtaHref}
+              target={heroSecondaryCtaHref.startsWith("http") ? "_blank" : undefined}
+              rel={heroSecondaryCtaHref.startsWith("http") ? "noopener noreferrer" : undefined}
+              class="hero-btn-secondary"
+            >
+              {heroSecondaryCtaLabel}
+            </a>
           </div>
           <p class="hero-footnote animate-fade-up-delay-3">
-            Starting at just ₹249 · Delivered in 24 hours · Revisions included
+            {heroFootnote}
           </p>
         </div>
         <!-- Hero Image or Decorative floating cards -->
@@ -401,26 +421,54 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
             <h2 class="section-heading">Creators love our work.</h2>
             <p class="section-subheading">Real feedback from real clients who grew their channels with us.</p>
           </div>
-          <div class="testimonials-grid">
-            {finalTestimonials.map(t => (
-              <div class="testimonial-card">
-                <div class="testimonial-stars" aria-label={`${t.rating} out of 5 stars`}>
-                  {Array.from({ length: t.rating }, () => '★').join('')}
-                </div>
-                <blockquote class="testimonial-quote">"{t.quote}"</blockquote>
-                <div class="testimonial-author">
-                  {t.avatarImage ? (
-                    <img class="testimonial-avatar testimonial-avatar-img" src={urlFor(t.avatarImage).width(100).url()} alt={t.name} />
-                  ) : (
-                    <div class="testimonial-avatar">{t.avatar}</div>
-                  )}
-                  <div>
-                    <p class="testimonial-name">{t.name}</p>
-                    <p class="testimonial-role">{t.role}</p>
+          <div class="testimonials-marquee-container">
+            <div class="testimonials-marquee-mask" aria-hidden="true"></div>
+            <div class="testimonials-marquee-track">
+              <div class="testimonials-marquee-group">
+                {finalTestimonials.map(t => (
+                  <div class="testimonial-card">
+                    <div class="testimonial-stars" aria-label={`${t.rating} out of 5 stars`}>
+                      {Array.from({ length: t.rating }, () => '★').join('')}
+                    </div>
+                    <blockquote class="testimonial-quote">"{t.quote}"</blockquote>
+                    <div class="testimonial-author">
+                      {t.avatarImage ? (
+                        <img class="testimonial-avatar testimonial-avatar-img" src={urlFor(t.avatarImage).width(100).url()} alt={t.name} />
+                      ) : (
+                        <div class="testimonial-avatar">{t.avatar}</div>
+                      )}
+                      <div>
+                        <p class="testimonial-name">{t.name}</p>
+                        <p class="testimonial-role">{t.role}</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
+
+              <!-- Duplicate group for seamless looping -->
+              <div class="testimonials-marquee-group" aria-hidden="true">
+                {finalTestimonials.map(t => (
+                  <div class="testimonial-card">
+                    <div class="testimonial-stars" aria-label={`${t.rating} out of 5 stars`}>
+                      {Array.from({ length: t.rating }, () => '★').join('')}
+                    </div>
+                    <blockquote class="testimonial-quote">"{t.quote}"</blockquote>
+                    <div class="testimonial-author">
+                      {t.avatarImage ? (
+                        <img class="testimonial-avatar testimonial-avatar-img" src={urlFor(t.avatarImage).width(100).url()} alt={t.name} />
+                      ) : (
+                        <div class="testimonial-avatar">{t.avatar}</div>
+                      )}
+                      <div>
+                        <p class="testimonial-name">{t.name}</p>
+                        <p class="testimonial-role">{t.role}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -449,13 +497,13 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
             {finalFaqItems.map(faq => (
               <details class="faq-details">
                 <summary class="faq-summary">
-                  <span>{faq.q}</span>
+                  <span>{faq.question}</span>
                   <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 </summary>
                 <div class="faq-content">
-                  <p>{faq.a}</p>
+                  <p>{faq.answer}</p>
                 </div>
               </details>
             ))}
@@ -1037,10 +1085,35 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
   }
 
   /* ── Testimonials ── */
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+  .testimonials-marquee-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding: 16px 0;
+  }
+  .testimonials-marquee-mask {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    background: linear-gradient(90deg, var(--color-canvas-soft) 0%, transparent 10%, transparent 90%, var(--color-canvas-soft) 100%);
+  }
+  .testimonials-marquee-track {
+    display: flex;
+    overflow: visible;
+    width: 100%;
+  }
+  .testimonials-marquee-group {
+    display: flex;
+    gap: 24px;
+    padding: 10px 12px;
+    flex-shrink: 0;
+    min-width: 100%;
+    justify-content: space-around;
+    animation: scroll-left-testimonials 65s linear infinite;
+  }
+  .testimonials-marquee-container:hover .testimonials-marquee-group {
+    animation-play-state: paused;
   }
   .testimonial-card {
     background: var(--color-canvas-soft);
@@ -1051,6 +1124,13 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
     flex-direction: column;
     gap: 16px;
     box-shadow: var(--shadow-card);
+    width: 380px;
+    flex-shrink: 0;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  }
+  .testimonial-card:hover {
+    transform: scale(1.04);
+    box-shadow: var(--shadow-card-lg);
   }
   .testimonial-stars {
     font-size: 18px;
@@ -1096,8 +1176,45 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
     color: var(--color-mute);
     margin: 0;
   }
-  @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr; } }
-  @media (min-width: 640px) and (max-width: 900px) { .testimonials-grid { grid-template-columns: repeat(2, 1fr); } }
+  @keyframes scroll-left-testimonials {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  /* Disable marquee horizontal scroll on mobile, restore static stacked layout */
+  @media (max-width: 768px) {
+    .testimonials-marquee-container {
+      padding: 0;
+      overflow: visible;
+    }
+    .testimonials-marquee-mask {
+      display: none;
+    }
+    .testimonials-marquee-track {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .testimonials-marquee-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: none !important;
+      width: 100%;
+      padding: 0;
+    }
+    .testimonials-marquee-group[aria-hidden="true"] {
+      display: none !important;
+    }
+    .testimonials-marquee-group .testimonial-card {
+      width: 100% !important;
+      flex-shrink: 1;
+    }
+  }
 
   /* ── Partner Band ── */
   .partner-band {

@@ -3,11 +3,13 @@ import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import { sanityClient } from "../lib/sanity";
-import { pricingPageQuery } from "../lib/queries";
+import { pricingPageQuery, homepageQuery } from "../lib/queries";
 
 let cms: any = null;
+let homepageCms: any = null;
 try {
   cms = await sanityClient.fetch(pricingPageQuery);
+  homepageCms = await sanityClient.fetch(homepageQuery);
 } catch (e) {
   console.warn("Sanity fetch failed:", e);
 }
@@ -50,6 +52,59 @@ const finalSocialMediaPacks = cms?.socialMediaPacks ?? [
   { name: "Starter", designs: 5, price: "₹999", savings: "Save ₹4,000", id: "social-starter", featured: false },
   { name: "Standard", designs: 10, price: "₹1,899", savings: "Save ₹8,091", featured: true, id: "social-standard" },
   { name: "Premium", designs: 20, price: "₹3,599", savings: "Save ₹16,381", id: "social-premium", featured: false },
+];
+
+const finalPricingTiers = homepageCms?.pricingTiers ?? [
+  {
+    name: "Starter",
+    price: "₹299",
+    originalPrice: "₹999",
+    description: "Perfect for individual creators starting out.",
+    features: [
+      "1 Custom Design",
+      "YouTube Thumbnail or Social Post",
+      "2 Revisions",
+      "WhatsApp Delivery",
+      "24hr Turnaround",
+    ],
+    ctaLabel: "Order Now",
+    ctaHref: "https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20Starter%20design",
+    featured: false,
+  },
+  {
+    name: "Standard Pack",
+    price: "₹2,449",
+    originalPrice: "₹9,990",
+    description: "Best for growing channels needing consistent visuals.",
+    features: [
+      "10 Custom Designs",
+      "Mix of Thumbnails & Posts",
+      "Unlimited Revisions",
+      "Priority Support",
+      "48hr Turnaround",
+      "Source Files Included",
+    ],
+    ctaLabel: "Get Access",
+    ctaHref: "https://wa.me/917488316199?text=Hi%2C%20I%20want%20the%20Standard%20Pack",
+    featured: true,
+  },
+  {
+    name: "Premium Pack",
+    price: "₹4,799",
+    originalPrice: "₹19,990",
+    description: "For professional brands wanting the full package.",
+    features: [
+      "20 Custom Designs",
+      "All Design Categories",
+      "Unlimited Revisions",
+      "Dedicated Designer",
+      "24hr Priority Turnaround",
+      "Source Files + Templates",
+    ],
+    ctaLabel: "Get Access",
+    ctaHref: "https://wa.me/917488316199?text=Hi%2C%20I%20want%20the%20Premium%20Pack",
+    featured: false,
+  },
 ];
 
 const finalFaqItems = cms?.faqItems ?? [
@@ -157,6 +212,54 @@ const finalFaqItems = cms?.faqItems ?? [
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <!-- Pricing Packages (Addon from Homepage) -->
+      <section class="pricing-section">
+        <div class="container-page">
+          <div style="text-align: center; margin-bottom: 48px;">
+            <p class="page-eyebrow text-caption-mono">PRICING PACKAGES</p>
+            <h2 class="pricing-section-title" style="font-size: clamp(28px, 4vw, 40px); letter-spacing: -1.5px; line-height: 1.1;">Premium quality. Honest pricing.</h2>
+            <p class="pricing-section-desc" style="margin-bottom: 0;">No hidden fees. Up to 75% off market rates for new clients.</p>
+          </div>
+          <div class="pricing-grid">
+            {finalPricingTiers.map(tier => (
+              <div class={`pricing-card ${tier.featured ? 'pricing-card-featured' : ''}`}>
+                {tier.featured && (
+                  <div class="pricing-badge">Most Popular</div>
+                )}
+                <div class="pricing-top">
+                  <h3 class="pricing-name">{tier.name}</h3>
+                  <p class="pricing-desc">{tier.description}</p>
+                </div>
+                <div class="pricing-price-block">
+                  <span class="pricing-original">{tier.originalPrice}</span>
+                  <span class="pricing-price">{tier.price}</span>
+                </div>
+                <ul class="pricing-features" role="list">
+                  {tier.features.map(feat => (
+                    <li class="pricing-feature">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                      {feat}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={tier.ctaHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class={`pricing-cta ${tier.featured ? 'pricing-cta-featured' : ''}`}
+                  id={`pricing-${tier.name.toLowerCase().replace(/\s+/g, '-')}-cta`}
+                >
+                  {tier.ctaLabel}
+                </a>
+              </div>
+            ))}
+          </div>
+          <p class="pricing-note">
+            Need something custom? <a href="https://wa.me/917488316199" target="_blank" rel="noopener noreferrer">Chat with us on WhatsApp →</a>
+          </p>
         </div>
       </section>
 
@@ -341,5 +444,138 @@ const finalFaqItems = cms?.faqItems ?? [
     .pack-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
     .pack-card-featured { transform: none; }
     .faq-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* ── Homepage Pricing Styles copied for Addon ── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .pricing-card {
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    box-shadow: var(--shadow-card);
+  }
+  .pricing-card-featured {
+    background: #0a0a0c;
+    border-color: #0a0a0c;
+    color: white;
+    transform: scale(1.04);
+    box-shadow: var(--shadow-pricing);
+  }
+  .pricing-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #007cf0, #7928ca);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+  }
+  .pricing-name {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    letter-spacing: -0.4px;
+    color: var(--color-ink);
+  }
+  .pricing-card-featured .pricing-name { color: white; }
+  .pricing-desc {
+    font-size: 14px;
+    color: var(--color-body);
+    margin: 0;
+    line-height: 20px;
+  }
+  .pricing-card-featured .pricing-desc { color: #a1a1a1; }
+  .pricing-price-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .pricing-original {
+    font-size: 13px;
+    color: var(--color-mute);
+    text-decoration: line-through;
+    font-family: var(--font-mono);
+  }
+  .pricing-card-featured .pricing-original { color: #666; }
+  .pricing-price {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    line-height: 1;
+  }
+  .pricing-card-featured .pricing-price { color: white; }
+  .pricing-features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid var(--color-hairline);
+    padding-top: 20px;
+  }
+  .pricing-card-featured .pricing-features { border-color: #333; }
+  .pricing-feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--color-body);
+  }
+  .pricing-card-featured .pricing-feature { color: #d1d1d1; }
+  .pricing-feature svg { flex-shrink: 0; color: var(--color-link); }
+  .pricing-card-featured .pricing-feature svg { color: #50e3c2; }
+  .pricing-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    border-radius: var(--radius-pill);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--color-hairline);
+    background: var(--color-canvas-soft);
+    color: var(--color-ink);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+    margin-top: auto;
+  }
+  .pricing-cta:hover { background: var(--color-canvas-soft-2); border-color: var(--color-hairline-strong); }
+  .pricing-cta-featured {
+    background: white;
+    color: #000;
+    border-color: white;
+  }
+  .pricing-cta-featured:hover { background: #f0f0f0; border-color: #f0f0f0; color: #000; }
+  .pricing-note {
+    text-align: center;
+    font-size: 14px;
+    color: var(--color-mute);
+    margin-top: 32px;
+  }
+  .pricing-note a {
+    color: var(--color-link);
+    text-decoration: none;
+  }
+  .pricing-note a:hover { text-decoration: underline; }
+  @media (max-width: 900px) {
+    .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    .pricing-card-featured { transform: none; }
   }
 </style>

@@ -31,10 +31,10 @@ const finalCompanyInfo = cms?.companyInfo ?? [
 ];
 
 const finalValues = cms?.values ?? [
-  { title: "Quality First", icon: "⭐", description: "Every design is crafted with attention to detail. We don't release work we're not proud of." },
-  { title: "Accessible Pricing", icon: "💰", description: "Premium design for everyone — not just big brands with big budgets." },
-  { title: "Creator Community", icon: "🤝", description: "We're built by creators for creators. We understand your journey because we've lived it." },
-  { title: "Fast Delivery", icon: "⚡", description: "Time is money for content creators. We deliver within 24–48 hours, always." }
+  { title: "Quality First", icon: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"12 2 15 8 22 9 17 14 18 21 12 18 6 21 7 14 2 9 9 8\"/></svg>", description: "Every design is crafted with attention to detail. We don't release work we're not proud of." },
+  { title: "Accessible Pricing", icon: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 1v22\"/><path d=\"M5 12h14\"/></svg>", description: "Premium design for everyone — not just big brands with big budgets." },
+  { title: "Creator Community", icon: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/></svg>", description: "We're built by creators for creators. We understand your journey because we've lived it." },
+  { title: "Fast Delivery", icon: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"17 8 12 3 7 8\"/><line x1=\"12\" y1=\"3\" x2=\"12\" y2=\"15\"/></svg>", description: "Time is money for content creators. We deliver within 24–48 hours, always." }
 ];
 
 const ctaHeading = cms?.ctaHeading ?? "Ready to work together?";
@@ -133,7 +133,7 @@ const ctaBody = cms?.ctaBody ?? "Order your first design today and experience th
           <div class="values-grid">
             {finalValues.map((val: any) => (
               <div class="value-card">
-                <div class="value-icon">{val.icon}</div>
+                <div class="value-icon" set:html={val.icon}></div>
                 <h3 class="value-title">{val.title}</h3>
                 <p class="value-desc">{val.desc || val.description}</p>
               </div>

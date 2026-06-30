@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import { sanityClient } from "../lib/sanity";
-import { siteSettingsQuery } from "../lib/queries";
+import { siteConfigQuery } from "../lib/queries";
 
 let siteSettings: any = null;
 try {
@@ -20,6 +20,10 @@ const defaultNavLinks = [
 
 const finalNavLinks = siteSettings?.navLinks ?? defaultNavLinks;
 
+const siteName = siteSettings?.siteName ?? "Siddharth Studious";
+const telegramLink = siteSettings?.socialLinks?.find((l: any) => l.label.toLowerCase() === 'telegram')?.href ?? "https://t.me/kumarsiddharth";
+const whatsappLink = siteSettings?.socialLinks?.find((l: any) => l.label.toLowerCase() === 'whatsapp')?.href ?? "https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design";
+
 const currentPath = Astro.url.pathname;
 ---
 
@@ -27,9 +31,9 @@ const currentPath = Astro.url.pathname;
   <div class="container-page">
     <nav class="navbar-inner">
       <!-- Logo -->
-      <a href="/" class="navbar-logo" aria-label="Siddharth Studious Home">
-          <img src="/logo.png" alt="Siddharth Studious Logo" width="28" height="28" class="logo-image" />
-        <span class="logo-text">Siddharth Studious</span>
+      <a href="/" class="navbar-logo" aria-label={`${siteName} Home`}>
+          <img src="/logo.png" alt={`${siteName} Logo`} width="28" height="28" class="logo-image" />
+        <span class="logo-text">{siteName}</span>
       </a>
 
       <!-- Desktop Nav Links -->
@@ -66,7 +70,7 @@ const currentPath = Astro.url.pathname;
           </svg>
         </button>
         <a
-          href="https://t.me/kumarsiddharth"
+          href={telegramLink}
           target="_blank"
           rel="noopener noreferrer"
           class="btn-nav-ghost"
@@ -74,7 +78,7 @@ const currentPath = Astro.url.pathname;
           Telegram
         </a>
         <a
-          href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design"
+          href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
           class="btn-nav-primary"
@@ -110,7 +114,7 @@ const currentPath = Astro.url.pathname;
     </ul>
     <div class="mobile-cta-cluster">
       <a
-        href="https://t.me/kumarsiddharth"
+        href={telegramLink}
         target="_blank"
         rel="noopener noreferrer"
         class="mobile-btn-ghost"
@@ -118,7 +122,7 @@ const currentPath = Astro.url.pathname;
         Join Telegram
       </a>
       <a
-        href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design"
+        href={whatsappLink}
         target="_blank"
         rel="noopener noreferrer"
         class="mobile-btn-primary"
@@ -141,6 +145,11 @@ const currentPath = Astro.url.pathname;
     height: 64px;
     display: flex;
     align-items: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  :root[data-theme="dark"] .navbar-root {
+    background-color: rgba(10, 10, 12, 0.85);
   }
 
   .navbar-inner {
@@ -358,8 +367,16 @@ const currentPath = Astro.url.pathname;
 
   /* Responsive */
   @media (max-width: 768px) {
+    .navbar-inner {
+      gap: 12px;
+    }
     .nav-links { display: none; }
-    .nav-cta-cluster { display: none; }
+    .btn-nav-ghost { display: none; }
+    .btn-nav-primary { display: none; }
+    .nav-cta-cluster {
+      display: flex;
+      margin-left: auto;
+    }
     .hamburger { display: flex; }
     .mobile-menu { display: block; }
   }

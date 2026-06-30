@@ -1,19 +1,13 @@
 // ─── GROQ Queries for Sanity CMS ───
 
 // ── Site Settings (Navbar, Footer, Global) ──
-export const siteSettingsQuery = `*[_type == "siteSettings"][0]{
-  siteName,
-  tagline,
-  description,
-  phone,
-  email,
-  address,
-  socialLinks[]{label, href, iconSvg},
-  navLinks[]{label, href},
-  footerColumns[]{
-    heading,
-    links[]{label, href}
-  }
+export const siteConfigQuery = `*[_type == "siteConfig"][0]{
+  siteTitle,
+  siteDescription,
+  logo,
+  navigation[]{label, href},
+  footerText,
+  ctaSection{heading, body, buttons[]{label, href}}
 }`;
 
 // ── Homepage ──
@@ -192,7 +186,8 @@ export const portfolioPageQuery = `*[_type == "portfolioPage"][0]{
     image,
     bgColor,
     lineColor,
-    dotColor
+    dotColor,
+    youtubeUrl
   },
   ctaHeading,
   ctaBody

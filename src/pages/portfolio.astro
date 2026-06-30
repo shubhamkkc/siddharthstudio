@@ -30,7 +30,20 @@ const portfolioItems = [
   { id: "p7", category: "thumbnail", title: "Cooking Show Thumbnail", client: "Food Creator", color: "#50e3c2" },
   { id: "p8", category: "social", title: "Product Launch Post", client: "D2C Brand", color: "#7928ca" },
   { id: "p9", category: "branding", title: "Creator Brand Kit", client: "Travel Creator", color: "#007cf0" },
+  { id: "v1", category: "video", title: "Lo-Fi Beats Video Edit", client: "Siddharth Music", color: "#ff0080", youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+  { id: "v2", category: "video", title: "Tech Unboxing Video Edit", client: "Tech Channel", color: "#00dfd8", youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }
 ];
+
+function getYouTubeEmbedUrl(url: string) {
+  if (!url) return "";
+  let videoId = "";
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  if (match && match[2].length === 11) {
+    videoId = match[2];
+  }
+  return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
+}
 
 const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.length > 0) ? cmsPage.portfolioItems : portfolioItems;
 ---
@@ -71,18 +84,141 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
         </div>
       </div>
 
+      <!-- Infinite Moving Thumbnail Marquee Showcase -->
+      <section class="marquee-showcase">
+        <div class="marquee-container">
+          <div class="marquee-mask" aria-hidden="true"></div>
+          
+          <!-- Track 1: Move Left -->
+          <div class="marquee-track">
+            <div class="marquee-group marquee-left">
+              {finalPortfolioItems.map((item: any) => {
+                const itemColor = item.bgColor || item.color || '#007cf0';
+                return (
+                  <div class="marquee-card" id={`marquee-l-${item.id || item._id}`} title={`Click to view ${item.title}`}>
+                    <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
+                      {item.image ? (
+                        <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : (
+                        <div class="preview-inner">
+                          <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                          <div class="preview-lines">
+                            <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
+                            <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
+                            <div class="preview-line preview-line-short" style={`background: ${item.lineColor || itemColor}30`}></div>
+                          </div>
+                          <div class="preview-dot" style={`background: ${item.dotColor || itemColor}`}></div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            
+            <!-- Duplicated group for seamless looping -->
+            <div class="marquee-group marquee-left" aria-hidden="true">
+              {finalPortfolioItems.map((item: any) => {
+                const itemColor = item.bgColor || item.color || '#007cf0';
+                return (
+                  <div class="marquee-card">
+                    <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
+                      {item.image ? (
+                        <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : (
+                        <div class="preview-inner">
+                          <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                          <div class="preview-lines">
+                            <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
+                            <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
+                            <div class="preview-line preview-line-short" style={`background: ${item.lineColor || itemColor}30`}></div>
+                          </div>
+                          <div class="preview-dot" style={`background: ${item.dotColor || itemColor}`}></div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <!-- Track 2: Move Right -->
+          <div class="marquee-track">
+            <div class="marquee-group marquee-right">
+              {[...finalPortfolioItems].reverse().map((item: any) => {
+                const itemColor = item.bgColor || item.color || '#007cf0';
+                return (
+                  <div class="marquee-card" id={`marquee-r-${item.id || item._id}`} title={`Click to view ${item.title}`}>
+                    <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
+                      {item.image ? (
+                        <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : (
+                        <div class="preview-inner">
+                          <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                          <div class="preview-lines">
+                            <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
+                            <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
+                            <div class="preview-line preview-line-short" style={`background: ${item.lineColor || itemColor}30`}></div>
+                          </div>
+                          <div class="preview-dot" style={`background: ${item.dotColor || itemColor}`}></div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            
+            <!-- Duplicated group for seamless looping -->
+            <div class="marquee-group marquee-right" aria-hidden="true">
+              {[...finalPortfolioItems].reverse().map((item: any) => {
+                const itemColor = item.bgColor || item.color || '#007cf0';
+                return (
+                  <div class="marquee-card">
+                    <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
+                      {item.image ? (
+                        <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : (
+                        <div class="preview-inner">
+                          <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                          <div class="preview-lines">
+                            <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
+                            <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
+                            <div class="preview-line preview-line-short" style={`background: ${item.lineColor || itemColor}30`}></div>
+                          </div>
+                          <div class="preview-dot" style={`background: ${item.dotColor || itemColor}`}></div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Filter Tabs -->
       <div class="filter-bar">
         <div class="container-page">
           <div class="filter-tabs" role="tablist">
             {[
-              { value: "all", label: "All Work" },
               { value: "thumbnail", label: "Thumbnails" },
+              { value: "video", label: "Video Editing" },
               { value: "social", label: "Social Media" },
               { value: "branding", label: "Branding" },
             ].map(tab => (
               <button
-                class={`filter-tab ${tab.value === 'all' ? 'filter-tab-active' : ''}`}
+                class={`filter-tab ${tab.value === 'thumbnail' ? 'filter-tab-active' : ''}`}
                 data-filter={tab.value}
                 role="tab"
                 id={`filter-${tab.value}`}
@@ -101,25 +237,48 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
             {finalPortfolioItems.map((item: any) => {
               const itemColor = item.bgColor || item.color || '#007cf0';
               return (
-                <div class="portfolio-card" data-category={item.category} id={`portfolio-item-${item.id || item._id}`}>
-                  <!-- Design Preview Mockup -->
-                  <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
-                    {item.image ? (
-                      <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
-                    ) : item.imageUrl ? (
-                      <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
-                    ) : (
-                      <div class="preview-inner">
-                        <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
-                        <div class="preview-lines">
-                          <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
-                          <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
-                          <div class="preview-line preview-line-short" style={`background: ${item.lineColor || itemColor}30`}></div>
+                <div 
+                  class="portfolio-card" 
+                  data-category={item.category} 
+                  id={`portfolio-item-${item.id || item._id}`}
+                  style={item.category === 'thumbnail' ? '' : 'display: none;'}
+                >
+                  {item.category === 'video' ? (
+                    <div class="video-container" style={`border-bottom: 3px solid ${itemColor}`}>
+                      {item.youtubeUrl ? (
+                        <iframe
+                          width="100%"
+                          height="100%"
+                          src={getYouTubeEmbedUrl(item.youtubeUrl)}
+                          title={item.title}
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                          style="width: 100%; height: 100%; aspect-ratio: 16/9;"
+                        ></iframe>
+                      ) : (
+                        <div class="video-placeholder" style="display:flex;align-items:center;justify-content:center;height:100%;background:#111;color:#666;font-size:14px;">No YouTube URL provided</div>
+                      )}
+                    </div>
+                  ) : (
+                    <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
+                      {item.image ? (
+                        <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : (
+                        <div class="preview-inner">
+                          <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                          <div class="preview-lines">
+                            <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
+                            <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
+                            <div class="preview-line preview-line-short" style={`background: ${item.lineColor || itemColor}30`}></div>
+                          </div>
+                          <div class="preview-dot" style={`background: ${item.dotColor || itemColor}`}></div>
                         </div>
-                        <div class="preview-dot" style={`background: ${item.dotColor || itemColor}`}></div>
-                      </div>
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  )}
                   <div class="portfolio-info">
                     <h3 class="portfolio-item-title">{item.title}</h3>
                     <p class="portfolio-item-client">{item.client}</p>
@@ -168,6 +327,30 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
       });
     });
   });
+
+  // Marquee interactions: click to filter and scroll to card
+  const marqueeCards = document.querySelectorAll('.marquee-card');
+  marqueeCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const idAttr = card.id;
+      if (!idAttr) return;
+      const id = idAttr.replace('marquee-l-', '').replace('marquee-r-', '');
+      const gridCard = document.getElementById(`portfolio-item-${id}`);
+      if (gridCard) {
+        // Find category and filter first
+        const category = gridCard.getAttribute('data-category');
+        const filterTab = document.getElementById(`filter-${category}`) as HTMLElement;
+        if (filterTab) {
+          filterTab.click();
+        }
+        // Scroll to card
+        gridCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Add highlight pulse
+        gridCard.classList.add('highlight-pulse');
+        setTimeout(() => gridCard.classList.remove('highlight-pulse'), 1500);
+      }
+    });
+  });
 </script>
 
 <style>
@@ -209,6 +392,13 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
     justify-content: center;
     position: relative;
     overflow: hidden;
+  }
+  .video-container {
+    width: 100%;
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+    background: #000;
   }
   .preview-inner {
     width: 100%;
@@ -253,6 +443,115 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
     border-radius: var(--radius-pill); text-decoration: none; transition: border-color 0.15s, background 0.15s;
   }
   .cta-secondary:hover { border-color: var(--color-hairline-strong); background: var(--color-canvas-soft-2); }
+
+  /* Moving Marquee Showcase */
+  .marquee-showcase {
+    background: var(--color-canvas-soft);
+    border-bottom: 1px solid var(--color-hairline);
+    padding: 32px 0;
+    overflow: hidden;
+  }
+
+  .marquee-container {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .marquee-mask {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    background: linear-gradient(90deg, var(--color-canvas-soft) 0%, transparent 10%, transparent 90%, var(--color-canvas-soft) 100%);
+  }
+
+  .marquee-track {
+    display: flex;
+    overflow: visible;
+    width: 100%;
+  }
+
+  .marquee-group {
+    display: flex;
+    gap: 20px;
+    padding: 10px 10px; /* Room for hover scale */
+    flex-shrink: 0;
+    min-width: 100%;
+    justify-content: space-around;
+  }
+
+  .marquee-left {
+    animation: scroll-left 50s linear infinite;
+  }
+
+  .marquee-right {
+    animation: scroll-right 50s linear infinite;
+  }
+
+  /* Pause marquee when hovering over the container */
+  .marquee-container:hover .marquee-left,
+  .marquee-container:hover .marquee-right {
+    animation-play-state: paused;
+  }
+
+  .marquee-card {
+    width: 280px;
+    aspect-ratio: 16/9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .marquee-card:hover {
+    transform: scale(1.06);
+    box-shadow: var(--shadow-card-lg);
+    border-color: var(--color-hairline-strong);
+    z-index: 20;
+  }
+
+  .marquee-card .portfolio-preview {
+    width: 100%;
+    height: 100%;
+    border-bottom: none !important; /* Remove bottom border inside marquee */
+  }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes scroll-right {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* Pulse highlight for clicked card in grid */
+  @keyframes pulse-highlight {
+    0% { transform: translateY(0) scale(1); box-shadow: var(--shadow-card); }
+    50% { transform: translateY(-8px) scale(1.03); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); border-color: var(--color-ink); }
+    100% { transform: translateY(0) scale(1); box-shadow: var(--shadow-card); }
+  }
+  .highlight-pulse {
+    animation: pulse-highlight 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 30;
+  }
 
   @media (max-width: 900px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 640px) {

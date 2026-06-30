@@ -19,8 +19,26 @@ export default defineType({
         fields: [
           defineField({ name: "title", title: "Title", type: "string" }),
           defineField({ name: "client", title: "Client", type: "string" }),
-          defineField({ name: "category", title: "Category", type: "string" }),
-          defineField({ name: "image", title: "Project Image", type: "image", options: { hotspot: true } }),
+          defineField({
+            name: "category",
+            title: "Category",
+            type: "string",
+            options: {
+              list: [
+                { title: "Thumbnail", value: "thumbnail" },
+                { title: "Social Media", value: "social" },
+                { title: "Branding", value: "branding" },
+                { title: "Video Editing (YouTube Video)", value: "video" },
+              ]
+            }
+          }),
+          defineField({
+            name: "youtubeUrl",
+            title: "YouTube Video URL (For Videos category only)",
+            type: "url",
+            description: "Example: https://www.youtube.com/watch?v=VIDEO_ID"
+          }),
+          defineField({ name: "image", title: "Project Image (Thumbnail mockup, for non-video designs)", type: "image", options: { hotspot: true } }),
           defineField({ name: "bgColor", title: "Background Color", type: "string" }),
           defineField({ name: "lineColor", title: "Line Color", type: "string" }),
           defineField({ name: "dotColor", title: "Dot Color", type: "string" }),
