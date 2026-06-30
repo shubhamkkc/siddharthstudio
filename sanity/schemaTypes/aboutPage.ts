@@ -28,8 +28,17 @@ export default defineType({
       type: "array",
       of: [{
         type: "object",
+        preview: {
+          select: { title: "title", subtitle: "description" },
+        },
         fields: [
-          defineField({ name: "icon", title: "Icon Emoji", type: "string" }),
+          defineField({
+            name: "icon",
+            title: "Icon SVG",
+            type: "text",
+            description: "Paste SVG code here. Example: <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">...</svg>. You can get SVG icons from lucide.dev or heroicons.com",
+            rows: 4,
+          }),
           defineField({ name: "title", title: "Title", type: "string" }),
           defineField({ name: "description", title: "Description", type: "text" }),
         ],
