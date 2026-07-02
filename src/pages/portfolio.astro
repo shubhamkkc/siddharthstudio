@@ -95,15 +95,15 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
               {finalPortfolioItems.map((item: any) => {
                 const itemColor = item.bgColor || item.color || '#007cf0';
                 return (
-                  <div class="marquee-card" id={`marquee-l-${item.id || item._id}`} title={`Click to view ${item.title}`}>
+                  <div class="marquee-card" id={`marquee-l-${item.id || item._key || item._id}`} title={`Click to view ${item.title || 'Project'}`}>
                     <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
                       {item.image ? (
-                        <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                        <img src={urlFor(item.image).url()} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
                       ) : item.imageUrl ? (
-                        <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                        <img src={item.imageUrl} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
                       ) : (
                         <div class="preview-inner">
-                          <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                          <div class="preview-label text-caption-mono">{(item.category || '').toUpperCase()}</div>
                           <div class="preview-lines">
                             <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
                             <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
@@ -126,12 +126,12 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
                   <div class="marquee-card">
                     <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
                       {item.image ? (
-                        <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                        <img src={urlFor(item.image).url()} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
                       ) : item.imageUrl ? (
-                        <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                        <img src={item.imageUrl} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
                       ) : (
                         <div class="preview-inner">
-                          <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                          <div class="preview-label text-caption-mono">{(item.category || '').toUpperCase()}</div>
                           <div class="preview-lines">
                             <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
                             <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
@@ -153,15 +153,15 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
               {[...finalPortfolioItems].reverse().map((item: any) => {
                 const itemColor = item.bgColor || item.color || '#007cf0';
                 return (
-                  <div class="marquee-card" id={`marquee-r-${item.id || item._id}`} title={`Click to view ${item.title}`}>
+                  <div class="marquee-card" id={`marquee-r-${item.id || item._key || item._id}`} title={`Click to view ${item.title || 'Project'}`}>
                     <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
                       {item.image ? (
-                        <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                        <img src={urlFor(item.image).url()} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
                       ) : item.imageUrl ? (
-                        <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                        <img src={item.imageUrl} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
                       ) : (
                         <div class="preview-inner">
-                          <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                          <div class="preview-label text-caption-mono">{(item.category || '').toUpperCase()}</div>
                           <div class="preview-lines">
                             <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
                             <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
@@ -184,12 +184,12 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
                   <div class="marquee-card">
                     <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
                       {item.image ? (
-                        <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                        <img src={urlFor(item.image).url()} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
                       ) : item.imageUrl ? (
-                        <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                        <img src={item.imageUrl} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
                       ) : (
                         <div class="preview-inner">
-                          <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                          <div class="preview-label text-caption-mono">{(item.category || '').toUpperCase()}</div>
                           <div class="preview-lines">
                             <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
                             <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
@@ -239,8 +239,8 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
               return (
                 <div 
                   class="portfolio-card" 
-                  data-category={item.category} 
-                  id={`portfolio-item-${item.id || item._id}`}
+                  data-category={item.category || ''} 
+                  id={`portfolio-item-${item.id || item._key || item._id}`}
                   style={item.category === 'thumbnail' ? '' : 'display: none;'}
                 >
                   {item.category === 'video' ? (
@@ -250,7 +250,7 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
                           width="100%"
                           height="100%"
                           src={getYouTubeEmbedUrl(item.youtubeUrl)}
-                          title={item.title}
+                          title={item.title || 'Video Project'}
                           frameborder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                           allowfullscreen
@@ -263,12 +263,12 @@ const finalPortfolioItems = (cmsPage?.portfolioItems && cmsPage.portfolioItems.l
                   ) : (
                     <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
                       {item.image ? (
-                        <img src={urlFor(item.image).url()} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                        <img src={urlFor(item.image).url()} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
                       ) : item.imageUrl ? (
-                        <img src={item.imageUrl} alt={item.title} style="width:100%;height:100%;object-fit:cover;" />
+                        <img src={item.imageUrl} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
                       ) : (
                         <div class="preview-inner">
-                          <div class="preview-label text-caption-mono">{item.category.toUpperCase()}</div>
+                          <div class="preview-label text-caption-mono">{(item.category || '').toUpperCase()}</div>
                           <div class="preview-lines">
                             <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
                             <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>

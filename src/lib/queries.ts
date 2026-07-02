@@ -180,6 +180,7 @@ export const portfolioPageQuery = `*[_type == "portfolioPage"][0]{
   heroSubheading,
   filterCategories,
   portfolioItems[]{
+    _key,
     title,
     client,
     category,
