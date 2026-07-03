@@ -1,13 +1,21 @@
 // ─── GROQ Queries for Sanity CMS ───
 
 // ── Site Settings (Navbar, Footer, Global) ──
-export const siteConfigQuery = `*[_type == "siteConfig"][0]{
-  siteTitle,
-  siteDescription,
-  logo,
-  navigation[]{label, href},
-  footerText,
-  ctaSection{heading, body, buttons[]{label, href}}
+export const siteConfigQuery = `*[_type == "siteSettings"][0]{
+  siteName,
+  legalName,
+  appTitle,
+  tagline,
+  description,
+  phone,
+  email,
+  address,
+  defaultOrderCtaLabel,
+  defaultOrderCtaHref,
+  defaultHelpCtaHref,
+  socialLinks[]{label, href, iconSvg},
+  navLinks[]{label, href},
+  footerColumns[]{heading, links[]{label, href}}
 }`;
 
 // ── Homepage ──
@@ -27,19 +35,8 @@ export const homepageQuery = `*[_type == "homepage"][0]{
     image,
     title,
     description,
-    price,
     gradient,
     href
-  },
-  pricingTiers[]{
-    name,
-    price,
-    originalPrice,
-    description,
-    features,
-    ctaLabel,
-    ctaHref,
-    featured
   },
   testimonials[]{
     name,
@@ -72,7 +69,6 @@ export const servicesQuery = `*[_type == "service"] | order(order asc){
   icon,
   description,
   features,
-  pricing[]{label, price, original},
   gradient
 }`;
 
@@ -131,6 +127,11 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0]{
   storyParagraphs,
   companyInfo[]{label, value},
   values[]{icon, title, description},
+  founderName,
+  founderTitle,
+  founderBio,
+  founderAvatar,
+  founderLinks[]{label, href},
   ctaHeading,
   ctaBody
 }`;

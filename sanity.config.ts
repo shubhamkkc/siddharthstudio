@@ -4,8 +4,8 @@ import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./sanity/schema";
 
 export default defineConfig({
-  name: "siddharth-studious",
-  title: "Siddharth Studious CMS",
+  name: "growsquadz",
+  title: "GrowSquadz CMS",
 
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID || "your-project-id-here",
   dataset: import.meta.env.PUBLIC_SANITY_DATASET || "production",

@@ -107,23 +107,23 @@ function toPortableText(paragraphs) {
 const siteSettingsDoc = {
   _id: "siteSettings",
   _type: "siteSettings",
-  siteName: "Siddharth Studious",
+  siteName: "GrowSquadz",
   tagline: "India's premier creative design studio",
   description: "Professional YouTube thumbnails, social media designs, and premium template packs. Up to 75% off. Trusted by 200+ content creators across India.",
   phone: "+91 74883 16199",
-  email: "info@siddharthstudious.in",
+  email: "info@growsquadz.in",
   address: "Sumitra Nagar, Biharimills Colony, Patna City, Patna, Bihar 800008",
   socialLinks: [
     {
       _key: "social1",
       label: "YouTube",
-      href: "https://youtube.com/@siddharthstudious",
+      href: "https://youtube.com/@growsquadz",
       iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`
     },
     {
       _key: "social2",
       label: "Instagram",
-      href: "https://www.instagram.com/siddharthstudious.in/",
+      href: "https://www.instagram.com/growsquadz.in/",
       iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>`
     },
     {
@@ -185,7 +185,7 @@ const siteSettingsDoc = {
 const homepageDoc = {
   _id: "homepage",
   _type: "homepage",
-  seoTitle: "Siddharth Studious — India's Premier Creative Design Studio",
+  seoTitle: "GrowSquadz — India's Premier Creative Design Studio",
   seoDescription: "Professional YouTube thumbnails, social media designs, and premium template packs. Up to 75% off. Trusted by 200+ content creators across India.",
   heroEyebrow: "India's Premier Creative Design Studio",
   heroHeadline: "Designs that make\nyour content stand out.",
@@ -321,7 +321,7 @@ const homepageDoc = {
       _key: "t1",
       name: "Arjun Sharma",
       role: "YouTube Creator · 50K subscribers",
-      quote: "My CTR jumped from 3% to 8% after using Siddharth Studious thumbnails. The quality is insane for the price.",
+      quote: "My CTR jumped from 3% to 8% after using GrowSquadz thumbnails. The quality is insane for the price.",
       avatar: "AS",
       rating: 5
     },
@@ -363,30 +363,30 @@ const homepageDoc = {
     }
   ],
   faqItems: [
-    { _key: "faq1", question: "What design services does Siddharth Studious offer?", answer: "We specialize in YouTube thumbnails, video editing, social media banner art, Instagram posts/carousels, and premium template design packs tailored for creators and brands." },
+    { _key: "faq1", question: "What design services does GrowSquadz offer?", answer: "We specialize in YouTube thumbnails, video editing, social media banner art, Instagram posts/carousels, and premium template design packs tailored for creators and brands." },
     { _key: "faq2", question: "How do I place an order?", answer: "Simply choose a plan from our pricing page or click any 'Order Now' button to chat with us on WhatsApp. You can share your design brief directly, and we will confirm and start working." },
     { _key: "faq3", question: "What is the turnaround time for designs?", answer: "Our standard delivery time is 24 to 48 hours depending on the complexity of the design. We prioritize quick deliveries so you never miss an upload schedule." },
     { _key: "faq4", question: "Do you offer revisions?", answer: "Yes, we offer revisions to ensure you get exactly what you want. Single orders include 2 rounds of revisions, while Standard and Premium design packs include unlimited revisions." },
     { _key: "faq5", question: "Do I get the source files?", answer: "Yes, raw source files (Figma or Photoshop PSD formats) are fully included with our Standard and Premium design packages." }
   ],
-  seoContentHeading: "Siddharth Studious: India's Premier Creative Design Studio for Content Creators & Brands",
-  seoContentBody: `In the highly competitive landscape of digital media, standing out is no longer optional; it is essential for survival and growth. Every day, millions of hours of video and countless social media posts are uploaded, creating an overwhelming ocean of content. To pierce through this noise, creators and brands must leverage the power of elite visual communication. Siddharth Studious was founded on this exact principle. We recognized early on that many incredibly talented creators were struggling to gain traction simply because their packaging—their thumbnails, banners, and promotional graphics—didn't reflect the high quality of their actual content. We stepped in to bridge this gap, offering a lifeline of professional graphic design tailored specifically for the fast-moving creator economy.
+  seoContentHeading: "GrowSquadz: India's Premier Creative Design Studio for Content Creators & Brands",
+  seoContentBody: `In the highly competitive landscape of digital media, standing out is no longer optional; it is essential for survival and growth. Every day, millions of hours of video and countless social media posts are uploaded, creating an overwhelming ocean of content. To pierce through this noise, creators and brands must leverage the power of elite visual communication. GrowSquadz was founded on this exact principle. We recognized early on that many incredibly talented creators were struggling to gain traction simply because their packaging—their thumbnails, banners, and promotional graphics—didn't reflect the high quality of their actual content. We stepped in to bridge this gap, offering a lifeline of professional graphic design tailored specifically for the fast-moving creator economy.
 
-Siddharth Studious has established itself as India's premier creative design studio, specializing in crafting high-impact visual assets. Our mission is to elevate your digital presence through stunning, click-worthy designs that tell your unique story. Whether you are a growing YouTube channel looking for the perfect thumbnail designer or a corporate brand in need of a cohesive social media identity, our team of expert designers delivers unparalleled quality and innovation.
+GrowSquadz has established itself as India's premier creative design studio, specializing in crafting high-impact visual assets. Our mission is to elevate your digital presence through stunning, click-worthy designs that tell your unique story. Whether you are a growing YouTube channel looking for the perfect thumbnail designer or a corporate brand in need of a cohesive social media identity, our team of expert designers delivers unparalleled quality and innovation.
 
 Why is professional graphic design crucial for your success?
-The answer lies in the first impression. A YouTube thumbnail is often the only deciding factor for a viewer choosing between your video and thousands of others. At Siddharth Studious, our YouTube thumbnail design services are engineered to maximize your Click-Through Rate (CTR). We understand the psychology of color, the importance of typography, and the nuances of facial expressions that make a thumbnail truly viral. We delve deep into data-driven design, analyzing current trends and optimizing for mobile viewing. With a proven track record of helping over 200 creators scale their channels, our thumbnail designs don't just look good—they perform.
+The answer lies in the first impression. A YouTube thumbnail is often the only deciding factor for a viewer choosing between your video and thousands of others. At GrowSquadz, our YouTube thumbnail design services are engineered to maximize your Click-Through Rate (CTR). We understand the psychology of color, the importance of typography, and the nuances of facial expressions that make a thumbnail truly viral. We delve deep into data-driven design, analyzing current trends and optimizing for mobile viewing. With a proven track record of helping over 200 creators scale their channels, our thumbnail designs don't just look good—they perform.
 
 Comprehensive Social Media Design Services
-Beyond YouTube, we offer comprehensive social media design services. Instagram, LinkedIn, Facebook, and Twitter each require a unique visual approach to engage their distinct user bases. Our packages include everything from carousel posts and infographics to story templates and banner art. We ensure that your brand identity remains consistent and captivating across all platforms. Our designs are optimized for engagement algorithms—encouraging saves, shares, and comments through strategic layouts and compelling visual hooks. By outsourcing your graphic design needs to Siddharth Studious, you save valuable time that can be better spent on content creation.
+Beyond YouTube, we offer comprehensive social media design services. Instagram, LinkedIn, Facebook, and Twitter each require a unique visual approach to engage their distinct user bases. Our packages include everything from carousel posts and infographics to story templates and banner art. We ensure that your brand identity remains consistent and captivating across all platforms. Our designs are optimized for engagement algorithms—encouraging saves, shares, and comments through strategic layouts and compelling visual hooks. By outsourcing your graphic design needs to GrowSquadz, you save valuable time that can be better spent on content creation.
 
 Premium Template Packs and Video Assets
 Video content is king, and our expertise doesn't stop at static images. While our core lies in premium graphic design, we also understand the synergy between great video editing and great design. We provide premium template packs and visual assets that video editors and creators can seamlessly integrate into their workflows. From animated lower thirds to sleek transition graphics, our assets are designed to give your videos a professional edge without breaking the bank.
 
 Affordable Quality and a Collaborative Partner
-What sets Siddharth Studious apart from other graphic design agencies in India? It's our commitment to affordability without compromising on quality. We believe that premium design should be accessible to everyone, which is why our services are priced competitively—up to 75% off standard market rates. Our 'Premium Pack V2' offers an incredible bundle of custom designs, unlimited revisions, and priority support.
+What sets GrowSquadz apart from other graphic design agencies in India? It's our commitment to affordability without compromising on quality. We believe that premium design should be accessible to everyone, which is why our services are priced competitively—up to 75% off standard market rates. Our 'Premium Pack V2' offers an incredible bundle of custom designs, unlimited revisions, and priority support.
 
-Furthermore, we pride ourselves on our seamless, hassle-free client experience. We know that creators hate endless back-and-forth emails and convoluted briefing processes. With direct WhatsApp communication, you can share your ideas instantly, and our rapid 24-48 hour turnaround ensures your content schedule never misses a beat. We are more than just a service provider; we are your creative partner. Whether you need a single viral thumbnail, a complete channel overhaul, or a long-term design partner, Siddharth Studious is your ultimate destination for top-tier graphic design in India.`
+Furthermore, we pride ourselves on our seamless, hassle-free client experience. We know that creators hate endless back-and-forth emails and convoluted briefing processes. With direct WhatsApp communication, you can share your ideas instantly, and our rapid 24-48 hour turnaround ensures your content schedule never misses a beat. We are more than just a service provider; we are your creative partner. Whether you need a single viral thumbnail, a complete channel overhaul, or a long-term design partner, GrowSquadz is your ultimate destination for top-tier graphic design in India.`
 };
 
 // ──────────────────────────────────────────
@@ -465,7 +465,7 @@ const servicesDocs = [
 const pricingPageDoc = {
   _id: "pricingPage",
   _type: "pricingPage",
-  seoTitle: "Pricing — Siddharth Studious",
+  seoTitle: "Pricing — GrowSquadz",
   seoDescription: "Transparent pricing for professional design services. YouTube thumbnails from ₹299, social media posts from ₹249. Premium packs up to 75% off.",
   heroHeading: "Simple, honest pricing.",
   heroSubheading: "No hidden fees. No complicated tiers. Up to 75% off market rates. Pick what you need.",
@@ -517,17 +517,17 @@ const pricingPageDoc = {
 const aboutPageDoc = {
   _id: "aboutPage",
   _type: "aboutPage",
-  seoTitle: "About — Siddharth Studious",
-  seoDescription: "Learn about Siddharth Studious — India's premier creative design studio founded by Kumar Siddharth in Patna, Bihar.",
+  seoTitle: "About — GrowSquadz",
+  seoDescription: "Learn about GrowSquadz — India's premier creative design studio founded by Kumar Siddharth in Patna, Bihar.",
   heroHeading: "Built by creators,<br />for creators.",
-  heroSubheading: "Siddharth Studious was founded with a simple mission: make world-class design accessible to every content creator in India.",
+  heroSubheading: "GrowSquadz was founded with a simple mission: make world-class design accessible to every content creator in India.",
   storyParagraphs: [
-    "Siddharth Studious was founded by Kumar Siddharth in Patna, Bihar. What started as helping fellow creators with YouTube thumbnails quickly grew into a full-fledged creative design studio serving hundreds of creators and businesses across India.",
-    "Today, we operate as <strong>Siddharth Studious Ventures Private Limited</strong>, with a team of talented designers and a growing partner network. Our designs have helped creators grow their channels, improve their CTR, and build recognizable brand identities.",
+    "GrowSquadz was founded by Kumar Siddharth in Patna, Bihar. What started as helping fellow creators with YouTube thumbnails quickly grew into a full-fledged creative design studio serving hundreds of creators and businesses across India.",
+    "Today, we operate as <strong>GrowSquadz Ventures Private Limited</strong>, with a team of talented designers and a growing partner network. Our designs have helped creators grow their channels, improve their CTR, and build recognizable brand identities.",
     "We believe that premium design shouldn't cost a premium. That's why we offer professional-grade work at introductory prices — because every creator deserves to look their best."
   ],
   companyInfo: [
-    { _key: "c1", label: "Registered as", value: "Siddharth Studious Ventures Pvt. Ltd." },
+    { _key: "c1", label: "Registered as", value: "GrowSquadz Ventures Pvt. Ltd." },
     { _key: "c2", label: "Location", value: "Patna, Bihar, India — 800008" },
     { _key: "c3", label: "Founded", value: "2020" },
     { _key: "c4", label: "Team size", value: "10+ designers & editors" }
@@ -539,7 +539,7 @@ const aboutPageDoc = {
     { _key: "v4", title: "Fast Delivery", icon: "⚡", description: "Time is money for content creators. We deliver within 24–48 hours, always." }
   ],
   ctaHeading: "Ready to work together?",
-  ctaBody: "Order your first design today and experience the Siddharth Studious difference."
+  ctaBody: "Order your first design today and experience the GrowSquadz difference."
 };
 
 // ──────────────────────────────────────────
@@ -548,8 +548,8 @@ const aboutPageDoc = {
 const contactPageDoc = {
   _id: "contactPage",
   _type: "contactPage",
-  seoTitle: "Contact — Siddharth Studious",
-  seoDescription: "Get in touch with Siddharth Studious. Order designs via WhatsApp, email us, or connect on social media. Based in Patna, Bihar, India.",
+  seoTitle: "Contact — GrowSquadz",
+  seoDescription: "Get in touch with GrowSquadz. Order designs via WhatsApp, email us, or connect on social media. Based in Patna, Bihar, India.",
   heroHeading: "Let's work together.",
   heroSubheading: "We typically respond within 1 hour on WhatsApp. Drop us a message and we'll get started.",
   channels: [
@@ -568,9 +568,9 @@ const contactPageDoc = {
       _key: "ch2",
       platform: "email",
       label: "Email",
-      value: "info@siddharthstudious.in",
+      value: "info@growsquadz.in",
       tag: "Response within 24 hours",
-      href: "mailto:info@siddharthstudious.in",
+      href: "mailto:info@growsquadz.in",
       iconBg: "var(--color-canvas-soft-2)",
       iconColor: "var(--color-ink)",
       borderColor: "var(--color-hairline-strong)"
@@ -590,16 +590,16 @@ const contactPageDoc = {
       _key: "ch4",
       platform: "instagram",
       label: "Instagram",
-      value: "@siddharthstudious.in",
+      value: "@growsquadz.in",
       tag: "See our latest work",
-      href: "https://www.instagram.com/siddharthstudious.in/",
+      href: "https://www.instagram.com/growsquadz.in/",
       iconBg: "#e1306c",
       iconColor: "white",
       borderColor: "var(--color-hairline-strong)"
     }
   ],
   businessDetails: [
-    { _key: "bd1", label: "REGISTERED NAME", value: "Siddharth Studious Ventures Private Limited" },
+    { _key: "bd1", label: "REGISTERED NAME", value: "GrowSquadz Ventures Private Limited" },
     { _key: "bd2", label: "ADDRESS", value: "Sumitra Nagar, Biharimills Colony, Patna City, Patna, Bihar 800008" },
     { _key: "bd3", label: "BUSINESS HOURS", value: "Monday – Saturday, 9 AM – 8 PM IST" },
     { _key: "bd4", label: "PAYMENT METHODS", value: "UPI, Bank Transfer, Razorpay" }
@@ -614,8 +614,8 @@ const contactPageDoc = {
 const partnerPageDoc = {
   _id: "partnerPage",
   _type: "partnerPage",
-  seoTitle: "Become a Partner — Siddharth Studious",
-  seoDescription: "Join the Siddharth Studious partner network. Earn by designing and creating for 200+ clients. Flexible work, consistent projects, great community.",
+  seoTitle: "Become a Partner — GrowSquadz",
+  seoDescription: "Join the GrowSquadz partner network. Earn by designing and creating for 200+ clients. Flexible work, consistent projects, great community.",
   heroBadge: "Join 500+ Partners",
   heroHeading: "Turn your skills into<br />a steady income.",
   heroSubheading: "Are you a graphic designer, video editor, or content creator? Join our partner network and earn consistently doing what you love.",
@@ -646,7 +646,7 @@ const partnerPageDoc = {
 const portfolioPageDoc = {
   _id: "portfolioPage",
   _type: "portfolioPage",
-  seoTitle: "Portfolio — Siddharth Studious",
+  seoTitle: "Portfolio — GrowSquadz",
   seoDescription: "Browse our portfolio of professional YouTube thumbnails, social media designs, logos, and brand identity work.",
   heroHeading: "Our recent work.",
   heroSubheading: "A selection of designs created for our clients. Every pixel is intentional.",
@@ -675,10 +675,10 @@ const legalPagesDocs = [
     _type: "legalPage",
     slug: { _type: "slug", current: "privacy" },
     title: "Privacy Policy",
-    seoDescription: "Privacy Policy for Siddharth Studious Ventures Private Limited.",
+    seoDescription: "Privacy Policy for GrowSquadz Ventures Private Limited.",
     lastUpdated: "2026-06-29",
     body: toPortableText([
-      "At Siddharth Studious, accessible from https://www.siddharthstudious.in, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Siddharth Studious and how we use it.",
+      "At GrowSquadz, accessible from https://www.growsquadz.in, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by GrowSquadz and how we use it.",
       "## Information We Collect",
       "The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information.",
       "If you contact us directly, we may receive additional information about you such as your name, email address, phone number, the contents of the message and/or attachments you may send us, and any other information you may choose to provide.",
@@ -692,7 +692,7 @@ const legalPagesDocs = [
       "- Send you emails or WhatsApp messages regarding your design orders",
       "- Find and prevent fraud",
       "## Log Files",
-      "Siddharth Studious follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable."
+      "GrowSquadz follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable."
     ])
   },
   {
@@ -700,13 +700,13 @@ const legalPagesDocs = [
     _type: "legalPage",
     slug: { _type: "slug", current: "terms-conditions" },
     title: "Terms & Conditions",
-    seoDescription: "Terms and Conditions for Siddharth Studious Ventures Private Limited.",
+    seoDescription: "Terms and Conditions for GrowSquadz Ventures Private Limited.",
     lastUpdated: "2026-06-29",
     body: toPortableText([
-      "Welcome to Siddharth Studious! These terms and conditions outline the rules and regulations for the use of Siddharth Studious Ventures Private Limited's Website, located at https://www.siddharthstudious.in.",
-      "By accessing this website we assume you accept these terms and conditions. Do not continue to use Siddharth Studious if you do not agree to take all of the terms and conditions stated on this page.",
+      "Welcome to GrowSquadz! These terms and conditions outline the rules and regulations for the use of GrowSquadz Ventures Private Limited's Website, located at https://www.growsquadz.in.",
+      "By accessing this website we assume you accept these terms and conditions. Do not continue to use GrowSquadz if you do not agree to take all of the terms and conditions stated on this page.",
       "## Intellectual Property Rights",
-      "Other than the content you own, under these Terms, Siddharth Studious Ventures Private Limited and/or its licensors own all the intellectual property rights and materials contained in this Website. You are granted limited license only for purposes of viewing the material contained on this Website.",
+      "Other than the content you own, under these Terms, GrowSquadz Ventures Private Limited and/or its licensors own all the intellectual property rights and materials contained in this Website. You are granted limited license only for purposes of viewing the material contained on this Website.",
       "## Restrictions",
       "You are specifically restricted from all of the following:",
       "- publishing any Website material in any other media without prior consent;",
@@ -716,7 +716,7 @@ const legalPagesDocs = [
       "- using this Website in any way that impacts user access to this Website;",
       "- using this Website contrary to applicable laws and regulations, or in any way may cause harm to the Website, or to any person or business entity.",
       "## Your Content",
-      "In these Website Standard Terms and Conditions, \"Your Content\" shall mean any audio, video text, images or other material you choose to display on this Website or submit to us for design tasks. By displaying or submitting Your Content, you grant Siddharth Studious Ventures Private Limited a non-exclusive, worldwide irrevocable, sub-licensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media."
+      "In these Website Standard Terms and Conditions, \"Your Content\" shall mean any audio, video text, images or other material you choose to display on this Website or submit to us for design tasks. By displaying or submitting Your Content, you grant GrowSquadz Ventures Private Limited a non-exclusive, worldwide irrevocable, sub-licensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media."
     ])
   },
   {
@@ -724,12 +724,12 @@ const legalPagesDocs = [
     _type: "legalPage",
     slug: { _type: "slug", current: "disclaimer" },
     title: "Disclaimer",
-    seoDescription: "Disclaimer for Siddharth Studious Ventures Private Limited.",
+    seoDescription: "Disclaimer for GrowSquadz Ventures Private Limited.",
     lastUpdated: "2026-06-29",
     body: toPortableText([
-      "If you require any more information or have any questions about our site's disclaimer, please feel free to contact us by email at info@siddharthstudious.in.",
-      "## Disclaimers for Siddharth Studious",
-      "All the information on this website - https://www.siddharthstudious.in - is published in good faith and for general information purpose only. Siddharth Studious does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (Siddharth Studious), is strictly at your own risk. Siddharth Studious will not be liable for any losses and/or damages in connection with the use of our website.",
+      "If you require any more information or have any questions about our site's disclaimer, please feel free to contact us by email at info@growsquadz.in.",
+      "## Disclaimers for GrowSquadz",
+      "All the information on this website - https://www.growsquadz.in - is published in good faith and for general information purpose only. GrowSquadz does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (GrowSquadz), is strictly at your own risk. GrowSquadz will not be liable for any losses and/or damages in connection with the use of our website.",
       "From our website, you can visit other websites by following hyperlinks to such external sites. While we strive to provide only quality links to useful and ethical websites, we have no control over the content and nature of these sites. These links to other websites do not imply a recommendation for all the content found on these sites. Site owners and content may change without notice and may occur before we have the opportunity to remove a link which may have gone 'bad'.",
       "Please be also aware that when you leave our website, other sites may have different privacy policies and terms which are beyond our control. Please be sure to check the Privacy Policies of these sites as well as their \"Terms of Service\" before engaging in any business or uploading any information.",
       "## Consent",

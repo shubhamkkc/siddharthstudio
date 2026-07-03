@@ -3,17 +3,27 @@ import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import { sanityClient } from "../lib/sanity";
-import { servicesQuery, servicesPageQuery } from "../lib/queries";
+import { servicesQuery, servicesPageQuery, siteConfigQuery } from "../lib/queries";
+import { buildWhatsAppHref, getWhatsAppBaseHref } from "../lib/contact";
 
 // Fetch from Sanity (falls back to hardcoded defaults below if null)
 let cmsServices: any = null;
 let cmsPage: any = null;
+let siteSettings: any = null;
 try {
   cmsServices = await sanityClient.fetch(servicesQuery);
   cmsPage = await sanityClient.fetch(servicesPageQuery);
 } catch (e) {
   console.warn("Sanity fetch failed, using hardcoded defaults:", e);
 }
+
+try {
+  siteSettings = await sanityClient.fetch(siteConfigQuery);
+} catch (e) {
+  console.warn("Sanity site settings fetch failed:", e);
+}
+
+const whatsappBaseHref = getWhatsAppBaseHref(siteSettings);
 
 const allServices = [
   {
@@ -72,7 +82,9 @@ const allServices = [
 
 // ── CMS Override: Use Sanity data if available ──
 const finalServices = cmsServices && cmsServices.length > 0 ? cmsServices : allServices;
-const seoTitle = cmsPage?.seoTitle ?? "Services — Siddharth Studious";
+/** @type {any[]} */
+const finalServicesList = finalServices;
+const seoTitle = cmsPage?.seoTitle ?? "Services — GrowSquadz";
 const seoDescription = cmsPage?.seoDescription ?? "Professional design services: YouTube thumbnails from ₹299, social media posts from ₹249, video editing, logos, and brand identity packages.";
 const heroHeading = cmsPage?.heroHeading ?? "Everything your content needs.";
 const heroSubheading = cmsPage?.heroSubheading ?? "Professional creative services at honest prices. Delivered in 24–48 hours via WhatsApp.";
@@ -122,7 +134,7 @@ const ctaBody = cmsPage?.ctaBody ?? "Send us a message on WhatsApp and let's dis
       </div>
 
       <!-- Service Sections -->
-      {finalServices.map((service: any, i: number) => (
+      {finalServicesList.map((service, i) => (
         <section class={`service-section ${i % 2 === 1 ? 'service-section-alt' : ''}`} id={service.id || service.serviceId}>
           <div class="container-page service-grid">
             <div class="service-info">
@@ -139,35 +151,19 @@ const ctaBody = cmsPage?.ctaBody ?? "Send us a message on WhatsApp and let's dis
               </ul>
             </div>
             <div class="service-pricing-panel">
-              <h3 class="panel-heading">Pricing</h3>
-              <div class="panel-tiers">
-                {service.pricing.map((tier, j) => (
-                  <div class={`panel-tier ${j === 1 ? 'panel-tier-featured' : ''}`}>
-                    <div class="tier-label">{tier.label}</div>
-                    <div class="tier-prices">
-                      {tier.original && <span class="tier-original">{tier.original}</span>}
-                      <span class="tier-price">{tier.price}</span>
-                    </div>
-                    <a
-                      href={`https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20${encodeURIComponent(tier.label + ' - ' + service.title)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class={`tier-btn ${j === 1 ? 'tier-btn-featured' : ''}`}
-                      id={`service-${service.id}-${j}`}
-                    >
-                      Order Now
-                    </a>
-                  </div>
-                ))}
-              </div>
+              <h3 class="panel-heading">Order Service</h3>
+              <p style="font-size: 15px; color: var(--color-body); line-height: 24px; margin-bottom: 24px;">
+                Ready to start? Click below to chat with us on WhatsApp and discuss your project.
+              </p>
               <a
-                href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20a%20custom%20quote"
+                href={buildWhatsAppHref(whatsappBaseHref, `Hi, I want to order ${service.title}`)}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="custom-quote-link"
-                id={`service-${service.id}-custom`}
+                class="tier-btn tier-btn-featured"
+                style="width: 100%; justify-content: center; height: 48px; font-size: 15px;"
+                id={`service-${service.id || service.serviceId}-cta`}
               >
-                Need a custom quote? Chat with us →
+                Order {service.title} →
               </a>
             </div>
           </div>
@@ -179,7 +175,7 @@ const ctaBody = cmsPage?.ctaBody ?? "Send us a message on WhatsApp and let's dis
         <div class="container-page services-cta-inner">
           <h2>{ctaHeading}</h2>
           <p>{ctaBody}</p>
-          <a href="https://wa.me/917488316199?text=Hi%2C%20I%20need%20help%20choosing%20the%20right%20service" target="_blank" rel="noopener noreferrer" class="cta-btn" id="services-help-cta">
+          <a href={buildWhatsAppHref(whatsappBaseHref, "Hi, I need help choosing the right service")} target="_blank" rel="noopener noreferrer" class="cta-btn" id="services-help-cta">
             Get a Recommendation →
           </a>
         </div>

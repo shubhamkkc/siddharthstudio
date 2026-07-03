@@ -6,11 +6,16 @@ export default defineType({
   type: "document",
   fields: [
     defineField({ name: "siteName", title: "Site Name", type: "string" }),
+    defineField({ name: "legalName", title: "Legal Company Name", type: "string" }),
+    defineField({ name: "appTitle", title: "App Title (PWA / Apple)", type: "string" }),
     defineField({ name: "tagline", title: "Tagline", type: "string" }),
     defineField({ name: "description", title: "Default SEO Description", type: "text" }),
     defineField({ name: "phone", title: "Phone Number", type: "string" }),
     defineField({ name: "email", title: "Email", type: "string" }),
     defineField({ name: "address", title: "Address", type: "text" }),
+    defineField({ name: "defaultOrderCtaLabel", title: "Default Order CTA Label", type: "string" }),
+    defineField({ name: "defaultOrderCtaHref", title: "Default Order CTA Link", type: "url" }),
+    defineField({ name: "defaultHelpCtaHref", title: "Default Help CTA Link", type: "url" }),
     defineField({
       name: "socialLinks",
       title: "Social Links",

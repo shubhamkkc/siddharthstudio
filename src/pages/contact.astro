@@ -3,27 +3,39 @@ import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import { sanityClient } from "../lib/sanity";
-import { contactPageQuery } from "../lib/queries";
+import { contactPageQuery, siteConfigQuery } from "../lib/queries";
+import { buildWhatsAppHref, getWhatsAppBaseHref } from "../lib/contact";
 
 let cms: any = null;
+let siteSettings: any = null;
 try {
   cms = await sanityClient.fetch(contactPageQuery);
 } catch (e) {
   console.warn("Sanity fetch failed:", e);
 }
 
-const seoTitle = cms?.seoTitle ?? "Contact — Siddharth Studious";
-const seoDescription = cms?.seoDescription ?? "Get in touch with Siddharth Studious. Order designs via WhatsApp, email us, or connect on social media. Based in Patna, Bihar, India.";
+try {
+  siteSettings = await sanityClient.fetch(siteConfigQuery);
+} catch (e) {
+  console.warn("Sanity site settings fetch failed:", e);
+}
+
+const fallbackEmail = siteSettings?.email ?? "info@growsquadz.in";
+const whatsappBaseHref = getWhatsAppBaseHref(siteSettings);
+const orderWhatsAppHref = buildWhatsAppHref(whatsappBaseHref, "Hi, I want to order a design");
+
+const seoTitle = cms?.seoTitle ?? "Contact — GrowSquadz";
+const seoDescription = cms?.seoDescription ?? "Get in touch with GrowSquadz. Order designs via WhatsApp, email us, or connect on social media. Based in Patna, Bihar, India.";
 const heroHeading = cms?.heroHeading ?? "Let's work together.";
 const heroSubheading = cms?.heroSubheading ?? "We typically respond within 1 hour on WhatsApp. Drop us a message and we'll get started.";
 
-const finalChannels = cms?.channels ?? [
+const baseChannels = cms?.channels ?? [
   {
     platform: "whatsapp",
     label: "WhatsApp (Fastest)",
     value: "+91 74883 16199",
     tag: "Avg. response: <1 hr",
-    href: "https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design",
+    href: orderWhatsAppHref,
     iconBg: "#25D366",
     iconColor: "white",
     borderColor: "var(--color-hairline-strong)"
@@ -31,9 +43,9 @@ const finalChannels = cms?.channels ?? [
   {
     platform: "email",
     label: "Email",
-    value: "info@siddharthstudious.in",
+    value: fallbackEmail,
     tag: "Response within 24 hours",
-    href: "mailto:info@siddharthstudious.in",
+    href: `mailto:${fallbackEmail}`,
     iconBg: "var(--color-canvas-soft-2)",
     iconColor: "var(--color-ink)",
     borderColor: "var(--color-hairline-strong)"
@@ -51,17 +63,29 @@ const finalChannels = cms?.channels ?? [
   {
     platform: "instagram",
     label: "Instagram",
-    value: "@siddharthstudious.in",
+    value: "@growsquadz.in",
     tag: "See our latest work",
-    href: "https://www.instagram.com/siddharthstudious.in/",
+    href: "https://www.instagram.com/growsquadz.in/",
     iconBg: "#E1306C",
     iconColor: "white",
     borderColor: "var(--color-hairline-strong)"
   }
 ];
 
+const finalChannels = baseChannels.map((channel: any) => {
+  if (channel?.platform === "email") {
+    return {
+      ...channel,
+      value: fallbackEmail,
+      href: `mailto:${fallbackEmail}`,
+    };
+  }
+
+  return channel;
+});
+
 const finalBusinessDetails = cms?.businessDetails ?? [
-  { label: "REGISTERED NAME", value: "Siddharth Studious Ventures Private Limited" },
+  { label: "REGISTERED NAME", value: "GrowSquadz Ventures Private Limited" },
   { label: "ADDRESS", value: "Sumitra Nagar, Biharimills Colony, Patna City, Patna, Bihar 800008" },
   { label: "BUSINESS HOURS", value: "Monday – Saturday, 9 AM – 8 PM IST" },
   { label: "PAYMENT METHODS", value: "UPI, Bank Transfer, Razorpay" }
@@ -153,7 +177,7 @@ const quickOrderBody = cms?.quickOrderBody ?? "The fastest way to get started is
             <div class="quick-order-card">
               <h3 class="quick-order-heading">{quickOrderHeading}</h3>
               <p>{quickOrderBody}</p>
-              <a href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design" target="_blank" rel="noopener noreferrer" class="quick-order-btn" id="contact-quick-order">
+              <a href={orderWhatsAppHref} target="_blank" rel="noopener noreferrer" class="quick-order-btn" id="contact-quick-order">
                 Order via WhatsApp →
               </a>
             </div>

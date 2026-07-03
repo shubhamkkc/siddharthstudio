@@ -4,69 +4,27 @@ import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { sanityClient, urlFor } from "../lib/sanity";
-import { homepageQuery } from "../lib/queries";
+import { homepageQuery, siteConfigQuery } from "../lib/queries";
+import { buildWhatsAppHref, getWhatsAppBaseHref } from "../lib/contact";
 
 // Fetch from Sanity (falls back to hardcoded defaults below if null)
 let cms: any = null;
+let siteSettings: any = null;
 try {
   cms = await sanityClient.fetch(homepageQuery);
 } catch (e) {
   console.warn("Sanity fetch failed, using hardcoded defaults:", e);
 }
 
-// Pricing data
-const pricingTiers = [
-  {
-    name: "Starter",
-    price: "₹299",
-    originalPrice: "₹999",
-    description: "Perfect for individual creators starting out.",
-    features: [
-      "1 Custom Design",
-      "YouTube Thumbnail or Social Post",
-      "2 Revisions",
-      "WhatsApp Delivery",
-      "24hr Turnaround",
-    ],
-    ctaLabel: "Order Now",
-    ctaHref: "https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20Starter%20design",
-    featured: false,
-  },
-  {
-    name: "Standard Pack",
-    price: "₹2,449",
-    originalPrice: "₹9,990",
-    description: "Best for growing channels needing consistent visuals.",
-    features: [
-      "10 Custom Designs",
-      "Mix of Thumbnails & Posts",
-      "Unlimited Revisions",
-      "Priority Support",
-      "48hr Turnaround",
-      "Source Files Included",
-    ],
-    ctaLabel: "Get Access",
-    ctaHref: "https://wa.me/917488316199?text=Hi%2C%20I%20want%20the%20Standard%20Pack",
-    featured: true,
-  },
-  {
-    name: "Premium Pack",
-    price: "₹4,799",
-    originalPrice: "₹19,990",
-    description: "For professional brands wanting the full package.",
-    features: [
-      "20 Custom Designs",
-      "All Design Categories",
-      "Unlimited Revisions",
-      "Dedicated Designer",
-      "24hr Priority Turnaround",
-      "Source Files + Templates",
-    ],
-    ctaLabel: "Get Access",
-    ctaHref: "https://wa.me/917488316199?text=Hi%2C%20I%20want%20the%20Premium%20Pack",
-    featured: false,
-  },
-];
+try {
+  siteSettings = await sanityClient.fetch(siteConfigQuery);
+} catch (e) {
+  console.warn("Sanity site settings fetch failed:", e);
+}
+
+const whatsappBaseHref = getWhatsAppBaseHref(siteSettings);
+
+
 
 const services = [
   {
@@ -130,7 +88,7 @@ const testimonials = [
   {
     name: "Arjun Sharma",
     role: "YouTube Creator · 50K subscribers",
-    quote: "My CTR jumped from 3% to 8% after using Siddharth Studious thumbnails. The quality is insane for the price.",
+    quote: "My CTR jumped from 3% to 8% after using GrowSquadz thumbnails. The quality is insane for the price.",
     avatar: "AS",
     rating: 5,
   },
@@ -169,18 +127,27 @@ const steps = [
 ];
 
 // ── CMS Override: Use Sanity data if available ──
-const finalPricingTiers = cms?.pricingTiers ?? pricingTiers;
 const finalServices = cms?.services ?? services;
 const finalStats = cms?.stats ?? stats;
 const finalTestimonials = cms?.testimonials ?? testimonials;
 const finalSteps = cms?.steps ?? steps;
 const finalFaqItems = cms?.faqItems ?? [
-  { question: "What design services does Siddharth Studious offer?", answer: "We specialize in YouTube thumbnails, video editing, social media banner art, Instagram posts/carousels, and premium template design packs tailored for creators and brands." },
+  { question: "What design services does GrowSquadz offer?", answer: "We specialize in YouTube thumbnails, video editing, social media banner art, Instagram posts/carousels, and premium template design packs tailored for creators and brands." },
   { question: "How do I place an order?", answer: "Simply choose a plan from our pricing page or click any 'Order Now' button to chat with us on WhatsApp. You can share your design brief directly, and we will confirm and start working." },
   { question: "What is the turnaround time for designs?", answer: "Our standard delivery time is 24 to 48 hours depending on the complexity of the design. We prioritize quick deliveries so you never miss an upload schedule." },
   { question: "Do you offer revisions?", answer: "Yes, we offer revisions to ensure you get exactly what you want. Single orders include 2 rounds of revisions, while Standard and Premium design packs include unlimited revisions." },
   { question: "Do I get the source files?", answer: "Yes, raw source files (Figma or Photoshop PSD formats) are fully included with our Standard and Premium design packages." },
 ];
+/** @type {any[]} */
+const finalServicesList = finalServices;
+/** @type {any[]} */
+const finalStatsList = finalStats;
+/** @type {any[]} */
+const finalTestimonialsList = finalTestimonials;
+/** @type {any[]} */
+const finalStepsList = finalSteps;
+/** @type {any[]} */
+const finalFaqItemsList = finalFaqItems;
 const heroEyebrow = cms?.heroEyebrow ?? "India's Leading Creative Agency";
 // Use CMS headline as plain text, or use styled HTML fallback
 const heroHeadlineCms: string | null = cms?.heroHeadline ?? null;
@@ -188,17 +155,19 @@ const heroHeadlineFallback = "Designs that make your content <span class=\"gradi
 const heroBody = cms?.heroBody ?? "Empowering Creators and Brands with Creative Design, Engaging Video Content and End-to-End Social Media Management.";
 const heroFootnote = cms?.heroFootnote ?? "Starting at just ₹249 · Delivered in 24 hours · Revisions included";
 
-// Debug: output hero headline source
-console.log('🛠️ heroHeadline value:', heroHeadlineCms ?? heroHeadlineFallback);
-
-
-const heroPrimaryCtaLabel = cms?.heroPrimaryCta?.label ?? "Order a Design";
-const heroPrimaryCtaHref = cms?.heroPrimaryCta?.href ?? "https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design";
+const heroPrimaryCtaLabel =
+  cms?.heroPrimaryCta?.label ??
+  siteSettings?.defaultOrderCtaLabel ??
+  "Order a Design";
+const heroPrimaryCtaHref =
+  cms?.heroPrimaryCta?.href ??
+  siteSettings?.defaultOrderCtaHref ??
+  buildWhatsAppHref(whatsappBaseHref, "Hi, I want to order a design");
 
 const heroSecondaryCtaLabel = cms?.heroSecondaryCta?.label ?? "View Our Work";
 const heroSecondaryCtaHref = cms?.heroSecondaryCta?.href ?? "/portfolio";
 
-const seoTitle = cms?.seoTitle ?? "Siddharth Studious — India's Premier Creative Design Studio";
+const seoTitle = cms?.seoTitle ?? "GrowSquadz — India's Premier Creative Design Studio";
 const seoDescription = cms?.seoDescription ?? "Professional YouTube thumbnails, social media designs, and premium template packs. Up to 75% off. Trusted by 200+ content creators across India.";
 const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
 ---
@@ -272,7 +241,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
             </div>
             <div class="deco-card deco-card-3 animate-float" style="animation-delay: 0.8s">
               <div class="deco-dot" style="background:#ff0080"></div>
-              <span>200+ Creators</span>
+              <span>{finalStatsList.find(s => s.label.toLowerCase().includes('creator'))?.value ?? "500+"} Creators</span>
             </div>
           </div>
         )}
@@ -282,7 +251,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
       <section class="stats-strip">
         <div class="container-page">
           <ul class="stats-grid" role="list">
-            {finalStats.map(stat => (
+            {finalStatsList.map(stat => (
               <li class="stat-item">
                 <span class="stat-value">{stat.value}</span>
                 <span class="stat-label">{stat.label}</span>
@@ -303,7 +272,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
             </p>
           </div>
           <div class="services-grid">
-            {finalServices.map(service => (
+            {finalServicesList.map(service => (
               <a href={service.href} class={`service-card service-card-${service.gradient}`} id={`service-${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
                 {service.image ? (
                   <div class="service-card-image">
@@ -317,7 +286,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
                   <p class="service-card-desc">{service.description}</p>
                 </div>
                 <div class="service-card-footer">
-                  <span class="service-price">{service.price}</span>
+                  <span class="service-price">Learn More</span>
                   <span class="service-arrow">→</span>
                 </div>
               </a>
@@ -335,7 +304,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
             <p class="section-subheading">No complex onboarding. Just send a message and get your design.</p>
           </div>
           <div class="process-grid">
-            {finalSteps.map((step, i) => (
+            {finalStepsList.map((step, i) => (
               <div class="process-step">
                 <div class="process-number">{step.number}</div>
                 {i < finalSteps.length - 1 && <div class="process-connector" aria-hidden="true"></div>}
@@ -353,7 +322,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
           </div>
           <div class="process-cta">
             <a
-              href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design"
+              href={buildWhatsAppHref(whatsappBaseHref, "Hi, I want to order a design")}
               target="_blank"
               rel="noopener noreferrer"
               class="hero-btn-primary"
@@ -365,53 +334,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
         </div>
       </section>
 
-      <!-- ── Pricing Section ── -->
-      <section class="section-band" id="pricing-preview">
-        <div class="container-page">
-          <div class="section-header">
-            <p class="section-eyebrow text-caption-mono">PRICING</p>
-            <h2 class="section-heading">Premium quality. Honest pricing.</h2>
-            <p class="section-subheading">No hidden fees. Up to 75% off market rates for new clients.</p>
-          </div>
-          <div class="pricing-grid">
-            {finalPricingTiers.map(tier => (
-              <div class={`pricing-card ${tier.featured ? 'pricing-card-featured' : ''}`}>
-                {tier.featured && (
-                  <div class="pricing-badge">Most Popular</div>
-                )}
-                <div class="pricing-top">
-                  <h3 class="pricing-name">{tier.name}</h3>
-                  <p class="pricing-desc">{tier.description}</p>
-                </div>
-                <div class="pricing-price-block">
-                  <span class="pricing-original">{tier.originalPrice}</span>
-                  <span class="pricing-price">{tier.price}</span>
-                </div>
-                <ul class="pricing-features" role="list">
-                  {tier.features.map(feat => (
-                    <li class="pricing-feature">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-                      {feat}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={tier.ctaHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class={`pricing-cta ${tier.featured ? 'pricing-cta-featured' : ''}`}
-                  id={`pricing-${tier.name.toLowerCase().replace(/\s+/g, '-')}-cta`}
-                >
-                  {tier.ctaLabel}
-                </a>
-              </div>
-            ))}
-          </div>
-          <p class="pricing-note">
-            Need something custom? <a href="https://wa.me/917488316199" target="_blank" rel="noopener noreferrer">Chat with us on WhatsApp →</a>
-          </p>
-        </div>
-      </section>
+
 
       <!-- ── Testimonials ── -->
       <section class="section-band section-band-soft" id="testimonials">
@@ -425,7 +348,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
             <div class="testimonials-marquee-mask" aria-hidden="true"></div>
             <div class="testimonials-marquee-track">
               <div class="testimonials-marquee-group">
-                {finalTestimonials.map(t => (
+                {finalTestimonialsList.map(t => (
                   <div class="testimonial-card">
                     <div class="testimonial-stars" aria-label={`${t.rating} out of 5 stars`}>
                       {Array.from({ length: t.rating }, () => '★').join('')}
@@ -448,7 +371,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
 
               <!-- Duplicate group for seamless looping -->
               <div class="testimonials-marquee-group" aria-hidden="true">
-                {finalTestimonials.map(t => (
+                {finalTestimonialsList.map(t => (
                   <div class="testimonial-card">
                     <div class="testimonial-stars" aria-label={`${t.rating} out of 5 stars`}>
                       {Array.from({ length: t.rating }, () => '★').join('')}
@@ -473,28 +396,13 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
         </div>
       </section>
 
-      <!-- ── Partner CTA Dark Band ── -->
-      <section class="partner-band" id="partner">
-        <div class="partner-mesh mesh-gradient"></div>
-        <div class="container-page partner-content">
-          <p class="partner-eyebrow text-caption-mono">JOIN OUR NETWORK</p>
-          <h2 class="partner-heading">Are you a designer or editor?</h2>
-          <p class="partner-body">
-            Join our growing network of 500+ creators and earn by doing what you love.
-            Flexible hours, consistent projects, and a community that grows together.
-          </p>
-          <div class="partner-actions">
-            <a href="/become-a-partner" class="partner-btn-primary" id="partner-apply-cta">Apply as Partner →</a>
-            <a href="/about" class="partner-btn-secondary">Learn More</a>
-          </div>
-        </div>
-      </section>
+
       <!-- ── FAQ Section ── -->
       <section class="section-band" id="faq" style="border-top: 1px solid var(--color-hairline);">
         <div class="container-page" style="max-width: 800px;">
           <h2 class="section-heading faq-title">Frequently Asked Questions</h2>
           <div class="faq-accordion-container">
-            {finalFaqItems.map(faq => (
+            {finalFaqItemsList.map(faq => (
               <details class="faq-details">
                 <summary class="faq-summary">
                   <span>{faq.question}</span>
@@ -517,7 +425,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
             "mainEntity": [
               {
                 "@type": "Question",
-                "name": "What design services does Siddharth Studious offer?",
+                "name": "What design services does GrowSquadz offer?",
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "<p>We specialize in YouTube thumbnails, video editing, social media banner art, Instagram posts/carousels, and premium template design packs tailored for creators and brands.</p>"
@@ -561,30 +469,45 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
       </section>
 
       <!-- ── SEO Content Section ── -->
-      <section class="seo-section">
-        <div class="container-page seo-inner">
-          <h2>Siddharth Studious: India's Premier Creative Design Studio for Content Creators & Brands</h2>
-          <div class="seo-content">
-            <p>In the highly competitive landscape of digital media, standing out is no longer optional; it is essential for survival and growth. Every day, millions of hours of video and countless social media posts are uploaded, creating an overwhelming ocean of content. To pierce through this noise, creators and brands must leverage the power of elite visual communication. Siddharth Studious was founded on this exact principle. We recognized early on that many incredibly talented creators were struggling to gain traction simply because their packaging—their thumbnails, banners, and promotional graphics—didn't reflect the high quality of their actual content. We stepped in to bridge this gap, offering a lifeline of professional graphic design tailored specifically for the fast-moving creator economy.</p>
-            
-            <p>Siddharth Studious has established itself as India's premier creative design studio, specializing in crafting high-impact visual assets. Our mission is to elevate your digital presence through stunning, click-worthy designs that tell your unique story. Whether you are a growing YouTube channel looking for the perfect thumbnail designer or a corporate brand in need of a cohesive social media identity, our team of expert designers delivers unparalleled quality and innovation.</p>
-            
-            <h3>Why is professional graphic design crucial for your success?</h3>
-            <p>The answer lies in the first impression. A YouTube thumbnail is often the only deciding factor for a viewer choosing between your video and thousands of others. At Siddharth Studious, our YouTube thumbnail design services are engineered to maximize your Click-Through Rate (CTR). We understand the psychology of color, the importance of typography, and the nuances of facial expressions that make a thumbnail truly viral. We delve deep into data-driven design, analyzing current trends and optimizing for mobile viewing. With a proven track record of helping over 200 creators scale their channels, our thumbnail designs don't just look good—they perform.</p>
-            
-            <h3>Comprehensive Social Media Design Services</h3>
-            <p>Beyond YouTube, we offer comprehensive social media design services. Instagram, LinkedIn, Facebook, and Twitter each require a unique visual approach to engage their distinct user bases. Our packages include everything from carousel posts and infographics to story templates and banner art. We ensure that your brand identity remains consistent and captivating across all platforms. Our designs are optimized for engagement algorithms—encouraging saves, shares, and comments through strategic layouts and compelling visual hooks. By outsourcing your graphic design needs to Siddharth Studious, you save valuable time that can be better spent on content creation.</p>
-            
-            <h3>Premium Template Packs and Video Assets</h3>
-            <p>Video content is king, and our expertise doesn't stop at static images. While our core lies in premium graphic design, we also understand the synergy between great video editing and great design. We provide premium template packs and visual assets that video editors and creators can seamlessly integrate into their workflows. From animated lower thirds to sleek transition graphics, our assets are designed to give your videos a professional edge without breaking the bank.</p>
-            
-            <h3>Affordable Quality and a Collaborative Partner</h3>
-            <p>What sets Siddharth Studious apart from other graphic design agencies in India? It's our commitment to affordability without compromising on quality. We believe that premium design should be accessible to everyone, which is why our services are priced competitively—up to 75% off standard market rates. Our 'Premium Pack V2' offers an incredible bundle of custom designs, unlimited revisions, and priority support.</p>
-            
-            <p>Furthermore, we pride ourselves on our seamless, hassle-free client experience. We know that creators hate endless back-and-forth emails and convoluted briefing processes. With direct WhatsApp communication, you can share your ideas instantly, and our rapid 24-48 hour turnaround ensures your content schedule never misses a beat. We are more than just a service provider; we are your creative partner. Whether you need a single viral thumbnail, a complete channel overhaul, or a long-term design partner, Siddharth Studious is your ultimate destination for top-tier graphic design in India.</p>
+      {(cms?.seoContentHeading || cms?.seoContentBody) ? (
+        <section class="seo-section">
+          <div class="container-page seo-inner">
+            {cms.seoContentHeading && <h2>{cms.seoContentHeading}</h2>}
+            {cms.seoContentBody && (
+              <div class="seo-content">
+                {cms.seoContentBody.split('\n\n').map((para: string) => (
+                  <p set:html={para.replace(/\n/g, '<br />')} />
+                ))}
+              </div>
+            )}
           </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <section class="seo-section">
+          <div class="container-page seo-inner">
+            <h2>GrowSquadz: India's Premier Creative Design Studio for Content Creators & Brands</h2>
+            <div class="seo-content">
+              <p>In the highly competitive landscape of digital media, standing out is no longer optional; it is essential for survival and growth. Every day, millions of hours of video and countless social media posts are uploaded, creating an overwhelming ocean of content. To pierce through this noise, creators and brands must leverage the power of elite visual communication. GrowSquadz was founded on this exact principle. We recognized early on that many incredibly talented creators were struggling to gain traction simply because their packaging—their thumbnails, banners, and promotional graphics—didn't reflect the high quality of their actual content. We stepped in to bridge this gap, offering a lifeline of professional graphic design tailored specifically for the fast-moving creator economy.</p>
+              
+              <p>GrowSquadz has established itself as India's premier creative design studio, specializing in crafting high-impact visual assets. Our mission is to elevate your digital presence through stunning, click-worthy designs that tell your unique story. Whether you are a growing YouTube channel looking for the perfect thumbnail designer or a corporate brand in need of a cohesive social media identity, our team of expert designers delivers unparalleled quality and innovation.</p>
+              
+              <h3>Why is professional graphic design crucial for your success?</h3>
+              <p>The answer lies in the first impression. A YouTube thumbnail is often the only deciding factor for a viewer choosing between your video and thousands of others. At GrowSquadz, our YouTube thumbnail design services are engineered to maximize your Click-Through Rate (CTR). We understand the psychology of color, the importance of typography, and the nuances of facial expressions that make a thumbnail truly viral. We delve deep into data-driven design, analyzing current trends and optimizing for mobile viewing. With a proven track record of helping over 200 creators scale their channels, our thumbnail designs don't just look good—they perform.</p>
+              
+              <h3>Comprehensive Social Media Design Services</h3>
+              <p>Beyond YouTube, we offer comprehensive social media design services. Instagram, LinkedIn, Facebook, and Twitter each require a unique visual approach to engage their distinct user bases. Our packages include everything from carousel posts and infographics to story templates and banner art. We ensure that your brand identity remains consistent and captivating across all platforms. Our designs are optimized for engagement algorithms—encouraging saves, shares, and comments through strategic layouts and compelling visual hooks. By outsourcing your graphic design needs to GrowSquadz, you save valuable time that can be better spent on content creation.</p>
+              
+              <h3>Premium Template Packs and Video Assets</h3>
+              <p>Video content is king, and our expertise doesn't stop at static images. While our core lies in premium graphic design, we also understand the synergy between great video editing and great design. We provide premium template packs and visual assets that video editors and creators can seamlessly integrate into their workflows. From animated lower thirds to sleek transition graphics, our assets are designed to give your videos a professional edge without breaking the bank.</p>
+              
+              <h3>Affordable Quality and a Collaborative Partner</h3>
+              <p>What sets GrowSquadz apart from other graphic design agencies in India? It's our commitment to affordability without compromising on quality. We believe that premium design should be accessible to everyone, which is why our services are priced competitively—up to 75% off standard market rates. Our 'Premium Pack V2' offers an incredible bundle of custom designs, unlimited revisions, and priority support.</p>
+              
+              <p>Furthermore, we pride ourselves on our seamless, hassle-free client experience. We know that creators hate endless back-and-forth emails and convoluted briefing processes. With direct WhatsApp communication, you can share your ideas instantly, and our rapid 24-48 hour turnaround ensures your content schedule never misses a beat. We are more than just a service provider; we are your creative partner. Whether you need a single viral thumbnail, a complete channel overhaul, or a long-term design partner, GrowSquadz is your ultimate destination for top-tier graphic design in India.</p>
+            </div>
+          </div>
+        </section>
+      )}
     </main>
 
     <Footer />
@@ -959,137 +882,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
     .process-step { padding-right: 0; }
   }
 
-  /* ── Pricing ── */
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    align-items: start;
-  }
-  .pricing-card {
-    background: var(--color-canvas);
-    border-radius: var(--radius-lg);
-    padding: 32px;
-    border: 1px solid var(--color-hairline);
-    box-shadow: var(--shadow-card);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    position: relative;
-  }
-  .pricing-card-featured {
-    background: #0a0a0c;
-    color: #fff;
-    border-color: #0a0a0c;
-    box-shadow: var(--shadow-pricing);
-    transform: scale(1.03);
-  }
-  .pricing-badge {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(135deg, #007cf0, #7928ca);
-    color: white;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 14px;
-    border-radius: var(--radius-full);
-    white-space: nowrap;
-  }
-  .pricing-top {}
-  .pricing-name {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 0 8px;
-    letter-spacing: -0.4px;
-  }
-  .pricing-desc {
-    font-size: 14px;
-    color: var(--color-body);
-    margin: 0;
-    line-height: 20px;
-  }
-  .pricing-card-featured .pricing-desc { color: #a1a1a1; }
-  .pricing-price-block {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .pricing-original {
-    font-size: 13px;
-    color: var(--color-mute);
-    text-decoration: line-through;
-    font-family: var(--font-mono);
-  }
-  .pricing-card-featured .pricing-original { color: #666; }
-  .pricing-price {
-    font-size: 40px;
-    font-weight: 700;
-    letter-spacing: -2px;
-    color: var(--color-ink);
-    font-family: var(--font-mono);
-    line-height: 1;
-  }
-  .pricing-card-featured .pricing-price { color: white; }
-  .pricing-features {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-top: 1px solid var(--color-hairline);
-    padding-top: 20px;
-  }
-  .pricing-card-featured .pricing-features { border-color: #333; }
-  .pricing-feature {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    color: var(--color-body);
-  }
-  .pricing-card-featured .pricing-feature { color: #d1d1d1; }
-  .pricing-feature svg { flex-shrink: 0; color: var(--color-link); }
-  .pricing-card-featured .pricing-feature svg { color: #50e3c2; }
-  .pricing-cta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 44px;
-    border-radius: var(--radius-pill);
-    font-size: 15px;
-    font-weight: 500;
-    text-decoration: none;
-    border: 1px solid var(--color-hairline);
-    background: var(--color-canvas-soft);
-    color: var(--color-ink);
-    transition: background-color 0.15s ease, border-color 0.15s ease;
-    margin-top: auto;
-  }
-  .pricing-cta:hover { background: var(--color-canvas-soft-2); border-color: var(--color-hairline-strong); }
-  .pricing-cta-featured {
-    background: white;
-    color: #000;
-    border-color: white;
-  }
-  .pricing-cta-featured:hover { background: #f0f0f0; border-color: #f0f0f0; color: #000; }
-  .pricing-note {
-    text-align: center;
-    font-size: 14px;
-    color: var(--color-mute);
-    margin-top: 32px;
-  }
-  .pricing-note a {
-    color: var(--color-link);
-    text-decoration: none;
-  }
-  .pricing-note a:hover { text-decoration: underline; }
-  @media (max-width: 900px) {
-    .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
-    .pricing-card-featured { transform: none; }
-  }
+
 
   /* ── Testimonials ── */
   .testimonials-marquee-container {
@@ -1223,77 +1016,7 @@ const seoImageUrl = cms?.seoImage ? urlFor(cms.seoImage).url() : undefined;
     }
   }
 
-  /* ── Partner Band ── */
-  .partner-band {
-    background: #0a0a0c;
-    color: #fff;
-    padding: 96px 24px;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-  }
-  .partner-mesh {
-    position: absolute;
-    inset: 0;
-    opacity: 0.15;
-    pointer-events: none;
-  }
-  .partner-content { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
-  .partner-eyebrow {
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin: 0 0 16px;
-  }
-  .partner-heading {
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 600;
-    letter-spacing: -1.28px;
-    color: white;
-    margin: 0 0 16px;
-    line-height: 1.1;
-  }
-  .partner-body {
-    font-size: 17px;
-    color: #a1a1a1;
-    line-height: 26px;
-    margin: 0 0 36px;
-  }
-  .partner-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .partner-btn-primary {
-    display: inline-flex;
-    align-items: center;
-    height: 48px;
-    padding: 0 24px;
-    font-size: 16px;
-    font-weight: 500;
-    color: #000;
-    background: white;
-    border-radius: var(--radius-pill);
-    text-decoration: none;
-    transition: opacity 0.15s ease;
-  }
-  .partner-btn-primary:hover { opacity: 0.9; }
-  .partner-btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    height: 48px;
-    padding: 0 24px;
-    font-size: 16px;
-    font-weight: 500;
-    color: white;
-    background: transparent;
-    border: 1px solid #444;
-    border-radius: var(--radius-pill);
-    text-decoration: none;
-    transition: border-color 0.15s ease;
-  }
-  .partner-btn-secondary:hover { border-color: #888; }
+
 
   /* Responsive global */
   @media (max-width: 640px) {

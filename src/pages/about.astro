@@ -3,28 +3,38 @@ import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import { sanityClient } from "../lib/sanity";
-import { aboutPageQuery } from "../lib/queries";
+import { aboutPageQuery, siteConfigQuery } from "../lib/queries";
+import { buildWhatsAppHref, getWhatsAppBaseHref } from "../lib/contact";
 
 let cms: any = null;
+let siteSettings: any = null;
 try {
   cms = await sanityClient.fetch(aboutPageQuery);
 } catch (e) {
   console.warn("Sanity fetch failed:", e);
 }
 
-const seoTitle = cms?.seoTitle ?? "About — Siddharth Studious";
-const seoDescription = cms?.seoDescription ?? "Learn about Siddharth Studious — India's premier creative design studio founded by Kumar Siddharth in Patna, Bihar.";
+try {
+  siteSettings = await sanityClient.fetch(siteConfigQuery);
+} catch (e) {
+  console.warn("Sanity site settings fetch failed:", e);
+}
+
+const orderWhatsAppHref = buildWhatsAppHref(getWhatsAppBaseHref(siteSettings), "Hi, I want to order a design");
+
+const seoTitle = cms?.seoTitle ?? "About — GrowSquadz";
+const seoDescription = cms?.seoDescription ?? "Learn about GrowSquadz — India's premier creative design studio founded by Kumar Siddharth in Patna, Bihar.";
 const heroHeading = cms?.heroHeading ?? "Built by creators,<br />for creators.";
-const heroSubheading = cms?.heroSubheading ?? "Siddharth Studious was founded with a simple mission: make world-class design accessible to every content creator in India.";
+const heroSubheading = cms?.heroSubheading ?? "GrowSquadz was founded with a simple mission: make world-class design accessible to every content creator in India.";
 
 const finalStoryParagraphs = cms?.storyParagraphs ?? [
-  "Siddharth Studious was founded by Kumar Siddharth in Patna, Bihar. What started as helping fellow creators with YouTube thumbnails quickly grew into a full-fledged creative design studio serving hundreds of creators and businesses across India.",
-  "Today, we operate as <strong>Siddharth Studious Ventures Private Limited</strong>, with a team of talented designers and a growing partner network. Our designs have helped creators grow their channels, improve their CTR, and build recognizable brand identities.",
+  "GrowSquadz was founded by Kumar Siddharth in Patna, Bihar. What started as helping fellow creators with YouTube thumbnails quickly grew into a full-fledged creative design studio serving hundreds of creators and businesses across India.",
+  "Today, we operate as <strong>GrowSquadz Ventures Private Limited</strong>, with a team of talented designers and a growing partner network. Our designs have helped creators grow their channels, improve their CTR, and build recognizable brand identities.",
   "We believe that premium design shouldn't cost a premium. That's why we offer professional-grade work at introductory prices — because every creator deserves to look their best."
 ];
 
 const finalCompanyInfo = cms?.companyInfo ?? [
-  { label: "Registered as", value: "Siddharth Studious Ventures Pvt. Ltd." },
+  { label: "Registered as", value: "GrowSquadz Ventures Pvt. Ltd." },
   { label: "Location", value: "Patna, Bihar, India — 800008" },
   { label: "Founded", value: "2020" },
   { label: "Team size", value: "10+ designers & editors" }
@@ -38,7 +48,7 @@ const finalValues = cms?.values ?? [
 ];
 
 const ctaHeading = cms?.ctaHeading ?? "Ready to work together?";
-const ctaBody = cms?.ctaBody ?? "Order your first design today and experience the Siddharth Studious difference.";
+const ctaBody = cms?.ctaBody ?? "Order your first design today and experience the GrowSquadz difference.";
 ---
 
 <!doctype html>
@@ -95,22 +105,31 @@ const ctaBody = cms?.ctaBody ?? "Order your first design today and experience th
           </div>
           <div class="story-card">
             <div class="founder-card">
-              <div class="founder-avatar">KS</div>
+              <div class="founder-avatar">{cms?.founderAvatar ?? "GS"}</div>
               <div class="founder-info">
-                <h3 class="founder-name">Kumar Siddharth</h3>
-                <p class="founder-title">Founder & Creative Director</p>
+                <h3 class="founder-name">{cms?.founderName ?? "GrowSquadz"}</h3>
+                <p class="founder-title">{cms?.founderTitle ?? "Creative Design Studio"}</p>
                 <p class="founder-bio">
-                  Designer, entrepreneur, and content creator based in Patna, Bihar.
-                  Passionate about helping Indian creators compete on a global stage.
+                  {cms?.founderBio ?? "India's premier creative design studio offering YouTube thumbnails, video editing, and social media designs."}
                 </p>
               </div>
               <div class="founder-links">
-                <a href="https://youtube.com/@siddharthstudious" target="_blank" rel="noopener noreferrer" class="founder-link">
-                  YouTube →
-                </a>
-                <a href="https://www.instagram.com/siddharthstudious.in/" target="_blank" rel="noopener noreferrer" class="founder-link">
-                  Instagram →
-                </a>
+                {cms?.founderLinks && cms.founderLinks.length > 0 ? (
+                  cms.founderLinks.map((link: any) => (
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" class="founder-link">
+                      {link.label} →
+                    </a>
+                  ))
+                ) : (
+                  <>
+                    <a href="https://youtube.com/@growsquadz" target="_blank" rel="noopener noreferrer" class="founder-link">
+                      YouTube →
+                    </a>
+                    <a href="https://www.instagram.com/growsquadz.in/" target="_blank" rel="noopener noreferrer" class="founder-link">
+                      Instagram →
+                    </a>
+                  </>
+                )}
               </div>
             </div>
             <div class="company-info-card">
@@ -153,7 +172,7 @@ const ctaBody = cms?.ctaBody ?? "Order your first design today and experience th
           <h2>{ctaHeading}</h2>
           <p>{ctaBody}</p>
           <div class="about-cta-actions">
-            <a href="https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design" target="_blank" rel="noopener noreferrer" class="hero-btn-primary-white" id="about-order-cta">Order Now →</a>
+            <a href={orderWhatsAppHref} target="_blank" rel="noopener noreferrer" class="hero-btn-primary-white" id="about-order-cta">Order Now →</a>
             <a href="/contact" class="hero-btn-secondary-white">Contact Us</a>
           </div>
         </div>

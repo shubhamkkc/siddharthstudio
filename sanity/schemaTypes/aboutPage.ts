@@ -46,5 +46,21 @@ export default defineType({
     }),
     defineField({ name: "ctaHeading", title: "CTA Heading", type: "string" }),
     defineField({ name: "ctaBody", title: "CTA Body", type: "text" }),
+    defineField({ name: "founderName", title: "Founder/Leader Name", type: "string" }),
+    defineField({ name: "founderTitle", title: "Founder/Leader Title", type: "string" }),
+    defineField({ name: "founderBio", title: "Founder/Leader Bio", type: "text" }),
+    defineField({ name: "founderAvatar", title: "Founder/Leader Avatar Initials", type: "string", description: "Initials to display inside the avatar. Example: KS or GS" }),
+    defineField({
+      name: "founderLinks",
+      title: "Founder/Leader Social Links",
+      type: "array",
+      of: [{
+        type: "object",
+        fields: [
+          defineField({ name: "label", title: "Label", type: "string" }),
+          defineField({ name: "href", title: "Link URL", type: "string" }),
+        ],
+      }],
+    }),
   ],
 });

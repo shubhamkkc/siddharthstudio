@@ -60,7 +60,6 @@ export default defineType({
           defineField({ name: "image", title: "Service Image (Cover)", type: "image", options: { hotspot: true } }),
           defineField({ name: "title", title: "Title", type: "string" }),
           defineField({ name: "description", title: "Description", type: "text" }),
-          defineField({ name: "price", title: "Price Label", type: "string" }),
           defineField({ name: "gradient", title: "Gradient Class", type: "string" }),
           defineField({ name: "href", title: "Link", type: "string" }),
         ],
