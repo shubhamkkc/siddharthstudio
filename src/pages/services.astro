@@ -85,7 +85,12 @@ const ctaBody = cmsPage?.ctaBody ?? "Send us a message on WhatsApp and let's dis
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="GrowSquadz" />
+    <link rel="manifest" href="/site.webmanifest" />
     <script is:inline>
       const theme = (() => {
         if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
@@ -264,7 +269,32 @@ const ctaBody = cmsPage?.ctaBody ?? "Send us a message on WhatsApp and let's dis
   .cta-btn:hover { opacity: 0.9; }
 
   @media (max-width: 900px) {
-    .service-grid { grid-template-columns: 1fr; gap: 48px; }
-    .service-pricing-panel { position: static; }
+    .service-section { padding: 48px 16px; }
+    .service-grid { grid-template-columns: 1fr; gap: 40px; }
+    .service-pricing-panel { position: static; padding: 24px 20px; }
+  }
+
+  @media (max-width: 550px) {
+    .services-hero { padding: 48px 16px 36px; }
+    .service-pricing-panel { padding: 20px 14px; }
+    .panel-tier {
+      flex-wrap: wrap;
+      gap: 16px 12px;
+      padding: 16px;
+    }
+    .tier-label {
+      flex: 1 1 50%;
+      font-size: 14px;
+    }
+    .tier-prices {
+      flex: 0 0 auto;
+      margin-left: auto;
+      align-items: baseline;
+    }
+    .tier-btn {
+      width: 100%;
+      justify-content: center;
+      order: 3;
+    }
   }
 </style>

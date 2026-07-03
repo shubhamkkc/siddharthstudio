@@ -32,7 +32,8 @@ const currentPath = Astro.url.pathname;
     <nav class="navbar-inner">
       <!-- Logo -->
       <a href="/" class="navbar-logo" aria-label={`${siteName} Home`}>
-          <img src="/logo.png" alt={`${siteName} Logo`} width="28" height="28" class="logo-image" />
+        <img src="/logo-light.png" alt={`${siteName} Logo`} width="28" height="28" class="logo-image logo-light" />
+        <img src="/logo-dark.png" alt={`${siteName} Logo`} width="28" height="28" class="logo-image logo-dark" />
         <span class="logo-text">{siteName}</span>
       </a>
 
@@ -186,6 +187,9 @@ const currentPath = Astro.url.pathname;
     text-decoration: none;
     flex-shrink: 0;
   }
+  .logo-dark { display: none; }
+  :root[data-theme="dark"] .logo-light { display: none; }
+  :root[data-theme="dark"] .logo-dark { display: block; }
   .logo-icon { display: flex; align-items: center; }
   .logo-text {
     font-size: 15px;

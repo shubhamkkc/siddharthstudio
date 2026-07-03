@@ -100,7 +100,8 @@ const finalSocialLinks = siteSettings?.socialLinks ?? defaultSocialLinks;
         <!-- Brand Column -->
         <div class="footer-brand">
           <a href="/" class="footer-logo" aria-label="Siddharth Studious">
-            <img src="/logo.png" alt="Siddharth Studious Logo" width="24" height="24" class="logo-image" />
+            <img src="/logo-light.png" alt="Siddharth Studious Logo" width="24" height="24" class="logo-image logo-light" />
+            <img src="/logo-dark.png" alt="Siddharth Studious Logo" width="24" height="24" class="logo-image logo-dark" />
             <span>Siddharth Studious</span>
           </a>
           <p class="footer-brand-tagline">
@@ -262,6 +263,9 @@ const finalSocialLinks = siteSettings?.socialLinks ?? defaultSocialLinks;
     font-weight: 600;
     margin-bottom: 16px;
   }
+  .logo-dark { display: none; }
+  :root[data-theme="dark"] .logo-light { display: none; }
+  :root[data-theme="dark"] .logo-dark { display: block; }
   .footer-brand-tagline {
     font-size: 14px;
     color: var(--color-body);

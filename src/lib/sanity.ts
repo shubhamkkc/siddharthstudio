@@ -1,12 +1,15 @@
 import { createClient } from "@sanity/client";
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url";
+
+const useCdn = import.meta.env.PUBLIC_SANITY_USE_CDN === "true";
 
 export const sanityClient = createClient({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID || "demo-project-id",
   dataset: import.meta.env.PUBLIC_SANITY_DATASET || "production",
   apiVersion: "2024-01-01",
-  useCdn: true,
+  useCdn,
+  perspective: "published",
 });
 
 const originalFetch = sanityClient.fetch.bind(sanityClient);
@@ -18,7 +21,7 @@ sanityClient.fetch = async (query: string, params?: any) => {
   return originalFetch(query, params);
 };
 
-const builder = imageUrlBuilder(sanityClient);
+const builder = createImageUrlBuilder(sanityClient);
 
 export function urlFor(source: SanityImageSource) {
   return builder.image(source);
