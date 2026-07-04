@@ -21,6 +21,7 @@ try {
 }
 
 const fallbackEmail = siteSettings?.email ?? "info@growsquadz.in";
+const fallbackPhone = siteSettings?.phone ?? "+91 74883 16199";
 const whatsappBaseHref = getWhatsAppBaseHref(siteSettings);
 const orderWhatsAppHref = buildWhatsAppHref(whatsappBaseHref, "Hi, I want to order a design");
 
@@ -33,7 +34,7 @@ const baseChannels = cms?.channels ?? [
   {
     platform: "whatsapp",
     label: "WhatsApp (Fastest)",
-    value: "+91 74883 16199",
+    value: fallbackPhone,
     tag: "Avg. response: <1 hr",
     href: orderWhatsAppHref,
     iconBg: "#25D366",
@@ -78,6 +79,14 @@ const finalChannels = baseChannels.map((channel: any) => {
       ...channel,
       value: fallbackEmail,
       href: `mailto:${fallbackEmail}`,
+    };
+  }
+
+  if (channel?.platform === "whatsapp") {
+    return {
+      ...channel,
+      value: fallbackPhone,
+      href: orderWhatsAppHref,
     };
   }
 

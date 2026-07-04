@@ -22,10 +22,18 @@ export const siteConfigQuery = `*[_type == "siteSettings"][0]{
 export const homepageQuery = `*[_type == "homepage"][0]{
   seoTitle,
   seoDescription,
+  announcementBadge,
+  announcementText,
+  announcementHref,
   heroEyebrow,
   heroHeadline,
   heroBody,
   heroFootnote,
+  heroHighlights[]{
+    text,
+    dotColor,
+    showCheck
+  },
   heroImage,
   heroPrimaryCta{label, href},
   heroSecondaryCta{label, href},
@@ -37,6 +45,19 @@ export const homepageQuery = `*[_type == "homepage"][0]{
     description,
     gradient,
     href
+  },
+  servicesSections[]{
+    eyebrow,
+    heading,
+    subheading,
+    services[]{
+      icon,
+      image,
+      title,
+      description,
+      gradient,
+      href
+    }
   },
   testimonials[]{
     name,

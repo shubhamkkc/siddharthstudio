@@ -17,11 +17,18 @@ const defaultNavLinks = [
   { href: "/about", label: "About" },
 ];
 
-const finalNavLinks = siteSettings?.navLinks ?? defaultNavLinks;
+const finalNavLinks = (siteSettings?.navLinks ?? defaultNavLinks).filter((link: any) => {
+  const label = (link?.label || "").toLowerCase().trim();
+  const href = (link?.href || "").toLowerCase().trim();
+  return label !== "pricing" && href !== "/pricing";
+});
 
 const siteName = siteSettings?.siteName ?? "GrowSquadz";
 const telegramLink = siteSettings?.socialLinks?.find((l: any) => l.label.toLowerCase() === 'telegram')?.href ?? "https://t.me/kumarsiddharth";
-const whatsappLink = siteSettings?.socialLinks?.find((l: any) => l.label.toLowerCase() === 'whatsapp')?.href ?? "https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design";
+const whatsappLink =
+  siteSettings?.defaultOrderCtaHref ??
+  siteSettings?.socialLinks?.find((l: any) => l.label?.toLowerCase() === 'whatsapp')?.href ??
+  "https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design";
 
 const currentPath = Astro.url.pathname;
 ---
@@ -31,9 +38,8 @@ const currentPath = Astro.url.pathname;
     <nav class="navbar-inner">
       <!-- Logo -->
       <a href="/" class="navbar-logo" aria-label={`${siteName} Home`}>
-        <img src="/logo-light.png" alt={`${siteName} Logo`} width="28" height="28" class="logo-image logo-light" />
-        <img src="/logo-dark.png" alt={`${siteName} Logo`} width="28" height="28" class="logo-image logo-dark" />
-        <span class="logo-text">{siteName}</span>
+        <img src="/logo-light.png" alt={`${siteName} Logo`} width="150" height="150" class="logo-image logo-light" />
+        <img src="/logo-dark.png" alt={`${siteName} Logo`} width="150" height="150" class="logo-image logo-dark" />
       </a>
 
       <!-- Desktop Nav Links -->
@@ -160,7 +166,7 @@ const currentPath = Astro.url.pathname;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-hairline);
-    height: 64px;
+    height: 76px;
     display: flex;
     align-items: center;
     transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -182,7 +188,7 @@ const currentPath = Astro.url.pathname;
   .navbar-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 0;
     text-decoration: none;
     flex-shrink: 0;
   }

@@ -10,6 +10,9 @@ export default defineType({
     defineField({ name: "seoDescription", title: "SEO Description", type: "text" }),
 
     // Hero
+    defineField({ name: "announcementBadge", title: "Announcement Badge", type: "string" }),
+    defineField({ name: "announcementText", title: "Announcement Text", type: "string" }),
+    defineField({ name: "announcementHref", title: "Announcement Link", type: "string" }),
     defineField({ name: "heroEyebrow", title: "Hero Eyebrow Text", type: "string" }),
     defineField({ name: "heroHeadline", title: "Hero Headline", type: "string" }),
     defineField({ name: "heroBody", title: "Hero Body Text", type: "text" }),
@@ -32,6 +35,19 @@ export default defineType({
         defineField({ name: "label", title: "Label", type: "string" }),
         defineField({ name: "href", title: "URL", type: "string" }),
       ],
+    }),
+    defineField({
+      name: "heroHighlights",
+      title: "Hero Highlight Cards",
+      type: "array",
+      of: [{
+        type: "object",
+        fields: [
+          defineField({ name: "text", title: "Text", type: "string" }),
+          defineField({ name: "dotColor", title: "Dot Color", type: "string" }),
+          defineField({ name: "showCheck", title: "Show Check Icon", type: "boolean" }),
+        ],
+      }],
     }),
 
     // Stats
@@ -62,6 +78,37 @@ export default defineType({
           defineField({ name: "description", title: "Description", type: "text" }),
           defineField({ name: "gradient", title: "Gradient Class", type: "string" }),
           defineField({ name: "href", title: "Link", type: "string" }),
+        ],
+      }],
+    }),
+
+    defineField({
+      name: "servicesSections",
+      title: "Repeatable Services Sections",
+      description: "Duplicate the services UI block with custom heading/subheading/content.",
+      type: "array",
+      of: [{
+        type: "object",
+        fields: [
+          defineField({ name: "eyebrow", title: "Eyebrow", type: "string" }),
+          defineField({ name: "heading", title: "Heading", type: "string" }),
+          defineField({ name: "subheading", title: "Subheading", type: "text" }),
+          defineField({
+            name: "services",
+            title: "Cards",
+            type: "array",
+            of: [{
+              type: "object",
+              fields: [
+                defineField({ name: "icon", title: "Icon SVG", type: "text" }),
+                defineField({ name: "image", title: "Service Image (Cover)", type: "image", options: { hotspot: true } }),
+                defineField({ name: "title", title: "Title", type: "string" }),
+                defineField({ name: "description", title: "Description", type: "text" }),
+                defineField({ name: "gradient", title: "Gradient Class", type: "string" }),
+                defineField({ name: "href", title: "Link", type: "string" }),
+              ],
+            }],
+          }),
         ],
       }],
     }),
