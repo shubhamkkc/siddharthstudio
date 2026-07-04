@@ -97,9 +97,7 @@ export const servicesPageQuery = `*[_type == "servicesPage"][0]{
   seoTitle,
   seoDescription,
   heroHeading,
-  heroSubheading,
-  ctaHeading,
-  ctaBody
+  heroSubheading
 }`;
 
 // ── Pricing Page ──
@@ -146,15 +144,14 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0]{
   heroHeading,
   heroSubheading,
   storyParagraphs,
-  companyInfo[]{label, value},
-  values[]{icon, title, description},
-  founderName,
-  founderTitle,
-  founderBio,
-  founderAvatar,
-  founderLinks[]{label, href},
-  ctaHeading,
-  ctaBody
+  profiles[]{
+    avatar,
+    name,
+    title,
+    bio,
+    links[]{label, href}
+  },
+  values[]{icon, title, description}
 }`;
 
 // ── Contact Page ──

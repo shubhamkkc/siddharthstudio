@@ -148,17 +148,18 @@ const finalTestimonialsList = finalTestimonials;
 const finalStepsList = finalSteps;
 /** @type {any[]} */
 const finalFaqItemsList = finalFaqItems;
-const finalServicesSections =
-  cms?.servicesSections?.length > 0
-    ? cms.servicesSections
-    : [
-        {
-          eyebrow: "WHAT WE DO",
-          heading: "Everything your brand needs.",
-          subheading: "From viral thumbnails to brand identity — we craft visuals that convert.",
-          services: finalServicesList,
-        },
-      ];
+const finalServicesSections = [
+  {
+    eyebrow: "WHAT WE DO",
+    heading: "Everything your brand needs.",
+    subheading: "From viral thumbnails to brand identity — we craft visuals that convert.",
+    services: finalServicesList,
+  },
+  ...(cms?.servicesSections ?? []),
+];
+const activeServicesSections = finalServicesSections.filter(
+  (section: any) => (section.services ?? []).length > 0
+);
 const creatorsStatValue = finalStatsList.find((s: any) => s.label.toLowerCase().includes('creator'))?.value ?? "500+";
 const finalHeroHighlights = cms?.heroHighlights ?? [
   { text: "Thumbnail Delivered", dotColor: "#50e3c2", showCheck: true },
@@ -371,7 +372,7 @@ const announcementHref = cms?.announcementHref ?? "/pricing";
       </script>
 
       <!-- ── Services Grid ── -->
-      {finalServicesSections.map((section: any, sectionIndex: number) => (
+      {activeServicesSections.map((section: any, sectionIndex: number) => (
         <section class="section-band" id={sectionIndex === 0 ? "services" : `services-${sectionIndex + 1}`}>
           <div class="container-page">
             <div class="section-header">
@@ -382,7 +383,7 @@ const announcementHref = cms?.announcementHref ?? "/pricing";
               </p>
             </div>
             <div class="services-grid">
-              {(section.services ?? finalServicesList).map((service: any) => (
+              {(section.services ?? []).map((service: any) => (
                 <a href={service.href} class={`service-card service-card-${service.gradient}`} id={`service-${service.title.toLowerCase().replace(/\s+/g, '-')}`}>
                   {service.image ? (
                     <div class="service-card-image">

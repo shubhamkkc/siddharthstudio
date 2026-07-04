@@ -33,12 +33,30 @@ const finalStoryParagraphs = cms?.storyParagraphs ?? [
   "We believe that premium design shouldn't cost a premium. That's why we offer professional-grade work at introductory prices — because every creator deserves to look their best."
 ];
 
-const finalCompanyInfo = cms?.companyInfo ?? [
-  { label: "Registered as", value: "GrowSquadz Ventures Pvt. Ltd." },
-  { label: "Location", value: "Patna, Bihar, India — 800008" },
-  { label: "Founded", value: "2020" },
-  { label: "Team size", value: "10+ designers & editors" }
+const defaultProfiles = [
+  {
+    avatar: "GS",
+    name: "GrowSquadz",
+    title: "Creative Design Studio",
+    bio: "India's premier creative design studio offering YouTube thumbnails, video editing, and social media designs.",
+    links: [
+      { label: "YouTube", href: "https://youtube.com/@growsquadz" },
+      { label: "Instagram", href: "https://www.instagram.com/growsquadz.in/" }
+    ]
+  },
+  {
+    avatar: "KS",
+    name: "Kumar Siddharth",
+    title: "Founder & Director",
+    bio: "Passionate designer and content creator helping fellow creators build scroll-stopping visual identities and maximize their channel potential.",
+    links: [
+      { label: "YouTube", href: "https://youtube.com/@kumarsiddharth" },
+      { label: "Instagram", href: "https://instagram.com/kumarsiddharth" }
+    ]
+  }
 ];
+
+const finalProfiles = (cms?.profiles && cms.profiles.length > 0) ? cms.profiles : defaultProfiles;
 
 const finalValues = cms?.values ?? [
   { title: "Quality First", icon: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"12 2 15 8 22 9 17 14 18 21 12 18 6 21 7 14 2 9 9 8\"/></svg>", description: "Every design is crafted with attention to detail. We don't release work we're not proud of." },
@@ -47,8 +65,7 @@ const finalValues = cms?.values ?? [
   { title: "Fast Delivery", icon: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"17 8 12 3 7 8\"/><line x1=\"12\" y1=\"3\" x2=\"12\" y2=\"15\"/></svg>", description: "Time is money for content creators. We deliver within 24–48 hours, always." }
 ];
 
-const ctaHeading = cms?.ctaHeading ?? "Ready to work together?";
-const ctaBody = cms?.ctaBody ?? "Order your first design today and experience the GrowSquadz difference.";
+
 ---
 
 <!doctype html>
@@ -104,45 +121,25 @@ const ctaBody = cms?.ctaBody ?? "Order your first design today and experience th
             ))}
           </div>
           <div class="story-card">
-            <div class="founder-card">
-              <div class="founder-avatar">{cms?.founderAvatar ?? "GS"}</div>
-              <div class="founder-info">
-                <h3 class="founder-name">{cms?.founderName ?? "GrowSquadz"}</h3>
-                <p class="founder-title">{cms?.founderTitle ?? "Creative Design Studio"}</p>
-                <p class="founder-bio">
-                  {cms?.founderBio ?? "India's premier creative design studio offering YouTube thumbnails, video editing, and social media designs."}
-                </p>
-              </div>
-              <div class="founder-links">
-                {cms?.founderLinks && cms.founderLinks.length > 0 ? (
-                  cms.founderLinks.map((link: any) => (
+            {finalProfiles.map((profile: any) => (
+              <div class="founder-card">
+                <div class="founder-avatar">{profile.avatar ?? "GS"}</div>
+                <div class="founder-info">
+                  <h3 class="founder-name">{profile.name ?? "GrowSquadz"}</h3>
+                  <p class="founder-title">{profile.title ?? "Creative Design Studio"}</p>
+                  <p class="founder-bio">
+                    {profile.bio ?? ""}
+                  </p>
+                </div>
+                <div class="founder-links">
+                  {(profile.links ?? []).map((link: any) => (
                     <a href={link.href} target="_blank" rel="noopener noreferrer" class="founder-link">
                       {link.label} →
                     </a>
-                  ))
-                ) : (
-                  <>
-                    <a href="https://youtube.com/@growsquadz" target="_blank" rel="noopener noreferrer" class="founder-link">
-                      YouTube →
-                    </a>
-                    <a href="https://www.instagram.com/growsquadz.in/" target="_blank" rel="noopener noreferrer" class="founder-link">
-                      Instagram →
-                    </a>
-                  </>
-                )}
+                  ))}
+                </div>
               </div>
-            </div>
-            <div class="company-info-card">
-              <h4>Company Info</h4>
-              <dl>
-                {finalCompanyInfo.map((info: any) => (
-                  <div class="info-row">
-                    <dt>{info.label}</dt>
-                    <dd>{info.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -166,17 +163,7 @@ const ctaBody = cms?.ctaBody ?? "Order your first design today and experience th
         </div>
       </section>
 
-      <!-- CTA -->
-      <section class="about-cta">
-        <div class="container-page about-cta-inner">
-          <h2>{ctaHeading}</h2>
-          <p>{ctaBody}</p>
-          <div class="about-cta-actions">
-            <a href={orderWhatsAppHref} target="_blank" rel="noopener noreferrer" class="hero-btn-primary-white" id="about-order-cta">Order Now →</a>
-            <a href="/contact" class="hero-btn-secondary-white">Contact Us</a>
-          </div>
-        </div>
-      </section>
+
     </main>
     <Footer />
   </body>
@@ -261,28 +248,7 @@ const ctaBody = cms?.ctaBody ?? "Order your first design today and experience th
   .value-title { font-size: 16px; font-weight: 600; color: var(--color-ink); margin: 0 0 8px; }
   .value-desc { font-size: 14px; color: var(--color-body); line-height: 20px; margin: 0; }
 
-  .about-cta {
-    background: #0a0a0c;
-    padding: 80px 24px;
-    text-align: center;
-  }
-  .about-cta-inner { max-width: 560px; margin: 0 auto; }
-  .about-cta h2 { font-size: 36px; font-weight: 600; letter-spacing: -1.5px; color: white; margin: 0 0 12px; }
-  .about-cta p { font-size: 17px; color: #a1a1a1; margin: 0 0 32px; }
-  .about-cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .hero-btn-primary-white {
-    display: inline-flex; align-items: center; height: 48px; padding: 0 24px;
-    font-size: 16px; font-weight: 500; color: #000; background: white;
-    border-radius: var(--radius-pill); text-decoration: none; transition: opacity 0.15s;
-  }
-  .hero-btn-primary-white:hover { opacity: 0.9; }
-  .hero-btn-secondary-white {
-    display: inline-flex; align-items: center; height: 48px; padding: 0 24px;
-    font-size: 16px; font-weight: 500; color: white; background: transparent;
-    border: 1px solid #444; border-radius: var(--radius-pill); text-decoration: none;
-    transition: border-color 0.15s;
-  }
-  .hero-btn-secondary-white:hover { border-color: #888; }
+
   .hero-btn-primary {
     display: inline-flex; align-items: center; height: 48px; padding: 0 24px;
     font-size: 16px; font-weight: 500; color: var(--color-on-primary); background: var(--color-ink);

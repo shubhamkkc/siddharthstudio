@@ -24,7 +24,6 @@ const finalNavLinks = (siteSettings?.navLinks ?? defaultNavLinks).filter((link: 
 });
 
 const siteName = siteSettings?.siteName ?? "GrowSquadz";
-const telegramLink = siteSettings?.socialLinks?.find((l: any) => l.label.toLowerCase() === 'telegram')?.href ?? "https://t.me/kumarsiddharth";
 const whatsappLink =
   siteSettings?.defaultOrderCtaHref ??
   siteSettings?.socialLinks?.find((l: any) => l.label?.toLowerCase() === 'whatsapp')?.href ??
@@ -76,20 +75,18 @@ const currentPath = Astro.url.pathname;
           </svg>
         </button>
         <a
-          href={telegramLink}
+          href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
           class="btn-nav-ghost"
         >
-          Telegram
+          WhatsApp
         </a>
         <a
-          href={whatsappLink}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/contact"
           class="btn-nav-primary"
         >
-          Order Now
+          Contact Us
         </a>
       </div>
 
@@ -138,20 +135,18 @@ const currentPath = Astro.url.pathname;
         <span class="mobile-theme-label">Toggle Theme</span>
       </button>
       <a
-        href={telegramLink}
+        href={whatsappLink}
         target="_blank"
         rel="noopener noreferrer"
         class="mobile-btn-ghost"
       >
-        Join Telegram
+        WhatsApp
       </a>
       <a
-        href={whatsappLink}
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/contact"
         class="mobile-btn-primary"
       >
-        Order Now →
+        Contact Us
       </a>
     </div>
   </div>

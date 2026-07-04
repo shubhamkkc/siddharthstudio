@@ -88,8 +88,7 @@ const seoTitle = cmsPage?.seoTitle ?? "Services — GrowSquadz";
 const seoDescription = cmsPage?.seoDescription ?? "Professional design services: YouTube thumbnails from ₹299, social media posts from ₹249, video editing, logos, and brand identity packages.";
 const heroHeading = cmsPage?.heroHeading ?? "Everything your content needs.";
 const heroSubheading = cmsPage?.heroSubheading ?? "Professional creative services at honest prices. Delivered in 24–48 hours via WhatsApp.";
-const ctaHeading = cmsPage?.ctaHeading ?? "Ready to level up your content?";
-const ctaBody = cmsPage?.ctaBody ?? "Send us a message on WhatsApp and let's discuss your next project.";
+
 ---
 
 <!doctype html>
@@ -170,16 +169,7 @@ const ctaBody = cmsPage?.ctaBody ?? "Send us a message on WhatsApp and let's dis
         </section>
       ))}
 
-      <!-- Bottom CTA -->
-      <section class="services-cta">
-        <div class="container-page services-cta-inner">
-          <h2>{ctaHeading}</h2>
-          <p>{ctaBody}</p>
-          <a href={buildWhatsAppHref(whatsappBaseHref, "Hi, I need help choosing the right service")} target="_blank" rel="noopener noreferrer" class="cta-btn" id="services-help-cta">
-            Get a Recommendation →
-          </a>
-        </div>
-      </section>
+
     </main>
     <Footer />
   </body>
@@ -253,16 +243,7 @@ const ctaBody = cmsPage?.ctaBody ?? "Send us a message on WhatsApp and let's dis
   .custom-quote-link { display: block; margin-top: 20px; font-size: 14px; color: var(--color-link); text-decoration: none; text-align: center; }
   .custom-quote-link:hover { text-decoration: underline; }
 
-  .services-cta { background: #0a0a0c; padding: 80px 24px; text-align: center; color: white; }
-  .services-cta-inner { max-width: 480px; margin: 0 auto; }
-  .services-cta h2 { font-size: 32px; font-weight: 600; letter-spacing: -1.5px; margin: 0 0 12px; }
-  .services-cta p { font-size: 17px; color: #a1a1a1; margin: 0 0 28px; }
-  .cta-btn {
-    display: inline-flex; align-items: center; height: 48px; padding: 0 24px;
-    font-size: 16px; font-weight: 500; color: #000; background: white;
-    border-radius: var(--radius-pill); text-decoration: none; transition: opacity 0.15s;
-  }
-  .cta-btn:hover { opacity: 0.9; }
+
 
   @media (max-width: 900px) {
     .service-section { padding: 48px 16px; }
