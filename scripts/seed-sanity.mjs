@@ -1170,6 +1170,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "6q2dt4s8",
             "_type": "span",
             "text": "If you require any more information or have any questions about our site's disclaimer, please feel free to contact us by email at info@growsquadz.in."
           }
@@ -1182,6 +1183,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "w6t7dd0t",
             "_type": "span",
             "text": "Disclaimers for GrowSquadz"
           }
@@ -1194,6 +1196,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "uhaer3os",
             "_type": "span",
             "text": "All the information on this website - https://www.growsquadz.in - is published in good faith and for general information purpose only. GrowSquadz does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (GrowSquadz), is strictly at your own risk. GrowSquadz will not be liable for any losses and/or damages in connection with the use of our website."
           }
@@ -1206,6 +1209,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "jwtq4yu7",
             "_type": "span",
             "text": "From our website, you can visit other websites by following hyperlinks to such external sites. While we strive to provide only quality links to useful and ethical websites, we have no control over the content and nature of these sites. These links to other websites do not imply a recommendation for all the content found on these sites. Site owners and content may change without notice and may occur before we have the opportunity to remove a link which may have gone 'bad'."
           }
@@ -1218,6 +1222,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "ov6g648y",
             "_type": "span",
             "text": "Please be also aware that when you leave our website, other sites may have different privacy policies and terms which are beyond our control. Please be sure to check the Privacy Policies of these sites as well as their \"Terms of Service\" before engaging in any business or uploading any information."
           }
@@ -1230,6 +1235,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "tgb7c1pe",
             "_type": "span",
             "text": "Consent"
           }
@@ -1242,6 +1248,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "uahwy90q",
             "_type": "span",
             "text": "By using our website, you hereby consent to our disclaimer and agree to its terms."
           }
@@ -1254,6 +1261,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "g2jx7m8q",
             "_type": "span",
             "text": "Update"
           }
@@ -1266,6 +1274,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "gdin2no1",
             "_type": "span",
             "text": "Should we update, amend or make any changes to this document, those changes will be prominently posted here."
           }
@@ -1291,6 +1300,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "etvza3kh",
             "_type": "span",
             "text": "At GrowSquadz, accessible from https://www.growsquadz.in, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by GrowSquadz and how we use it."
           }
@@ -1303,6 +1313,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "x0zrtbib",
             "_type": "span",
             "text": "Information We Collect"
           }
@@ -1315,6 +1326,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "ql51zdlb",
             "_type": "span",
             "text": "The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information."
           }
@@ -1327,6 +1339,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "e6erhu7m",
             "_type": "span",
             "text": "If you contact us directly, we may receive additional information about you such as your name, email address, phone number, the contents of the message and/or attachments you may send us, and any other information you may choose to provide."
           }
@@ -1339,6 +1352,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "u13p6afm",
             "_type": "span",
             "text": "How We Use Your Information"
           }
@@ -1351,6 +1365,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "leaa9s8c",
             "_type": "span",
             "text": "We use the information we collect in various ways, including to:"
           }
@@ -1363,6 +1378,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "8v5kvo1w",
             "_type": "span",
             "text": "Provide, operate, and maintain our website and services"
           }
@@ -1376,6 +1392,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "dgpqwk0z",
             "_type": "span",
             "text": "Improve, personalize, and expand our website and services"
           }
@@ -1389,6 +1406,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "43uf5mo8",
             "_type": "span",
             "text": "Understand and analyze how you use our website"
           }
@@ -1402,6 +1420,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "4hg65wde",
             "_type": "span",
             "text": "Develop new products, services, features, and functionality"
           }
@@ -1415,6 +1434,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "8n7epc2e",
             "_type": "span",
             "text": "Communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the website"
           }
@@ -1428,6 +1448,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "sa4rwecb",
             "_type": "span",
             "text": "Send you emails or WhatsApp messages regarding your design orders"
           }
@@ -1441,6 +1462,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "33ugodal",
             "_type": "span",
             "text": "Find and prevent fraud"
           }
@@ -1454,6 +1476,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "mkl8wy86",
             "_type": "span",
             "text": "Log Files"
           }
@@ -1466,6 +1489,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "xxbmx1hy",
             "_type": "span",
             "text": "GrowSquadz follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable."
           }
@@ -1491,6 +1515,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "qwyqfc95",
             "_type": "span",
             "text": "Welcome to GrowSquadz! These terms and conditions outline the rules and regulations for the use of GrowSquadz Ventures Private Limited's Website, located at https://www.growsquadz.in."
           }
@@ -1503,6 +1528,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "8qwb9fe8",
             "_type": "span",
             "text": "By accessing this website we assume you accept these terms and conditions. Do not continue to use GrowSquadz if you do not agree to take all of the terms and conditions stated on this page."
           }
@@ -1515,6 +1541,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "7v3vu7au",
             "_type": "span",
             "text": "Intellectual Property Rights"
           }
@@ -1527,6 +1554,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "lqkg4cp4",
             "_type": "span",
             "text": "Other than the content you own, under these Terms, GrowSquadz Ventures Private Limited and/or its licensors own all the intellectual property rights and materials contained in this Website. You are granted limited license only for purposes of viewing the material contained on this Website."
           }
@@ -1539,6 +1567,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "qi00n9fp",
             "_type": "span",
             "text": "Restrictions"
           }
@@ -1551,6 +1580,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "n3lbazd2",
             "_type": "span",
             "text": "You are specifically restricted from all of the following:"
           }
@@ -1563,6 +1593,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "nofpdu5h",
             "_type": "span",
             "text": "publishing any Website material in any other media without prior consent;"
           }
@@ -1576,6 +1607,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "frsxdlsf",
             "_type": "span",
             "text": "selling, sublicensing and/or otherwise commercializing any Website material;"
           }
@@ -1589,6 +1621,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "ku6qpbug",
             "_type": "span",
             "text": "publicly performing and/or showing any Website material;"
           }
@@ -1602,6 +1635,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "j768e9ad",
             "_type": "span",
             "text": "using this Website in any way that is or may be damaging to this Website;"
           }
@@ -1615,6 +1649,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "4fz085ya",
             "_type": "span",
             "text": "using this Website in any way that impacts user access to this Website;"
           }
@@ -1628,6 +1663,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "czldtqbq",
             "_type": "span",
             "text": "using this Website contrary to applicable laws and regulations, or in any way may cause harm to the Website, or to any person or business entity."
           }
@@ -1641,6 +1677,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "1y59dfx8",
             "_type": "span",
             "text": "Your Content"
           }
@@ -1653,6 +1690,7 @@ const legalPagesDocs = [
         "_type": "block",
         "children": [
           {
+            "_key": "l33645n0",
             "_type": "span",
             "text": "In these Website Standard Terms and Conditions, \"Your Content\" shall mean any audio, video text, images or other material you choose to display on this Website or submit to us for design tasks. By displaying or submitting Your Content, you grant GrowSquadz Ventures Private Limited a non-exclusive, worldwide irrevocable, sub-licensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media."
           }
@@ -1682,10 +1720,10 @@ async function seed() {
     await client.createOrReplace(homepageDoc);
     console.log("✅ Homepage content seeded successfully!");
 
-    console.log("➡️ Seeding services (${servicesDocs.length} documents)...");
+    console.log("➡️ Seeding services (" + servicesDocs.length + " documents)...");
     for (const service of servicesDocs) {
       await client.createOrReplace(service);
-      console.log(`   - Seeded service: "${service.title}"`);
+      console.log('   - Seeded service: "' + service.title + '"');
     }
     console.log("✅ Individual service documents seeded successfully!");
 
@@ -1713,10 +1751,10 @@ async function seed() {
     await client.createOrReplace(portfolioPageDoc);
     console.log("✅ Portfolio page seeded successfully!");
 
-    console.log("➡️ Seeding legal pages (${legalPagesDocs.length} documents)...");
+    console.log("➡️ Seeding legal pages (" + legalPagesDocs.length + " documents)...");
     for (const legal of legalPagesDocs) {
       await client.createOrReplace(legal);
-      console.log(`   - Seeded legal page: "${legal.title}"`);
+      console.log('   - Seeded legal page: "' + legal.title + '"');
     }
     console.log("✅ Legal pages seeded successfully!");
 
