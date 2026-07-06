@@ -74,6 +74,14 @@ const whatsappLink =
   siteSettings?.defaultOrderCtaHref ??
   siteSettings?.socialLinks?.find((l: any) => l.label?.toLowerCase() === "whatsapp")?.href ??
   "https://wa.me/917488316199?text=Hi%2C%20I%20want%20to%20order%20a%20design";
+
+const footerCtaEyebrow = siteSettings?.footerCtaEyebrow ?? "GET STARTED TODAY";
+const footerCtaHeading = siteSettings?.footerCtaHeading ?? "Ready to elevate your content?";
+const footerCtaBody = siteSettings?.footerCtaBody ?? "Join thousands of creators who trust GrowSquadz for premium designs.";
+const footerCtaPrimaryLabel = siteSettings?.footerCtaPrimaryLabel ?? "Order Now →";
+const footerCtaPrimaryHref = siteSettings?.footerCtaPrimaryHref || whatsappLink;
+const footerCtaSecondaryLabel = siteSettings?.footerCtaSecondaryLabel ?? "View Services";
+const footerCtaSecondaryHref = siteSettings?.footerCtaSecondaryHref ?? "/services";
 ---
 
 <footer class="footer-root">
@@ -82,22 +90,22 @@ const whatsappLink =
     <div class="container-page">
       <div class="footer-cta-inner">
         <div class="footer-cta-text">
-          <p class="footer-cta-eyebrow text-caption-mono">GET STARTED TODAY</p>
-          <h2 class="footer-cta-heading">Ready to elevate your content?</h2>
+          <p class="footer-cta-eyebrow text-caption-mono">{footerCtaEyebrow}</p>
+          <h2 class="footer-cta-heading">{footerCtaHeading}</h2>
           <p class="footer-cta-body">
-            Join thousands of creators who trust GrowSquadz for premium designs.
+            {footerCtaBody}
           </p>
         </div>
         <div class="footer-cta-actions">
           <a
-            href={whatsappLink}
+            href={footerCtaPrimaryHref}
             target="_blank"
             rel="noopener noreferrer"
             class="btn-primary-lg"
           >
-            Order Now →
+            {footerCtaPrimaryLabel}
           </a>
-          <a href="/services" class="btn-secondary-lg">View Services</a>
+          <a href={footerCtaSecondaryHref} class="btn-secondary-lg">{footerCtaSecondaryLabel}</a>
         </div>
       </div>
     </div>
@@ -115,7 +123,7 @@ const whatsappLink =
             <span>{siteName}</span>
           </a>
           <p class="footer-brand-tagline">
-            India's premier creative design studio. Professional designs for content creators and businesses.
+            {siteSettings?.tagline ?? "India's premier creative design studio. Professional designs for content creators and businesses."}
           </p>
           <div class="footer-social">
           {finalSocialLinks.map((social: any) => (

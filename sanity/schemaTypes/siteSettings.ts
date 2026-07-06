@@ -72,5 +72,12 @@ export default defineType({
         },
       ],
     }),
+    defineField({ name: "footerCtaEyebrow", title: "Footer CTA Eyebrow", type: "string" }),
+    defineField({ name: "footerCtaHeading", title: "Footer CTA Heading", type: "string" }),
+    defineField({ name: "footerCtaBody", title: "Footer CTA Body", type: "text" }),
+    defineField({ name: "footerCtaPrimaryLabel", title: "Footer CTA Primary Button Label", type: "string" }),
+    defineField({ name: "footerCtaPrimaryHref", title: "Footer CTA Primary Button Link (leave empty for default WhatsApp link)", type: "string" }),
+    defineField({ name: "footerCtaSecondaryLabel", title: "Footer CTA Secondary Button Label", type: "string" }),
+    defineField({ name: "footerCtaSecondaryHref", title: "Footer CTA Secondary Button Link", type: "string" }),
   ],
 });

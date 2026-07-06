@@ -15,7 +15,14 @@ export const siteConfigQuery = `*[_type == "siteSettings"][0]{
   defaultHelpCtaHref,
   socialLinks[]{label, href, iconSvg},
   navLinks[]{label, href},
-  footerColumns[]{heading, links[]{label, href}}
+  footerColumns[]{heading, links[]{label, href}},
+  footerCtaEyebrow,
+  footerCtaHeading,
+  footerCtaBody,
+  footerCtaPrimaryLabel,
+  footerCtaPrimaryHref,
+  footerCtaSecondaryLabel,
+  footerCtaSecondaryHref
 }`;
 
 // ── Homepage ──
@@ -96,6 +103,7 @@ export const servicesQuery = `*[_type == "service"] | order(order asc){
 export const servicesPageQuery = `*[_type == "servicesPage"][0]{
   seoTitle,
   seoDescription,
+  heroEyebrow,
   heroHeading,
   heroSubheading
 }`;
@@ -143,9 +151,11 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0]{
   seoDescription,
   heroHeading,
   heroSubheading,
+  storyHeading,
   storyParagraphs,
   profiles[]{
     avatar,
+    image,
     name,
     title,
     bio,

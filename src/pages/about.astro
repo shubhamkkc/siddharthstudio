@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
-import { sanityClient } from "../lib/sanity";
+import { sanityClient, urlFor } from "../lib/sanity";
 import { aboutPageQuery, siteConfigQuery } from "../lib/queries";
 import { buildWhatsAppHref, getWhatsAppBaseHref } from "../lib/contact";
 
@@ -26,6 +26,7 @@ const seoTitle = cms?.seoTitle ?? "About — GrowSquadz";
 const seoDescription = cms?.seoDescription ?? "Learn about GrowSquadz — India's premier creative design studio founded by Kumar Siddharth in Patna, Bihar.";
 const heroHeading = cms?.heroHeading ?? "Built by creators,<br />for creators.";
 const heroSubheading = cms?.heroSubheading ?? "GrowSquadz was founded with a simple mission: make world-class design accessible to every content creator in India.";
+const storyHeading = cms?.storyHeading ?? "Started with a thumbnail. Grew into a studio.";
 
 const finalStoryParagraphs = cms?.storyParagraphs ?? [
   "GrowSquadz was founded by Kumar Siddharth in Patna, Bihar. What started as helping fellow creators with YouTube thumbnails quickly grew into a full-fledged creative design studio serving hundreds of creators and businesses across India.",
@@ -115,7 +116,7 @@ const finalValues = cms?.values ?? [
         <div class="container-page story-grid">
           <div class="story-text">
             <p class="section-eyebrow text-caption-mono">OUR STORY</p>
-            <h2 class="story-heading">Started with a thumbnail. Grew into a studio.</h2>
+            <h2 class="story-heading">{storyHeading}</h2>
             {finalStoryParagraphs.map((para: string) => (
               <p set:html={para} />
             ))}
@@ -123,7 +124,13 @@ const finalValues = cms?.values ?? [
           <div class="story-card">
             {finalProfiles.map((profile: any) => (
               <div class="founder-card">
-                <div class="founder-avatar">{profile.avatar ?? "GS"}</div>
+                <div class="founder-avatar">
+                  {profile.image ? (
+                    <img src={urlFor(profile.image).width(128).height(128).url()} alt={profile.name ?? "Profile"} class="founder-avatar-img" />
+                  ) : (
+                    profile.avatar ?? "GS"
+                  )}
+                </div>
                 <div class="founder-info">
                   <h3 class="founder-name">{profile.name ?? "GrowSquadz"}</h3>
                   <p class="founder-title">{profile.title ?? "Creative Design Studio"}</p>
@@ -211,6 +218,13 @@ const finalValues = cms?.values ?? [
     align-items: center;
     justify-content: center;
     margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .founder-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
   }
   .founder-name { font-size: 18px; font-weight: 600; color: var(--color-ink); margin: 0 0 4px; }
   .founder-title { font-size: 13px; color: var(--color-mute); margin: 0 0 12px; font-family: var(--font-mono); }

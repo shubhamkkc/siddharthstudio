@@ -86,6 +86,7 @@ const finalServices = cmsServices && cmsServices.length > 0 ? cmsServices : allS
 const finalServicesList = finalServices;
 const seoTitle = cmsPage?.seoTitle ?? "Services — GrowSquadz";
 const seoDescription = cmsPage?.seoDescription ?? "Professional design services: YouTube thumbnails from ₹299, social media posts from ₹249, video editing, logos, and brand identity packages.";
+const heroEyebrow = cmsPage?.heroEyebrow ?? "SERVICES";
 const heroHeading = cmsPage?.heroHeading ?? "Everything your content needs.";
 const heroSubheading = cmsPage?.heroSubheading ?? "Professional creative services at honest prices. Delivered in 24–48 hours via WhatsApp.";
 
@@ -126,7 +127,7 @@ const heroSubheading = cmsPage?.heroSubheading ?? "Professional creative service
       <!-- Hero -->
       <div class="services-hero">
         <div class="container-page">
-          <p class="eyebrow text-caption-mono">SERVICES</p>
+          <p class="eyebrow text-caption-mono">{heroEyebrow}</p>
           <h1 class="services-heading">{heroHeading}</h1>
           <p class="services-subheading">{heroSubheading}</p>
         </div>

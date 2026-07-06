@@ -9,6 +9,7 @@ export default defineType({
     defineField({ name: "seoDescription", title: "SEO Description", type: "text" }),
     defineField({ name: "heroHeading", title: "Hero Heading", type: "string" }),
     defineField({ name: "heroSubheading", title: "Hero Subheading", type: "text" }),
+    defineField({ name: "storyHeading", title: "Story Heading", type: "string" }),
     defineField({ name: "storyParagraphs", title: "Story Paragraphs", type: "array", of: [{ type: "text" }] }),
     defineField({
       name: "profiles",
@@ -21,6 +22,7 @@ export default defineType({
         title: "Profile Card",
         fields: [
           defineField({ name: "avatar", title: "Avatar Initials", type: "string", description: "Example: KS or GS" }),
+          defineField({ name: "image", title: "Avatar Image", type: "image", options: { hotspot: true } }),
           defineField({ name: "name", title: "Name", type: "string" }),
           defineField({ name: "title", title: "Title/Role", type: "string" }),
           defineField({ name: "bio", title: "Bio/Description", type: "text" }),

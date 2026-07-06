@@ -7,6 +7,7 @@ export default defineType({
   fields: [
     defineField({ name: "seoTitle", title: "SEO Title", type: "string" }),
     defineField({ name: "seoDescription", title: "SEO Description", type: "text" }),
+    defineField({ name: "heroEyebrow", title: "Hero Eyebrow Text", type: "string" }),
     defineField({ name: "heroHeading", title: "Hero Heading", type: "string" }),
     defineField({ name: "heroSubheading", title: "Hero Subheading", type: "text" }),
   ],
