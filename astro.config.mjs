@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import cloudflare from '@astrojs/cloudflare';
+import sitemap from '@astrojs/sitemap';
 
 /** @type {any} */
 const nodeGlobal = globalThis;
@@ -15,9 +16,10 @@ const isDev = Boolean(
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://www.growsquadz.in',
   output: isDev ? 'static' : 'server',
   adapter: isDev ? undefined : cloudflare(),
-  integrations: [react()],
+  integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
