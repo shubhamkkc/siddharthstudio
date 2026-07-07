@@ -16,7 +16,7 @@ const isDev = Boolean(
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.growsquadz.in',
+  site: 'https://growsquadz.in',
   output: isDev ? 'static' : 'server',
   adapter: isDev ? undefined : cloudflare(),
   integrations: [react(), sitemap()],

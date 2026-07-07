@@ -4,4 +4,4 @@ Allow: /
 Disallow: /studio/
 Disallow: /studio
 
-Sitemap: https://www.growsquadz.in/sitemap-index.xml
+Sitemap: https://growsquadz.in/sitemap-index.xml
