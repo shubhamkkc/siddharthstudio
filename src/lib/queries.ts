@@ -154,7 +154,6 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0]{
   storyHeading,
   storyParagraphs,
   profiles[]{
-    avatar,
     image,
     name,
     title,

@@ -21,7 +21,6 @@ export default defineType({
         name: "profile",
         title: "Profile Card",
         fields: [
-          defineField({ name: "avatar", title: "Avatar Initials", type: "string", description: "Example: KS or GS" }),
           defineField({ name: "image", title: "Avatar Image", type: "image", options: { hotspot: true } }),
           defineField({ name: "name", title: "Name", type: "string" }),
           defineField({ name: "title", title: "Title/Role", type: "string" }),

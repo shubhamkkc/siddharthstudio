@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { sanityClient, urlFor } from "../lib/sanity";
-import { homepageQuery, siteConfigQuery } from "../lib/queries";
+import { homepageQuery, siteConfigQuery, portfolioPageQuery } from "../lib/queries";
 import { buildWhatsAppHref, getWhatsAppBaseHref } from "../lib/contact";
 
 // Fetch from Sanity (falls back to hardcoded defaults below if null)
@@ -21,6 +21,26 @@ try {
 } catch (e) {
   console.warn("Sanity site settings fetch failed:", e);
 }
+
+let portfolioCms: any = null;
+try {
+  portfolioCms = await sanityClient.fetch(portfolioPageQuery);
+} catch (e) {
+  console.warn("Sanity portfolio fetch failed:", e);
+}
+
+const portfolioItemsFallback = [
+  { id: "p1", category: "thumbnail", title: "Gaming Channel Thumbnail", client: "Tech Creator", color: "#007cf0" },
+  { id: "p2", category: "social", title: "Instagram Post Design", client: "Lifestyle Brand", color: "#7928ca" },
+  { id: "p3", category: "thumbnail", title: "Finance YouTube Thumbnail", client: "Finance Creator", color: "#ff4d4d" },
+  { id: "p4", category: "branding", title: "Startup Logo Design", client: "EdTech Startup", color: "#00dfd8" },
+  { id: "p5", category: "social", title: "Social Media Banner", client: "Fashion Brand", color: "#ff0080" },
+  { id: "p6", category: "thumbnail", title: "Motivation Channel Art", client: "Motivational Creator", color: "#f9cb28" },
+  { id: "p7", category: "thumbnail", title: "Cooking Show Thumbnail", client: "Food Creator", color: "#50e3c2" },
+  { id: "p8", category: "social", title: "Product Launch Post", client: "D2C Brand", color: "#7928ca" },
+  { id: "p9", category: "branding", title: "Creator Brand Kit", client: "Travel Creator", color: "#007cf0" }
+];
+const finalPortfolioItems = (portfolioCms?.portfolioItems && portfolioCms.portfolioItems.length > 0) ? portfolioCms.portfolioItems : portfolioItemsFallback;
 
 const whatsappBaseHref = getWhatsAppBaseHref(siteSettings);
 
@@ -280,6 +300,129 @@ const announcementHref = cms?.announcementHref ?? "/pricing";
             )}
           </div>
         )}
+      </section>
+
+      <!-- Infinite Moving Thumbnail Marquee Showcase -->
+      <section class="marquee-showcase">
+        <div class="marquee-container">
+          <div class="marquee-mask" aria-hidden="true"></div>
+          
+          <!-- Track 1: Move Left -->
+          <div class="marquee-track">
+            <div class="marquee-group marquee-left">
+              {finalPortfolioItems.map((item: any) => {
+                const itemColor = item.bgColor || item.color || '#007cf0';
+                return (
+                  <a href="/portfolio" class="marquee-card" id={`marquee-l-${item.id || item._key || item._id}`} title={`Click to view ${item.title || 'Project'}`}>
+                    <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
+                      {item.image ? (
+                        <img src={urlFor(item.image).url()} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : (
+                        <div class="preview-inner">
+                          <div class="preview-label text-caption-mono">{(item.category || '').toUpperCase()}</div>
+                          <div class="preview-lines">
+                            <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
+                            <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
+                            <div class="preview-line preview-line-short" style={`background: ${item.lineColor || itemColor}30`}></div>
+                          </div>
+                          <div class="preview-dot" style={`background: ${item.dotColor || itemColor}`}></div>
+                        </div>
+                      )}
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+            
+            <!-- Duplicated group for seamless looping -->
+            <div class="marquee-group marquee-left" aria-hidden="true">
+              {finalPortfolioItems.map((item: any) => {
+                const itemColor = item.bgColor || item.color || '#007cf0';
+                return (
+                  <a href="/portfolio" class="marquee-card">
+                    <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
+                      {item.image ? (
+                        <img src={urlFor(item.image).url()} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : (
+                        <div class="preview-inner">
+                          <div class="preview-label text-caption-mono">{(item.category || '').toUpperCase()}</div>
+                          <div class="preview-lines">
+                            <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
+                            <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
+                            <div class="preview-line preview-line-short" style={`background: ${item.lineColor || itemColor}30`}></div>
+                          </div>
+                          <div class="preview-dot" style={`background: ${item.dotColor || itemColor}`}></div>
+                        </div>
+                      )}
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+
+          <!-- Track 2: Move Right -->
+          <div class="marquee-track">
+            <div class="marquee-group marquee-right">
+              {[...finalPortfolioItems].reverse().map((item: any) => {
+                const itemColor = item.bgColor || item.color || '#007cf0';
+                return (
+                  <a href="/portfolio" class="marquee-card" id={`marquee-r-${item.id || item._key || item._id}`} title={`Click to view ${item.title || 'Project'}`}>
+                    <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
+                      {item.image ? (
+                        <img src={urlFor(item.image).url()} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : (
+                        <div class="preview-inner">
+                          <div class="preview-label text-caption-mono">{(item.category || '').toUpperCase()}</div>
+                          <div class="preview-lines">
+                            <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
+                            <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
+                            <div class="preview-line preview-line-short" style={`background: ${item.lineColor || itemColor}30`}></div>
+                          </div>
+                          <div class="preview-dot" style={`background: ${item.dotColor || itemColor}`}></div>
+                        </div>
+                      )}
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+            
+            <!-- Duplicated group for seamless looping -->
+            <div class="marquee-group marquee-right" aria-hidden="true">
+              {[...finalPortfolioItems].reverse().map((item: any) => {
+                const itemColor = item.bgColor || item.color || '#007cf0';
+                return (
+                  <a href="/portfolio" class="marquee-card">
+                    <div class="portfolio-preview" style={`background: linear-gradient(135deg, ${itemColor}20 0%, ${itemColor}40 100%); border-bottom: 3px solid ${itemColor}`}>
+                      {item.image ? (
+                        <img src={urlFor(item.image).url()} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title || 'Project Image'} style="width:100%;height:100%;object-fit:cover;" />
+                      ) : (
+                        <div class="preview-inner">
+                          <div class="preview-label text-caption-mono">{(item.category || '').toUpperCase()}</div>
+                          <div class="preview-lines">
+                            <div class="preview-line preview-line-wide" style={`background: ${item.lineColor || itemColor}60`}></div>
+                            <div class="preview-line preview-line-med" style={`background: ${item.lineColor || itemColor}40`}></div>
+                            <div class="preview-line preview-line-short" style={`background: ${item.lineColor || itemColor}30`}></div>
+                          </div>
+                          <div class="preview-dot" style={`background: ${item.dotColor || itemColor}`}></div>
+                        </div>
+                      )}
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- ── Stats Strip ── -->
@@ -1277,5 +1420,129 @@ const announcementHref = cms?.announcementHref ?? "/pricing";
     padding: 0;
     background: transparent;
     object-fit: cover;
+  }
+
+  /* Moving Marquee Showcase */
+  .marquee-showcase {
+    background: var(--color-canvas-soft);
+    border-bottom: 1px solid var(--color-hairline);
+    padding: 32px 0;
+    overflow: hidden;
+  }
+
+  .marquee-container {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .marquee-mask {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    background: linear-gradient(90deg, var(--color-canvas-soft) 0%, transparent 10%, transparent 90%, var(--color-canvas-soft) 100%);
+  }
+
+  .marquee-track {
+    display: flex;
+    overflow: visible;
+    width: 100%;
+  }
+
+  .marquee-group {
+    display: flex;
+    gap: 20px;
+    padding: 10px 10px; /* Room for hover scale */
+    flex-shrink: 0;
+    min-width: 100%;
+    justify-content: space-around;
+  }
+
+  .marquee-left {
+    animation: scroll-left 50s linear infinite;
+  }
+
+  .marquee-right {
+    animation: scroll-right 50s linear infinite;
+  }
+
+  /* Pause marquee when hovering over the container */
+  .marquee-container:hover .marquee-left,
+  .marquee-container:hover .marquee-right {
+    animation-play-state: paused;
+  }
+
+  .marquee-card {
+    width: 280px;
+    aspect-ratio: 16/9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .marquee-card:hover {
+    transform: scale(1.06);
+    box-shadow: var(--shadow-card-lg);
+    border-color: var(--color-hairline-strong);
+    z-index: 20;
+  }
+
+  .marquee-card .portfolio-preview {
+    width: 100%;
+    height: 100%;
+  }
+
+  .portfolio-preview {
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .preview-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px;
+    gap: 10px;
+  }
+  .preview-label { color: var(--color-mute); font-size: 10px; }
+  .preview-lines { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+  .preview-line { height: 8px; border-radius: 4px; }
+  .preview-line-wide { width: 80%; }
+  .preview-line-med { width: 55%; }
+  .preview-line-short { width: 35%; }
+  .preview-dot { width: 32px; height: 32px; border-radius: 50%; margin-top: 8px; opacity: 0.7; }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes scroll-right {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
   }
 </style>

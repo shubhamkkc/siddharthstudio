@@ -128,7 +128,7 @@ const finalValues = cms?.values ?? [
                   {profile.image ? (
                     <img src={urlFor(profile.image).width(128).height(128).url()} alt={profile.name ?? "Profile"} class="founder-avatar-img" />
                   ) : (
-                    profile.avatar ?? "GS"
+                    profile.avatar ?? (profile.name ? profile.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase() : "GS")
                   )}
                 </div>
                 <div class="founder-info">
